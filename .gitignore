@@ -1,0 +1,5 @@
+# Generated Anki decks
+*.apkg
+
+# OS files
+.DS_Store
