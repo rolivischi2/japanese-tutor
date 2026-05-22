@@ -101,9 +101,35 @@ python3 tools/export_to_anki.py --help
 
 ---
 
+## build_kana_guide.py
+
+**What it does:** Builds the interactive kana guide — a single self-contained
+HTML file at `modules/00-writing-systems/kana-guide.html` with every hiragana
+and katakana, stroke-order animation, browser audio, mnemonics, and a practice
+quiz.
+
+It reads stroke paths from `tools/data/kana-strokes.json` (extracted from
+KanjiVG, CC BY-SA 3.0) and the curated kana metadata held inside the script
+itself (romaji, mnemonics, look-alike clusters, pronunciation notes). Edit that
+metadata in the script, then re-run to regenerate the guide.
+
+**Dependencies:** Python 3 standard library only.
+
+**How to run:**
+
+```bash
+python3 tools/build_kana_guide.py
+```
+
+The generated `kana-guide.html` is committed to the repo; open it directly in
+any browser (no server needed).
+
+---
+
 ## Dependency summary
 
-| Script              | External dependencies |
-|---------------------|-----------------------|
-| `validate.py`       | None (stdlib only)    |
-| `export_to_anki.py` | `genanki` (`pip install genanki`) |
+| Script                 | External dependencies |
+|------------------------|-----------------------|
+| `validate.py`          | None (stdlib only)    |
+| `build_kana_guide.py`  | None (stdlib only)    |
+| `export_to_anki.py`    | `genanki` (`pip install genanki`) |

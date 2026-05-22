@@ -70,6 +70,7 @@ Why this specific number: below ~40 mora/min, decoding is still effortful enough
 
 | Tool | Use | Link |
 |---|---|---|
+| **The Kana Guide** (this repo) | Interactive visual guide — every hiragana & katakana with stroke-order animation, audio, a mnemonic, and a practice quiz with look-alike drills. Open the file in any browser; no install. Your primary reference for this module. | `kana-guide.html` (in this folder) |
 | **realkana.com** | Browser kana speed drill. Free, no account. Tick the rows you have learned; it shows random kana, you self-check. The main speed-building tool. | realkana.com |
 | **Anki + a kana deck** | SRS for durable recall. Use any well-rated hiragana/katakana deck (AnkiWeb), or the kana portion of a starter deck. **Suspend / retire it once Module 00 ends** — kana belongs in your eyes, not your review queue forever. | apps.ankiweb.net |
 | **Tofugu hiragana & katakana mnemonics** | Free picture-mnemonic guides — the fastest known way to memorise kana shapes. Referenced throughout `01`–`03` instead of being reinvented here. | tofugu.com/japanese/learn-hiragana / tofugu.com/japanese/learn-katakana |
