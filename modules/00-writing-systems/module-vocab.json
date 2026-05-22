@@ -1,0 +1,452 @@
+[
+  {
+    "id": "ohayou-gozaimasu",
+    "kana": "おはようございます",
+    "kanji": null,
+    "reading": "おはようございます",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["good morning"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "せんせい、おはようございます。", "kanji": null, "english": "Good morning, teacher." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Polite morning greeting. Casual short form: おはよう. Set phrase; verify pitch on OJAD if needed.",
+    "tags": ["greeting", "fixed-phrase", "kana-only"]
+  },
+  {
+    "id": "konnichiwa",
+    "kana": "こんにちは",
+    "kanji": null,
+    "reading": "こんにちは",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["hello", "good day", "good afternoon"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "こんにちは。げんきですか。", "kanji": null, "english": "Hello. How are you?" }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Daytime greeting. Final は is the topic particle, pronounced [wa] in this fixed phrase.",
+    "tags": ["greeting", "fixed-phrase", "kana-only"]
+  },
+  {
+    "id": "konbanwa",
+    "kana": "こんばんは",
+    "kanji": null,
+    "reading": "こんばんは",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["good evening"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "こんばんは。", "kanji": null, "english": "Good evening." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Evening greeting. Final は pronounced [wa], as in こんにちは.",
+    "tags": ["greeting", "fixed-phrase", "kana-only"]
+  },
+  {
+    "id": "oyasuminasai",
+    "kana": "おやすみなさい",
+    "kanji": null,
+    "reading": "おやすみなさい",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["good night"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "おやすみなさい。", "kanji": null, "english": "Good night." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Said before sleeping. Casual short form: おやすみ.",
+    "tags": ["greeting", "fixed-phrase", "kana-only"]
+  },
+  {
+    "id": "sayounara",
+    "kana": "さようなら",
+    "kanji": null,
+    "reading": "さようなら",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["goodbye"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "では、さようなら。", "kanji": null, "english": "Well then, goodbye." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Somewhat formal / final-feeling farewell; not the everyday word among friends.",
+    "tags": ["greeting", "fixed-phrase", "kana-only"]
+  },
+  {
+    "id": "hajimemashite",
+    "kana": "はじめまして",
+    "kanji": null,
+    "reading": "はじめまして",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["how do you do", "nice to meet you"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "はじめまして。ローランドです。", "kanji": null, "english": "How do you do. I'm Roland." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Said on first meeting someone. Literally 'for the first time'.",
+    "tags": ["greeting", "fixed-phrase", "kana-only"]
+  },
+  {
+    "id": "yoroshiku-onegaishimasu",
+    "kana": "よろしくおねがいします",
+    "kanji": null,
+    "reading": "よろしくおねがいします",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["please treat me well", "I look forward to working with you"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "よろしくおねがいします。", "kanji": null, "english": "I look forward to getting to know you." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Set social phrase with no clean English equivalent; used on meeting someone or asking a favour.",
+    "tags": ["greeting", "fixed-phrase", "kana-only"]
+  },
+  {
+    "id": "arigatou-gozaimasu",
+    "kana": "ありがとうございます",
+    "kanji": null,
+    "reading": "ありがとうございます",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["thank you"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "どうもありがとうございます。", "kanji": null, "english": "Thank you very much." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Polite thanks. Casual short form: ありがとう.",
+    "tags": ["greeting", "fixed-phrase", "kana-only"]
+  },
+  {
+    "id": "sumimasen",
+    "kana": "すみません",
+    "kanji": null,
+    "reading": "すみません",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["excuse me", "sorry", "thank you (for trouble taken)"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "すみません。", "kanji": null, "english": "Excuse me. / Sorry." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Apology, attention-getter, and light thanks all in one. Very high frequency.",
+    "tags": ["greeting", "fixed-phrase", "kana-only"]
+  },
+  {
+    "id": "gomennasai",
+    "kana": "ごめんなさい",
+    "kanji": null,
+    "reading": "ごめんなさい",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["I'm sorry"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "ごめんなさい。", "kanji": null, "english": "I'm sorry." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "A personal/contrite apology; more so than すみません. Casual short form: ごめん.",
+    "tags": ["greeting", "fixed-phrase", "kana-only"]
+  },
+  {
+    "id": "itadakimasu",
+    "kana": "いただきます",
+    "kanji": null,
+    "reading": "いただきます",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["(said before eating) I gratefully receive this meal"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "いただきます。", "kanji": null, "english": "Let's eat. / I gratefully receive this meal." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Set phrase said by the person about to eat. No English equivalent.",
+    "tags": ["fixed-phrase", "meals", "kana-only"]
+  },
+  {
+    "id": "gochisousama-deshita",
+    "kana": "ごちそうさまでした",
+    "kanji": null,
+    "reading": "ごちそうさまでした",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["(said after eating) thank you for the meal"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "ごちそうさまでした。", "kanji": null, "english": "Thank you for the meal." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Set phrase said after eating. Casual short form: ごちそうさま.",
+    "tags": ["fixed-phrase", "meals", "kana-only"]
+  },
+  {
+    "id": "hai",
+    "kana": "はい",
+    "kanji": null,
+    "reading": "はい",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["yes", "(here you go)"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "はい、そうです。", "kanji": null, "english": "Yes, that's right." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Affirmative. Pitch atamadaka [HL] is the standard Tokyo value.",
+    "tags": ["fixed-phrase", "kana-only", "response"]
+  },
+  {
+    "id": "iie",
+    "kana": "いいえ",
+    "kanji": null,
+    "reading": "いいえ",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["no"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "いいえ、ちがいます。", "kanji": null, "english": "No, that's not it." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Negative response. Contrasts with いえ (2 morae) in vowel length — a minimal-pair drill target.",
+    "tags": ["fixed-phrase", "kana-only", "response"]
+  },
+  {
+    "id": "koohii",
+    "kana": "コーヒー",
+    "kanji": null,
+    "reading": "コーヒー",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["coffee"],
+    "pitch_accent": { "pattern": "nakadaka", "drop_after_mora": 3 },
+    "example_sentences": [
+      { "kana": "コーヒーをおねがいします。", "kanji": null, "english": "Coffee, please." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword from English 'coffee'. 4 morae. Pitch commonly nakadaka, drop after mora 3 (コーヒ|ー) per NHK; verify on OJAD.",
+    "tags": ["loanword", "katakana", "food-drink"]
+  },
+  {
+    "id": "biiru",
+    "kana": "ビール",
+    "kanji": null,
+    "reading": "ビール",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["beer"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "ビールをのみます。", "kanji": null, "english": "I drink beer." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (from Dutch 'bier' / German 'Bier'). 3 morae. Pitch atamadaka [HLL] is the standard Tokyo value.",
+    "tags": ["loanword", "katakana", "food-drink"]
+  },
+  {
+    "id": "terebi",
+    "kana": "テレビ",
+    "kanji": null,
+    "reading": "テレビ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["television", "TV"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "テレビをみます。", "kanji": null, "english": "I watch television." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Clipped loanword from 'television'. Pitch atamadaka [HLL] is the standard Tokyo value.",
+    "tags": ["loanword", "katakana", "wasei-eigo-adjacent"]
+  },
+  {
+    "id": "pan",
+    "kana": "パン",
+    "kanji": null,
+    "reading": "パン",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["bread"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "パンをたべます。", "kanji": null, "english": "I eat bread." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword from Portuguese 'pão' — not English. 2 morae. Pitch atamadaka [HL] is the standard Tokyo value.",
+    "tags": ["loanword", "katakana", "food-drink"]
+  },
+  {
+    "id": "basu",
+    "kana": "バス",
+    "kanji": null,
+    "reading": "バス",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["bus"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "バスにのります。", "kanji": null, "english": "I take the bus." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword from English 'bus'. 2 morae. Pitch atamadaka [HL] is the standard Tokyo value.",
+    "tags": ["loanword", "katakana", "transport"]
+  },
+  {
+    "id": "hoteru",
+    "kana": "ホテル",
+    "kanji": null,
+    "reading": "ホテル",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["hotel"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "ホテルはどこですか。", "kanji": null, "english": "Where is the hotel?" }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword from English 'hotel'. Pitch atamadaka [HLL] is the standard Tokyo value.",
+    "tags": ["loanword", "katakana", "travel"]
+  },
+  {
+    "id": "nyuusu",
+    "kana": "ニュース",
+    "kanji": null,
+    "reading": "ニュース",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["news"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "ニュースをききます。", "kanji": null, "english": "I listen to the news." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword from English 'news'. Uses the ニュ yoon. Pitch atamadaka [HLL] is the standard Tokyo value.",
+    "tags": ["loanword", "katakana"]
+  },
+  {
+    "id": "juusu",
+    "kana": "ジュース",
+    "kanji": null,
+    "reading": "ジュース",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["juice"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "ジュースをのみます。", "kanji": null, "english": "I drink juice." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword from English 'juice'. Uses the ジュ yoon. Pitch atamadaka [HLL] is the standard Tokyo value.",
+    "tags": ["loanword", "katakana", "food-drink"]
+  },
+  {
+    "id": "geemu",
+    "kana": "ゲーム",
+    "kanji": null,
+    "reading": "ゲーム",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["game", "video game"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "ゲームをします。", "kanji": null, "english": "I play a game." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword from English 'game'. 3 morae with the long-vowel mark. Pitch atamadaka [HLL] is the standard Tokyo value.",
+    "tags": ["loanword", "katakana"]
+  },
+  {
+    "id": "meeru",
+    "kana": "メール",
+    "kanji": null,
+    "reading": "メール",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["email", "e-mail message"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "メールをおくります。", "kanji": null, "english": "I send an email." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Clipped loanword from English 'email'. Pitch atamadaka [HLL] is the standard Tokyo value.",
+    "tags": ["loanword", "katakana"]
+  },
+  {
+    "id": "suisu",
+    "kana": "スイス",
+    "kanji": null,
+    "reading": "スイス",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["Switzerland"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "スイスからきました。", "kanji": null, "english": "I came from Switzerland." }
+    ],
+    "module_introduced": 0,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Place name, from German 'Schweiz' — not English. Pitch atamadaka [HLL] is the standard Tokyo value.",
+    "tags": ["loanword", "katakana", "place-name"]
+  }
+]

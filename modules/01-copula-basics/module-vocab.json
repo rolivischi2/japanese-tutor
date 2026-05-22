@@ -1,0 +1,1226 @@
+[
+  {
+    "id": "watashi",
+    "kana": "わたし",
+    "kanji": null,
+    "reading": "わたし",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["I", "me"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "わたし は がくせい です。", "kanji": null, "english": "I am a student." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Most neutral first-person pronoun; safe in any register.",
+    "tags": ["pronoun", "self-introduction"]
+  },
+  {
+    "id": "anata",
+    "kana": "あなた",
+    "kanji": null,
+    "reading": "あなた",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["you"],
+    "pitch_accent": { "pattern": "nakadaka", "drop_after_mora": 2 },
+    "example_sentences": [
+      { "kana": "あなた は にほんじん です か。", "kanji": null, "english": "Are you Japanese?" }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Grammatically 'you', but natives prefer name + さん. Fine for drills only.",
+    "tags": ["pronoun"]
+  },
+  {
+    "id": "namae",
+    "kana": "なまえ",
+    "kanji": null,
+    "reading": "なまえ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["name"],
+    "pitch_accent": { "pattern": "nakadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "わたし の なまえ は ローラント です。", "kanji": null, "english": "My name is Roland." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["self-introduction"]
+  },
+  {
+    "id": "hito",
+    "kana": "ひと",
+    "kanji": null,
+    "reading": "ひと",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["person"],
+    "pitch_accent": { "pattern": "odaka", "drop_after_mora": 2 },
+    "example_sentences": [
+      { "kana": "あの ひと は ともだち です。", "kanji": null, "english": "That person is a friend." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Kanji 人 introduced in Module 04.",
+    "tags": []
+  },
+  {
+    "id": "tomodachi",
+    "kana": "ともだち",
+    "kanji": null,
+    "reading": "ともだち",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["friend"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "マリオさん は わたし の ともだち です。", "kanji": null, "english": "Mario is my friend." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["people"]
+  },
+  {
+    "id": "gakusei",
+    "kana": "がくせい",
+    "kanji": null,
+    "reading": "がくせい",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["student"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "わたし は がくせい です。", "kanji": null, "english": "I am a student." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["occupation"]
+  },
+  {
+    "id": "sensei",
+    "kana": "せんせい",
+    "kanji": null,
+    "reading": "せんせい",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["teacher"],
+    "pitch_accent": { "pattern": "nakadaka", "drop_after_mora": 3 },
+    "example_sentences": [
+      { "kana": "ミカさん は せんせい です。", "kanji": null, "english": "Mika is a teacher." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Also a polite address term for teachers/doctors.",
+    "tags": ["occupation"]
+  },
+  {
+    "id": "enjinia",
+    "kana": "エンジニア",
+    "kanji": null,
+    "reading": "エンジニア",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["engineer"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "わたし は エンジニア です。", "kanji": null, "english": "I am an engineer." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana). Pitch accent: verify on OJAD.",
+    "tags": ["occupation", "loanword", "katakana"]
+  },
+  {
+    "id": "kaishain",
+    "kana": "かいしゃいん",
+    "kanji": null,
+    "reading": "かいしゃいん",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["company employee", "office worker"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "マリオさん は かいしゃいん です。", "kanji": null, "english": "Mario is a company employee." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Kanji 会社員 introduced later.",
+    "tags": ["occupation"]
+  },
+  {
+    "id": "isha",
+    "kana": "いしゃ",
+    "kanji": null,
+    "reading": "いしゃ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["doctor"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "わたし は いしゃ じゃありません。", "kanji": null, "english": "I am not a doctor." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Polite reference to one's own doctor: おいしゃさん.",
+    "tags": ["occupation"]
+  },
+  {
+    "id": "kaisha",
+    "kana": "かいしゃ",
+    "kanji": null,
+    "reading": "かいしゃ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["company"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "これ は わたし の かいしゃ の カメラ です。", "kanji": null, "english": "This is my company's camera." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["work"]
+  },
+  {
+    "id": "nihon",
+    "kana": "にほん",
+    "kanji": null,
+    "reading": "にほん",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["Japan"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "これ は にほん の くるま です。", "kanji": null, "english": "This is a Japanese car." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Also read にっぽん in formal/emphatic contexts. にほん [0] heiban is common in modern speech; verify on OJAD.",
+    "tags": ["country"]
+  },
+  {
+    "id": "nihonjin",
+    "kana": "にほんじん",
+    "kanji": null,
+    "reading": "にほんじん",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["Japanese person"],
+    "pitch_accent": { "pattern": "nakadaka", "drop_after_mora": 4 },
+    "example_sentences": [
+      { "kana": "ミカさん は にほんじん です。", "kanji": null, "english": "Mika is Japanese." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Nationality = country + じん. Kanji 人 in Module 04.",
+    "tags": ["nationality"]
+  },
+  {
+    "id": "suisu",
+    "kana": "スイス",
+    "kanji": null,
+    "reading": "スイス",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["Switzerland"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "わたし は スイスじん です。", "kanji": null, "english": "I am Swiss." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana). Roland's home country.",
+    "tags": ["country", "loanword", "katakana"]
+  },
+  {
+    "id": "suisujin",
+    "kana": "スイスじん",
+    "kanji": null,
+    "reading": "スイスじん",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["Swiss person"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "わたし は スイスじん です。", "kanji": null, "english": "I am Swiss." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Country + じん. Pitch accent of the compound: verify on OJAD.",
+    "tags": ["nationality", "katakana"]
+  },
+  {
+    "id": "hangari",
+    "kana": "ハンガリー",
+    "kanji": null,
+    "reading": "ハンガリー",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["Hungary"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "ハンガリー の カメラ です。", "kanji": null, "english": "It is a Hungarian camera." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana). Roland's L1 country. Pitch accent: verify on OJAD.",
+    "tags": ["country", "loanword", "katakana"]
+  },
+  {
+    "id": "doitsu",
+    "kana": "ドイツ",
+    "kanji": null,
+    "reading": "ドイツ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["Germany"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "マリオ は ドイツじん じゃありません。", "kanji": null, "english": "Mario is not German." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana).",
+    "tags": ["country", "loanword", "katakana"]
+  },
+  {
+    "id": "amerika",
+    "kana": "アメリカ",
+    "kanji": null,
+    "reading": "アメリカ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["USA", "America"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "ハナさん は アメリカじん です。", "kanji": null, "english": "Hana is American." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana).",
+    "tags": ["country", "loanword", "katakana"]
+  },
+  {
+    "id": "itaria",
+    "kana": "イタリア",
+    "kanji": null,
+    "reading": "イタリア",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["Italy"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "それ は イタリア の くるま です か。", "kanji": null, "english": "Is that an Italian car?" }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana).",
+    "tags": ["country", "loanword", "katakana"]
+  },
+  {
+    "id": "furansu",
+    "kana": "フランス",
+    "kanji": null,
+    "reading": "フランス",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["France"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "これ は フランス の パン です。", "kanji": null, "english": "This is French bread." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana). フ is bilabial [ɸ] — do not substitute [f].",
+    "tags": ["country", "loanword", "katakana"]
+  },
+  {
+    "id": "igirisu",
+    "kana": "イギリス",
+    "kanji": null,
+    "reading": "イギリス",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["United Kingdom", "Britain"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "あの ひと は イギリスじん です。", "kanji": null, "english": "That person is British." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana), from Portuguese 'inglês'.",
+    "tags": ["country", "loanword", "katakana"]
+  },
+  {
+    "id": "supein",
+    "kana": "スペイン",
+    "kanji": null,
+    "reading": "スペイン",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["Spain"],
+    "pitch_accent": { "pattern": "nakadaka", "drop_after_mora": 2 },
+    "example_sentences": [
+      { "kana": "これ は スペイン の ほん です。", "kanji": null, "english": "This is a Spanish book." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana).",
+    "tags": ["country", "loanword", "katakana"]
+  },
+  {
+    "id": "osutoria",
+    "kana": "オーストリア",
+    "kanji": null,
+    "reading": "オーストリア",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["Austria"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "あの ひと は オーストリアじん です。", "kanji": null, "english": "That person is Austrian." }
+    ],
+    "module_introduced": 1,
+    "tier": 2,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana). The ー is a full mora. Pitch accent: verify on OJAD.",
+    "tags": ["country", "loanword", "katakana"]
+  },
+  {
+    "id": "toruko",
+    "kana": "トルコ",
+    "kanji": null,
+    "reading": "トルコ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["Turkey"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "それ は トルコ の おちゃ です か。", "kanji": null, "english": "Is that Turkish tea?" }
+    ],
+    "module_introduced": 1,
+    "tier": 2,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana).",
+    "tags": ["country", "loanword", "katakana"]
+  },
+  {
+    "id": "desu",
+    "kana": "です",
+    "kanji": null,
+    "reading": "です",
+    "pos": "particle",
+    "transitivity": null,
+    "english": ["(polite copula) is", "am", "are"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "わたし は エンジニア です。", "kanji": null, "english": "I am an engineer." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Polite copula: links two nouns (identity), never means 'to exist', never attaches to verbs. Plain form だ in Module 06. Final す usually devoiced ('dess').",
+    "tags": ["copula", "grammar"]
+  },
+  {
+    "id": "wa-particle",
+    "kana": "は",
+    "kanji": null,
+    "reading": "わ",
+    "pos": "particle",
+    "transitivity": null,
+    "english": ["(topic particle) as for"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "わたし は がくせい です。", "kanji": null, "english": "As for me, (I am) a student." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Written は, pronounced 'wa' as a particle. Marks the TOPIC, not the subject.",
+    "tags": ["particle", "grammar"]
+  },
+  {
+    "id": "ka",
+    "kana": "か",
+    "kanji": null,
+    "reading": "か",
+    "pos": "particle",
+    "transitivity": null,
+    "english": ["(question particle)"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "あなた は がくせい です か。", "kanji": null, "english": "Are you a student?" }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Sentence-final question marker. No word-order inversion. Rising intonation.",
+    "tags": ["particle", "grammar"]
+  },
+  {
+    "id": "no-particle",
+    "kana": "の",
+    "kanji": null,
+    "reading": "の",
+    "pos": "particle",
+    "transitivity": null,
+    "english": ["(possessive / linking particle) 's", "of"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "これ は わたし の ほん です。", "kanji": null, "english": "This is my book." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Links noun to noun: possession and noun-modification. Owner/describer comes first.",
+    "tags": ["particle", "grammar"]
+  },
+  {
+    "id": "mo-particle",
+    "kana": "も",
+    "kanji": null,
+    "reading": "も",
+    "pos": "particle",
+    "transitivity": null,
+    "english": ["also", "too"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "ハナさん も にほんじん です か。", "kanji": null, "english": "Is Hana Japanese too?" }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Replaces は in the topic slot to mean 'also'. Not a Module 01 focus point; appears in dialogues as a useful extra.",
+    "tags": ["particle", "grammar"]
+  },
+  {
+    "id": "dewa-arimasen",
+    "kana": "ではありません",
+    "kanji": null,
+    "reading": "ではありません",
+    "pos": "particle",
+    "transitivity": null,
+    "english": ["is not", "am not", "are not (formal)"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "わたし は せんせい ではありません。", "kanji": null, "english": "I am not a teacher." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Formal negative copula. The は inside is read 'wa'. Spoken contraction: じゃありません.",
+    "tags": ["copula", "negative", "grammar"]
+  },
+  {
+    "id": "ja-arimasen",
+    "kana": "じゃありません",
+    "kanji": null,
+    "reading": "じゃありません",
+    "pos": "particle",
+    "transitivity": null,
+    "english": ["is not", "am not", "are not (polite spoken)"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "ミカさん は がくせい じゃありません。", "kanji": null, "english": "Mika is not a student." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Polite spoken negative copula; じゃ contracts では. The default for Preply conversation.",
+    "tags": ["copula", "negative", "grammar"]
+  },
+  {
+    "id": "hai",
+    "kana": "はい",
+    "kanji": null,
+    "reading": "はい",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["yes"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "はい、がくせい です。", "kanji": null, "english": "Yes, I am a student." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Also used as a back-channel/acknowledgement.",
+    "tags": ["fixed-phrase"]
+  },
+  {
+    "id": "iie",
+    "kana": "いいえ",
+    "kanji": null,
+    "reading": "いいえ",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["no"],
+    "pitch_accent": { "pattern": "nakadaka", "drop_after_mora": 2 },
+    "example_sentences": [
+      { "kana": "いいえ、がくせい じゃありません。", "kanji": null, "english": "No, I am not a student." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Three morae: い-い-え. Mind the long vowel.",
+    "tags": ["fixed-phrase"]
+  },
+  {
+    "id": "kore",
+    "kana": "これ",
+    "kanji": null,
+    "reading": "これ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["this one (near speaker)"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "これ は ほん です。", "kanji": null, "english": "This is a book." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Demonstrative pronoun; stands alone. Full こそあど set in Module 02.",
+    "tags": ["demonstrative", "kosoado"]
+  },
+  {
+    "id": "sore",
+    "kana": "それ",
+    "kanji": null,
+    "reading": "それ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["that one (near listener)"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "それ は あなた の スマホ です か。", "kanji": null, "english": "Is that your smartphone?" }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Anchored to the LISTENER, not just 'medium distance'.",
+    "tags": ["demonstrative", "kosoado"]
+  },
+  {
+    "id": "are",
+    "kana": "あれ",
+    "kanji": null,
+    "reading": "あれ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["that one over there (away from both)"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "あれ は カメラ です。", "kanji": null, "english": "That over there is a camera." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Far from speaker and listener.",
+    "tags": ["demonstrative", "kosoado"]
+  },
+  {
+    "id": "dore",
+    "kana": "どれ",
+    "kanji": null,
+    "reading": "どれ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["which one?"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "どれ が ミカさん の かばん です か。", "kanji": null, "english": "Which one is Mika's bag?" }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Question-word pronoun; takes が, not は.",
+    "tags": ["demonstrative", "kosoado", "question-word"]
+  },
+  {
+    "id": "nan",
+    "kana": "なん",
+    "kanji": null,
+    "reading": "なん",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["what"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "あれ は なん です か。", "kanji": null, "english": "What is that over there?" }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Question word 'what'. Form なん before です/だ; なに elsewhere.",
+    "tags": ["question-word"]
+  },
+  {
+    "id": "dare",
+    "kana": "だれ",
+    "kanji": null,
+    "reading": "だれ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["who"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "あの ひと は だれ です か。", "kanji": null, "english": "Who is that person?" }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Question word 'who'. Polite variant どなた.",
+    "tags": ["question-word"]
+  },
+  {
+    "id": "hon",
+    "kana": "ほん",
+    "kanji": null,
+    "reading": "ほん",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["book"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "これ は わたし の ほん です。", "kanji": null, "english": "This is my book." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Kanji 本 introduced later.",
+    "tags": ["object"]
+  },
+  {
+    "id": "kaban",
+    "kana": "かばん",
+    "kanji": null,
+    "reading": "かばん",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["bag"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "あれ は ミカさん の かばん です。", "kanji": null, "english": "That over there is Mika's bag." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["object"]
+  },
+  {
+    "id": "sumaho",
+    "kana": "スマホ",
+    "kanji": null,
+    "reading": "スマホ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["smartphone"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "それ は わたし の スマホ です。", "kanji": null, "english": "That is my smartphone." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Clipped loanword (katakana) from 'smartphone'.",
+    "tags": ["object", "loanword", "katakana"]
+  },
+  {
+    "id": "kamera",
+    "kana": "カメラ",
+    "kanji": null,
+    "reading": "カメラ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["camera"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "あれ は にほん の カメラ です。", "kanji": null, "english": "That is a Japanese camera." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana).",
+    "tags": ["object", "loanword", "katakana"]
+  },
+  {
+    "id": "kuruma",
+    "kana": "くるま",
+    "kanji": null,
+    "reading": "くるま",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["car"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "これ は にほん の くるま です。", "kanji": null, "english": "This is a Japanese car." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Kanji 車 introduced later.",
+    "tags": ["object"]
+  },
+  {
+    "id": "shashin",
+    "kana": "しゃしん",
+    "kanji": null,
+    "reading": "しゃしん",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["photograph", "photo"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "これ は わたし の しゃしん です。", "kanji": null, "english": "This is my photo." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["object"]
+  },
+  {
+    "id": "tsukue",
+    "kana": "つくえ",
+    "kanji": null,
+    "reading": "つくえ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["desk"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "それ は わたし の つくえ じゃありません。", "kanji": null, "english": "That is not my desk." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "つ is [tsɯ] — Hungarian 'c' transfers well.",
+    "tags": ["object"]
+  },
+  {
+    "id": "isu",
+    "kana": "いす",
+    "kanji": null,
+    "reading": "いす",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["chair"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "これ は いす です。", "kanji": null, "english": "This is a chair." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["object"]
+  },
+  {
+    "id": "kagi",
+    "kana": "かぎ",
+    "kanji": null,
+    "reading": "かぎ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["key"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "それ は あなた の かぎ です か。", "kanji": null, "english": "Is that your key?" }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["object"]
+  },
+  {
+    "id": "tokei",
+    "kana": "とけい",
+    "kanji": null,
+    "reading": "とけい",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["clock", "watch"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "あれ は スイス の とけい です。", "kanji": null, "english": "That over there is a Swiss watch." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["object"]
+  },
+  {
+    "id": "pasokon",
+    "kana": "パソコン",
+    "kanji": null,
+    "reading": "パソコン",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["personal computer", "PC"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "これ は かいしゃ の パソコン です。", "kanji": null, "english": "This is the company's computer." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Clipped loanword (katakana) from 'personal computer'. Useful for Roland (developer).",
+    "tags": ["object", "loanword", "katakana", "work"]
+  },
+  {
+    "id": "kohi",
+    "kana": "コーヒー",
+    "kanji": null,
+    "reading": "コーヒー",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["coffee"],
+    "pitch_accent": { "pattern": "nakadaka", "drop_after_mora": 3 },
+    "example_sentences": [
+      { "kana": "これ は コーヒー です。", "kanji": null, "english": "This is coffee." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana). Four morae: ko-o-hi-i; each ー is a full mora.",
+    "tags": ["food-drink", "loanword", "katakana"]
+  },
+  {
+    "id": "ocha",
+    "kana": "おちゃ",
+    "kanji": null,
+    "reading": "おちゃ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["tea (green tea)"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "それ は おちゃ です。", "kanji": null, "english": "That is tea." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "The お is an honorific prefix fused into the word.",
+    "tags": ["food-drink"]
+  },
+  {
+    "id": "mizu",
+    "kana": "みず",
+    "kanji": null,
+    "reading": "みず",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["water"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "これ は みず です。", "kanji": null, "english": "This is water." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["food-drink"]
+  },
+  {
+    "id": "pan",
+    "kana": "パン",
+    "kanji": null,
+    "reading": "パン",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["bread"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "これ は パン です。", "kanji": null, "english": "This is bread." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana) from Portuguese 'pão'. Two morae: pa-n.",
+    "tags": ["food-drink", "loanword", "katakana"]
+  },
+  {
+    "id": "chizu",
+    "kana": "チーズ",
+    "kanji": null,
+    "reading": "チーズ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["cheese"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "それ は チーズ じゃありません。", "kanji": null, "english": "That is not cheese." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Loanword (katakana). チ is [tɕi].",
+    "tags": ["food-drink", "loanword", "katakana"]
+  },
+  {
+    "id": "neko",
+    "kana": "ねこ",
+    "kanji": null,
+    "reading": "ねこ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["cat"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "これ は わたし の ねこ です。", "kanji": null, "english": "This is my cat." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["animal"]
+  },
+  {
+    "id": "inu",
+    "kana": "いぬ",
+    "kanji": null,
+    "reading": "いぬ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["dog"],
+    "pitch_accent": { "pattern": "odaka", "drop_after_mora": 2 },
+    "example_sentences": [
+      { "kana": "あれ は ミカさん の いぬ です。", "kanji": null, "english": "That over there is Mika's dog." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Odaka: drops on a following particle (いぬが).",
+    "tags": ["animal"]
+  },
+  {
+    "id": "kyou",
+    "kana": "きょう",
+    "kanji": null,
+    "reading": "きょう",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["today"],
+    "pitch_accent": { "pattern": "atamadaka", "drop_after_mora": 1 },
+    "example_sentences": [
+      { "kana": "きょう は やすみ です。", "kanji": null, "english": "Today is a day off." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Two morae: きょ (yōon) + う. Can serve as a topic.",
+    "tags": ["time"]
+  },
+  {
+    "id": "yasumi",
+    "kana": "やすみ",
+    "kanji": null,
+    "reading": "やすみ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["day off", "rest", "holiday"],
+    "pitch_accent": { "pattern": "nakadaka", "drop_after_mora": 3 },
+    "example_sentences": [
+      { "kana": "きょう は やすみ です。", "kanji": null, "english": "Today is a day off." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["time"]
+  },
+  {
+    "id": "sai",
+    "kana": "さい",
+    "kanji": null,
+    "reading": "さい",
+    "pos": "counter",
+    "transitivity": null,
+    "english": ["...years old (age counter)"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "わたし は さんじゅうなな さい です。", "kanji": null, "english": "I am thirty-seven years old." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Number + さい. Sound changes: 1 いっさい, 8 はっさい, 10 じゅっさい. 20 is irregular: はたち.",
+    "tags": ["counter", "age"]
+  },
+  {
+    "id": "hatachi",
+    "kana": "はたち",
+    "kanji": null,
+    "reading": "はたち",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["twenty years old"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "ミカさん は はたち です。", "kanji": null, "english": "Mika is twenty years old." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Irregular age word for 20. にじゅっさい is heard but はたち is standard.",
+    "tags": ["age"]
+  },
+  {
+    "id": "san-suffix",
+    "kana": "さん",
+    "kanji": null,
+    "reading": "さん",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["(polite name suffix) Mr.", "Ms."],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "ミカさん は せんせい です。", "kanji": null, "english": "Mika is a teacher." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Attach to other people's names; never to your own name.",
+    "tags": ["suffix", "politeness"]
+  },
+  {
+    "id": "hajimemashite",
+    "kana": "はじめまして",
+    "kanji": null,
+    "reading": "はじめまして",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["nice to meet you"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "はじめまして。ローラント です。", "kanji": null, "english": "Nice to meet you. I'm Roland." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Fixed introduction phrase; learn as one unit.",
+    "tags": ["fixed-phrase", "self-introduction"]
+  },
+  {
+    "id": "douzo-yoroshiku",
+    "kana": "どうぞ よろしく",
+    "kanji": null,
+    "reading": "どうぞ よろしく",
+    "pos": "interj",
+    "transitivity": null,
+    "english": ["pleased to meet you", "please be kind to me"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "わたし は スイスじん です。どうぞ よろしく。", "kanji": null, "english": "I am Swiss. Pleased to meet you." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Fixed closing phrase of a self-introduction. Fuller form: どうぞ よろしく おねがいします.",
+    "tags": ["fixed-phrase", "self-introduction"]
+  },
+  {
+    "id": "namae-question",
+    "kana": "おなまえ",
+    "kanji": null,
+    "reading": "おなまえ",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["name (polite, someone else's)"],
+    "pitch_accent": null,
+    "example_sentences": [
+      { "kana": "おなまえ は？", "kanji": null, "english": "And your name?" }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Honorific お + なまえ; use when asking someone else's name. Use なまえ for your own.",
+    "tags": ["self-introduction", "politeness"]
+  },
+  {
+    "id": "eigo",
+    "kana": "えいご",
+    "kanji": null,
+    "reading": "えいご",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["English (language)"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "これ は えいご の ほん です。", "kanji": null, "english": "This is an English-language book." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "Language = name + ご. Useful with の for noun-modification.",
+    "tags": ["language"]
+  },
+  {
+    "id": "nihongo",
+    "kana": "にほんご",
+    "kanji": null,
+    "reading": "にほんご",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["Japanese (language)"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "これ は にほんご の ほん です。", "kanji": null, "english": "This is a Japanese-language book." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": "にほん + ご.",
+    "tags": ["language"]
+  },
+  {
+    "id": "kuni",
+    "kana": "くに",
+    "kanji": null,
+    "reading": "くに",
+    "pos": "noun",
+    "transitivity": null,
+    "english": ["country", "home country"],
+    "pitch_accent": { "pattern": "heiban", "drop_after_mora": 0 },
+    "example_sentences": [
+      { "kana": "わたし の くに は スイス です。", "kanji": null, "english": "My country is Switzerland." }
+    ],
+    "module_introduced": 1,
+    "tier": 1,
+    "frequency_rank_bccwj": null,
+    "notes": null,
+    "tags": ["self-introduction"]
+  }
+]

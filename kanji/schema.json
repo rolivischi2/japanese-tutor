@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/roland/japan-learning/kanji/schema.json",
+  "title": "KanjiEntry",
+  "description": "A single kanji entry in the Japanese-learning knowledge base (kanji-master.json).",
+  "type": "object",
+  "required": [
+    "kanji",
+    "meaning_primary",
+    "on_yomi",
+    "kun_yomi",
+    "stroke_count",
+    "radicals",
+    "mnemonic",
+    "vocab_using",
+    "module_introduced"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "kanji": {
+      "type": "string",
+      "description": "The single kanji character this entry describes.",
+      "minLength": 1,
+      "maxLength": 1
+    },
+    "meaning_primary": {
+      "type": "string",
+      "description": "The single most important English meaning / keyword, e.g. 'eat / food'.",
+      "minLength": 1
+    },
+    "meaning_secondary": {
+      "type": "array",
+      "description": "Additional English meanings or nuances.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "on_yomi": {
+      "type": "array",
+      "description": "On-readings in katakana (canonical dictionary form), e.g. ['ショク', 'ジキ'].",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "kun_yomi": {
+      "type": "array",
+      "description": "Kun-readings in hiragana with okurigana dot notation, e.g. ['た.べる'].",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "stroke_count": {
+      "type": "integer",
+      "description": "Number of strokes for this kanji.",
+      "minimum": 1,
+      "maximum": 84
+    },
+    "radicals": {
+      "type": "array",
+      "description": "Component radicals used to build the mnemonic (kanji characters or descriptive labels).",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "mnemonic": {
+      "type": "string",
+      "description": "A short, memorable English story linking the radicals to the meaning.",
+      "minLength": 1
+    },
+    "vocab_using": {
+      "type": "array",
+      "description": "IDs of vocab entries (from vocab/schema.json) that use this kanji. References tier CSV slugs.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_-]*$"
+      },
+      "default": []
+    },
+    "example_sentence": {
+      "type": "object",
+      "description": "A single representative example sentence.",
+      "required": ["kanji", "kana", "english"],
+      "additionalProperties": false,
+      "properties": {
+        "kanji": {
+          "type": "string",
+          "description": "The sentence in normal kanji+kana orthography.",
+          "minLength": 1
+        },
+        "kana": {
+          "type": "string",
+          "description": "The sentence written fully in kana.",
+          "minLength": 1
+        },
+        "english": {
+          "type": "string",
+          "description": "Natural English translation.",
+          "minLength": 1
+        }
+      }
+    },
+    "module_introduced": {
+      "type": "integer",
+      "description": "Module number (0–12) in which this kanji is first introduced.",
+      "minimum": 0,
+      "maximum": 12
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Freeform note: common reading confusions, historical context, etc. null if unused."
+    }
+  }
+}

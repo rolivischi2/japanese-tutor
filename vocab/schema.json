@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/roland/japan-learning/vocab/schema.json",
+  "title": "VocabEntry",
+  "description": "A single vocabulary entry in the Japanese-learning knowledge base.",
+  "type": "object",
+  "required": ["id", "kana", "reading", "pos", "english", "module_introduced"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique slug identifier, e.g. 'taberu', 'ohayou'. ASCII, hyphens allowed.",
+      "pattern": "^[a-z][a-z0-9_-]*$"
+    },
+    "kana": {
+      "type": "string",
+      "description": "The word written entirely in hiragana (or katakana for loanwords).",
+      "minLength": 1
+    },
+    "kanji": {
+      "type": ["string", "null"],
+      "description": "The standard kanji+kana spelling, or null if the word is kana-only."
+    },
+    "reading": {
+      "type": "string",
+      "description": "Full hiragana reading, including okurigana, e.g. 'た.べる'.",
+      "minLength": 1
+    },
+    "pos": {
+      "type": "string",
+      "description": "Part-of-speech category.",
+      "enum": [
+        "noun",
+        "verb-godan",
+        "verb-ichidan",
+        "verb-irregular",
+        "i-adj",
+        "na-adj",
+        "adv",
+        "particle",
+        "conj",
+        "interj",
+        "counter"
+      ]
+    },
+    "transitivity": {
+      "type": ["string", "null"],
+      "description": "For verbs: 'tr' (transitive / 他動詞), 'intr' (intransitive / 自動詞), or null for non-verbs.",
+      "enum": ["tr", "intr", null]
+    },
+    "english": {
+      "type": "array",
+      "description": "One or more English glosses, most common first.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "pitch_accent": {
+      "type": "object",
+      "description": "Tokyo standard pitch-accent descriptor.",
+      "required": ["pattern", "drop_after_mora"],
+      "additionalProperties": false,
+      "properties": {
+        "pattern": {
+          "type": "string",
+          "description": "Named pitch-accent pattern.",
+          "enum": ["heiban", "atamadaka", "nakadaka", "odaka"]
+        },
+        "drop_after_mora": {
+          "type": "integer",
+          "description": "Drop position: 0 = heiban (no drop), n > 0 = drop after mora n.",
+          "minimum": 0
+        }
+      }
+    },
+    "example_sentences": {
+      "type": "array",
+      "description": "One or more example sentences. Leave empty array [] if none yet authored.",
+      "items": {
+        "type": "object",
+        "required": ["kana", "english"],
+        "additionalProperties": false,
+        "properties": {
+          "kana": {
+            "type": "string",
+            "description": "The sentence written entirely in kana (spaces optional for readability).",
+            "minLength": 1
+          },
+          "kanji": {
+            "type": ["string", "null"],
+            "description": "The sentence in its normal kanji+kana orthography, or null if kana-only."
+          },
+          "english": {
+            "type": "string",
+            "description": "Natural English translation.",
+            "minLength": 1
+          }
+        }
+      },
+      "default": []
+    },
+    "module_introduced": {
+      "type": "integer",
+      "description": "Module number (0–12) in which this word is first introduced.",
+      "minimum": 0,
+      "maximum": 12
+    },
+    "tier": {
+      "type": "integer",
+      "description": "Vocabulary tier: 1 = core-300, 2 = expand-700, 3 = fluency-1500.",
+      "enum": [1, 2, 3]
+    },
+    "frequency_rank_bccwj": {
+      "type": ["integer", "null"],
+      "description": "Rank in the BCCWJ spoken-corpus frequency list (1 = most frequent), or null if unknown.",
+      "minimum": 1
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Freeform authoring note, common mistake flag, or cross-reference. null if unused."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Arbitrary classifier tags, e.g. ['greetings', 'formal', 'body-part'].",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    }
+  }
+}
