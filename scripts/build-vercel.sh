@@ -1,23 +1,25 @@
 #!/usr/bin/env bash
-# Vercel build step. Copies the two user-facing HTML artifacts and a
-# landing page into public/, which is what Vercel deploys. The rest of
-# the repo (Markdown lessons, vocab CSVs, Python tools, .venv, etc.)
-# stays out of the deployed site.
+# Vercel build step. Generates the landing + rendered module pages via
+# tools/build_site.py, then copies the two standalone HTML artifacts
+# (kana guide, printable chart) into public/. The rest of the repo
+# (Markdown lessons, vocab CSVs, Python tools, .venv, etc.) stays out
+# of the deployed site.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/public"
 
-rm -rf "$OUT"
-mkdir -p "$OUT/kana" "$OUT/chart"
+# build_site.py wipes and recreates $OUT, including empty kana/ and chart/
+# subdirectories. Subsequent cp commands populate those subdirectories.
+uv run "$ROOT/tools/build_site.py"
 
 cp "$ROOT/modules/00-writing-systems/kana-guide.html" "$OUT/kana/index.html"
 cp "$ROOT/pronunciation/11-kana-printable-chart.html" "$OUT/chart/index.html"
-cp "$ROOT/scripts/landing.html"                       "$OUT/index.html"
 
 echo
 echo "Built $OUT/"
-echo "  /        → $OUT/index.html"
-echo "  /kana    → $OUT/kana/index.html"
-echo "  /chart   → $OUT/chart/index.html"
-du -h "$OUT"/{index.html,kana/index.html,chart/index.html} | sort -k2
+echo "  /                        → $OUT/index.html"
+echo "  /kana                    → $OUT/kana/index.html"
+echo "  /chart                   → $OUT/chart/index.html"
+echo "  /modules/<slug>/...      → $OUT/modules/"
+du -sh "$OUT"
