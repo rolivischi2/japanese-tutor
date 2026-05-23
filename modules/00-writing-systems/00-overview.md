@@ -3,7 +3,7 @@ module: 00
 file: 00-overview
 lang_focus: writing
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Module 00 — Writing Systems
@@ -14,7 +14,7 @@ Japanese is written with three scripts working together: **hiragana**, **katakan
 
 This module has **no grammar**. Its single job is to make you a fluent kana reader before any grammar arrives, so that from Module 01 onward you never have to decode symbols and parse grammar at the same time. Decoding must become automatic — like reading the Latin alphabet — or it silently taxes everything built on top of it.
 
-A note for you specifically: as a Hungarian native speaker you already have a phonological system that maps cleanly onto most Japanese sounds (see `pronunciation/07-hungarian-transfer-notes.md`). Kana learning is therefore mostly a *visual* task for you, not an auditory one. The sounds are easy; the shapes are the work.
+Depending on your L1, you may find kana learning is mostly a *visual* task rather than an auditory one — many learners already have a phonological system that maps cleanly onto most Japanese sounds. If you are a Hungarian speaker, see `pronunciation/07-hungarian-transfer-notes.md` for detailed transfer notes. If you are a German or Swiss German speaker, see `pronunciation/08-german-swiss-german-transfer-notes.md`. The sounds may come easily; the shapes are the work.
 
 ## Goals
 

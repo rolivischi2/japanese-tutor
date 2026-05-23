@@ -3,7 +3,7 @@ module: 00
 file: 02-hiragana-dakuten-and-yoon
 lang_focus: writing
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Hiragana — Dakuten, Handakuten, and Yōon
@@ -27,12 +27,12 @@ A **dakuten** is two short strokes added to the top-right of a kana. It **voices
 | た ち つ て と | **だ ぢ づ で ど** | t → d [d] (ぢ/づ special, below) |
 | は ひ ふ へ ほ | **ば び ぶ べ ぼ** | h → b [b] |
 
-The voicing logic is exactly the Hungarian *k/g*, *s(z)/z*, *t/d*, *p/b* pairing — a familiar contrast, just spelled with a diacritic.
+The voicing logic is the same voiced/voiceless consonant pairing found in most European languages — *k/g*, *s/z*, *t/d*, *p/b* — a familiar contrast, just spelled with a diacritic.
 
 ### Special cases in the voiced rows
 
 - **じ and ぢ** both sound [(d)ʑi] — essentially identical in modern standard Japanese. **づ and ず** both sound [(d)zɯ] — also identical. This is the *yotsugana* merger. In practice じ and ず are the everyday spellings; ぢ and づ appear only in a few words (e.g. compounds where a づ-sound arises from つ). For reading, treat the pairs as homophones; for the rare writing case, prefer じ/ず unless a word specifically uses ぢ/づ.
-- **ざ ず ぜ ぞ** — the z is [z] as Hungarian *z* in *zab*. じ is the soft [(d)ʑ], like the *j* of an English "jeep" softened.
+- **ざ ず ぜ ぞ** — the z is a plain [z] as in English *zero* or German *See*. じ is the soft [(d)ʑ], like the *j* of an English "jeep" softened.
 
 Example words:
 - かぎ — "key"
@@ -50,7 +50,7 @@ A **handakuten** is a small circle at the top-right. It applies **only to the �
 |---|---|---|
 | は ひ ふ へ ほ | **ぱ ぴ ぷ ぺ ぽ** | h → p [p] |
 
-The p is a plain unaspirated [p] — Hungarian *p* in *pad*. Visually: **゛dakuten = two strokes** (b-sound), **゜handakuten = one circle** (p-sound). Do not confuse them; ば and ぱ are different words apart.
+The p is a plain unaspirated [p] — like *p* in Spanish or Italian (not the aspirated English *p*). Visually: **゛dakuten = two strokes** (b-sound), **゜handakuten = one circle** (p-sound). Do not confuse them; ば and ぱ are different words apart.
 
 Example words:
 - ぱん — "bread"

@@ -3,7 +3,7 @@ module: 00
 file: 03-katakana
 lang_focus: writing
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Katakana
@@ -17,10 +17,10 @@ Seven days, roughly two rows per day. Use the **Tofugu katakana mnemonics** (tof
 Hiragana writes native Japanese words and all grammar. Katakana has a narrower job:
 
 1. **Loanwords** from other languages — コーヒー (coffee), テレビ (television), インターネット (internet). This is the big one and the focus of `04`.
-2. **Foreign names** — personal and place names: スイス (Switzerland), ハンガリー (Hungary), ローランド (the name "Roland").
+2. **Foreign names** — personal and place names: スイス (Switzerland), ハンガリー (Hungary), アレックス (the name "Alex").
 3. **Onomatopoeia**, **emphasis** (like italics), scientific names of plants/animals, and stylistic effect (signage, branding).
 
-For you, learning loanwords means a lot of vocabulary you *already know* in English/German is suddenly readable — once you can decode the katakana and adjust for Japanese pronunciation. `04` is dedicated to exactly that.
+Learning loanwords means a lot of vocabulary you *already know* in other languages is suddenly readable — once you can decode the katakana and adjust for Japanese pronunciation. `04` is dedicated to exactly that.
 
 ## Why katakana feels harder at first (and why that fades)
 

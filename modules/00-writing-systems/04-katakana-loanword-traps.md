@@ -3,14 +3,14 @@ module: 00
 file: 04-katakana-loanword-traps
 lang_focus: writing
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Katakana — Loanword Traps
 
 You can now decode every katakana symbol. But reading **loanwords** (*gairaigo*) needs three extra pieces: the long-vowel mark **ー**, the **extended foreign-sound combinations** (ファ, ティ, ウィ, ジェ …), and an understanding of *how Japanese reshapes a foreign word* so you can recognise the original underneath. That last point is the real "trap": a Japanese loanword often does **not** sound like the English/German word it came from, and guessing blindly leads you astray.
 
-For you specifically, English and German loanwords are a vocabulary gift — but only once you can decode them. This chapter is Day 14's content.
+English and German loanwords in particular are a vocabulary gift — but only once you can decode them. This chapter is Day 14's content.
 
 ## 1. The long-vowel mark ー
 
@@ -24,7 +24,7 @@ The bar means "hold the **preceding** vowel for one more mora". It counts as **o
 - ビール = ビ + ー + ル = **three morae**. "beer"
 - ケーキ = ケ + ー + キ = **three morae**. "cake"
 
-Caution — this is a length contrast, and you are well equipped for it (Hungarian has phonemic vowel length). The bar is **never** silent and **never** optional. Reading コヒー as if it were コーヒー, or skipping the bar, changes the word's rhythm and can change the word. When the text runs **vertically**, the bar is drawn **vertically** — same meaning.
+Caution — this is a length contrast. The bar is **never** silent and **never** optional. Reading コヒー as if it were コーヒー, or skipping the bar, changes the word's rhythm and can change the word. (If your L1 has phonemic vowel length — Hungarian, Finnish, Japanese-adjacent languages — this will feel natural; see `pronunciation/07-hungarian-transfer-notes.md`.) When the text runs **vertically**, the bar is drawn **vertically** — same meaning.
 
 ## 2. Extended katakana — foreign-sound combinations
 
@@ -74,7 +74,7 @@ This is why loanwords are often **longer** than the original: a one-syllable Eng
 
 ### Rule C — the source is often not English
 
-Many "loanwords" come from German, Portuguese, Dutch, French, etc. As a German speaker you have an advantage here:
+Many "loanwords" come from German, Portuguese, Dutch, French, etc. Learners with European L1s (especially German) often recognise these immediately:
 
 - アルバイト "part-time job" — from German *Arbeit*
 - パン "bread" — from Portuguese *pão*

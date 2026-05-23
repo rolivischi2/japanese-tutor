@@ -3,7 +3,7 @@ module: 00
 file: 01-hiragana-vowels-and-rows
 lang_focus: writing
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Hiragana — Vowels and the Consonant Rows
@@ -39,13 +39,13 @@ Notes on the gaps:
 
 Learn these first and perfectly; every other symbol reuses them. Japanese has exactly five vowel sounds, each a single pure quality (no gliding diphthongs like English "day" or "go").
 
-| Kana | IPA | Hungarian / German anchor |
+| Kana | IPA | Notes / L1 anchors |
 |---|---|---|
-| あ | [a] | Hungarian short *a* in *hal* is too rounded/back — use the brighter *á* quality of *láb* but **short**. German *a* in *Mann* works well. |
-| い | [i] | Hungarian *i* in *kicsi*. Clean match. |
-| う | [ɯ̜] | **Trap.** Not Hungarian *u* (*kút*), which is fully rounded. Japanese う is lips *unrounded / compressed* — say Hungarian *u* but spread your lips flat. This is your single hardest vowel; see `pronunciation/02-the-five-vowels.md`. |
-| え | [e̞] | **Trap.** Not Hungarian short *e* (*tej*), which is too open ([ɛ]). Use the closer quality of Hungarian long *é* in *kép* but cut it **short**. |
-| お | [o̞] | Hungarian *o* in *bor*, German *o* in *Sonne*. Good match. |
+| あ | [a] | A bright front-ish [a]. If your L1 is Hungarian: short *a* in *hal* is too rounded/back — use the *á* quality of *láb* but **short**. If your L1 is German: *a* in *Mann* works well. |
+| い | [i] | Clean cardinal [i]. Matches the *i* in most European languages. |
+| う | [ɯ̜] | **Trap.** Japanese う is lips *unrounded / compressed* — unlike rounded [u] in most European languages. Spread your lips flat. This is the hardest vowel for most learners; see `pronunciation/02-the-five-vowels.md`. |
+| え | [e̞] | **Trap.** More closed than the open [ɛ] common in many European languages. Aim for a closer [e] quality, but keep it **short**. |
+| お | [o̞] | A mid-back [o̞]. Matches a plain *o* in most European languages (e.g. Spanish, German, Italian *o*). |
 
 These cautions are summarised here for context only — the real vowel drilling lives in the `pronunciation/` track. For this module, knowing the *shape*-to-*sound* link is enough.
 
@@ -55,7 +55,7 @@ These cautions are summarised here for context only — the real vowel drilling 
 
 **か き く け こ** → [ka ki kɯ ke ko]
 
-The k-sound is the same as Hungarian *k* and German *k*. No aspiration worries — a light unaspirated k, as in Hungarian *kap*, is correct.
+The k-sound is an unaspirated [k] — like the *k* in most European languages (Spanish, German, Hungarian, Italian). No aspiration worries; a light unaspirated k is correct.
 
 Example words to drill once you also have the vowels:
 - あか — "red"
@@ -68,13 +68,13 @@ Example words to drill once you also have the vowels:
 
 ### さ-row — **さ し す せ そ** → [sa ɕi sɯ se so]
 
-Caution: **し is not [si]** — it is [ɕi], a soft palatal *sh*-like sound. Hungarian *s* (*sas*) is [ʃ], close but a touch heavier; aim slightly softer and more forward. す has the う-vowel trap (unrounded).
+Caution: **し is not [si]** — it is [ɕi], a soft palatal *sh*-like sound, slightly softer and more forward than the English [ʃ]. す has the う-vowel trap (unrounded).
 
 ### た-row — **た ち つ て と** → [ta tɕi tsɯ te to]
 
 Two irregular members:
-- **ち is not [ti]** — it is [tɕi], like the *ch* in Hungarian *csak* (softer) or German *tsch*.
-- **つ is not [tu]** — it is [tsɯ], a *ts*-cluster. **Advantage for you:** Hungarian *c* in *cukor* is exactly [ts]. Say Hungarian *cu* with an unrounded vowel.
+- **ち is not [ti]** — it is [tɕi], like the *ch* in English "cheese" (softer) or German *tsch*.
+- **つ is not [tu]** — it is [tsɯ], a *ts*-cluster. If your L1 has a native *ts* (e.g. German *z* in *Zeit*, Hungarian *c* in *cukor*, Italian *z* in *pizza*) this comes naturally — just use an unrounded vowel. If your L1 is English, practise the *ts* onset deliberately.
 
 Example words:
 - すし — "sushi"
@@ -87,13 +87,13 @@ Example words:
 
 ### な-row — **な に ぬ ね の** → [na ɲi nɯ ne no]
 
-Straightforward. に is slightly palatalised [ɲi] (like Hungarian *ny* in *nyár*, but lighter) — natural and not worth fussing over.
+Straightforward. に is slightly palatalised [ɲi] — natural and not worth fussing over. (If your L1 is Hungarian, this is similar to *ny* in *nyár* but lighter; if Italian, similar to *gn* in *ogni*.)
 
 ### は-row — **は ひ ふ へ ほ** → [ha çi ɸɯ he ho]
 
 Two cautions:
-- **ひ is [çi]** — a palatal fricative. **Advantage for you via German:** this is exactly the Swiss/Standard German *ich*-Laut. Use that habit directly.
-- **ふ is [ɸɯ]** — a *bilabial* fricative: air between both lips, lips **not** touching the teeth. **Trap:** Hungarian has no [ɸ] and you will substitute the labiodental [f]. Blow gently as if cooling soup. See `pronunciation/03-tricky-consonants.md`.
+- **ひ is [çi]** — a palatal fricative, like the German *ich*-Laut. If your L1 is German or Swiss German (see `pronunciation/08-german-swiss-german-transfer-notes.md`), this is already in your phoneme inventory. For other L1s: aim for a soft *h* pushed forward, as if whispering "hee".
+- **ふ is [ɸɯ]** — a *bilabial* fricative: air between both lips, lips **not** touching the teeth. Most L1s lack this sound and will substitute the labiodental [f] — blow gently as if cooling soup. See `pronunciation/03-tricky-consonants.md`.
 - Note: は and へ are *also* used as grammatical particles, where their pronunciation shifts (は → [wa], へ → [e]). That is a Module 01/04 grammar matter — inside ordinary words they keep their normal sounds.
 
 Example words:
@@ -111,7 +111,7 @@ Fully regular. No traps.
 
 ### や-row — **や ゆ よ** → [ja jɯ jo]
 
-Only three symbols. The *y* is the glide in Hungarian *jó* / German *ja*. These three small-form versions (ゃ ゅ ょ) become important in `02` for yōon — note the shape now.
+Only three symbols. The *y* is the [j] glide — as in English "yes", German *ja*, or the *j* in most European languages. These three small-form versions (ゃ ゅ ょ) become important in `02` for yōon — note the shape now.
 
 Example words:
 - やま — "mountain"
@@ -124,11 +124,11 @@ Example words:
 
 ### ら-row — **ら り る れ ろ** → [ɾa ɾi ɾɯ ɾe ɾo]
 
-The Japanese r is **not** an English r and **not** a trill. It is a single alveolar **tap** [ɾ]. **Strong advantage for you:** the Hungarian *r*, in casual speech, very often surfaces as a tap rather than a full trill — that tap allophone is essentially the Japanese sound. You only have to *suppress the trill*: tap the ridge behind your teeth once, do not let it buzz.
+The Japanese r is **not** an English r and **not** a trill. It is a single alveolar **tap** [ɾ]. If your L1 is Hungarian, Spanish, or Italian, you already produce this tap as an allophone — you only need to *suppress the trill* and produce a single tap. If your L1 is English, the closest cue is the *t* in American "butter" (a flap). See `pronunciation/03-tricky-consonants.md` for drilling. (Hungarian-specific notes: `pronunciation/07-hungarian-transfer-notes.md`.)
 
 ### わ-row — **わ を** → [wa] / [o]
 
-- わ — [wa], as in Hungarian *vaú*-glide / English *w*.
+- わ — [wa], as in English *w* / the glide in most European languages.
 - を — pronounced [o], identical to お. Only ever appears as the object-marking particle (Module 04). Recognise the shape; you will not write it in words.
 
 ### ん — [n] / [m] / [ŋ] / [ɴ]

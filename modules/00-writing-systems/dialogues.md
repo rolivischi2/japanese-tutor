@@ -3,7 +3,7 @@ module: 00
 file: dialogues
 lang_focus: writing
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Module 00 — Dialogues
@@ -98,6 +98,6 @@ B: How do you do. I look forward to getting to know you.
 1. Read each kana line aloud **without** looking at the gloss — this is the sight-reading drill.
 2. Check the gloss; confirm you decoded correctly.
 3. Add these to your Anki kana/vocab review so they become automatic.
-4. Use them for real from Day 1 — greet your Preply tutor with おはよう ございます, say いただきます before lunch. Spaced real use beats flashcards.
+4. Use them for real from Day 1 — greet your tutor or conversation partner with おはよう ございます, say いただきます before lunch. Spaced real use beats flashcards.
 
 Full grammar-bearing dialogues begin in **Module 01**. The vocabulary above is catalogued in `module-vocab.json`.

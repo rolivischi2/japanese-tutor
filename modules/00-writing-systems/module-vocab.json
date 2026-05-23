@@ -99,7 +99,7 @@
     "english": ["how do you do", "nice to meet you"],
     "pitch_accent": null,
     "example_sentences": [
-      { "kana": "はじめまして。ローランドです。", "kanji": null, "english": "How do you do. I'm Roland." }
+      { "kana": "はじめまして。アレックスです。", "kanji": null, "english": "How do you do. I'm Alex." }
     ],
     "module_introduced": 0,
     "tier": 1,
