@@ -3,7 +3,7 @@ module: meta
 file: resources-by-level
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Listening Resources by Level
@@ -31,7 +31,7 @@ TODO: Expand entry for Nihongo con Teppei for Beginners:
 
 TODO: Expand entry for Game Gengo (YouTube):
 - Gaming-themed grammar explanations
-- Particularly suitable for Roland as a software developer
+- Particularly suitable if you work in software or tech
 - Frequency: 1×/week
 
 ## From Module 05
@@ -57,7 +57,7 @@ TODO: Expand entry for drama recommendations:
 ## From Module 08–09
 
 TODO: Expand entry for native-pace interest podcasts:
-- Rebuild.fm (Japanese IT podcast — directly relevant for Roland as a developer)
+- Rebuild.fm (Japanese IT podcast — relevant if you work in software or tech)
 - Start with 0.85× speed if necessary
 
 ## From Module 10+

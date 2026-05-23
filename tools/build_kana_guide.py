@@ -237,7 +237,7 @@ MNEMONIC = {
     "ン": "A short up-flick ↗ — compare ソ, which flicks down.",
 }
 
-# Sound notes for the tricky kana (Hungarian/German learner focus)
+# Sound notes for the tricky kana (common L1 interference points for European learners)
 NOTE = {
     "う": "Unrounded [ɯ] — keep lips relaxed, don’t push them forward.",
     "し": "[ɕi] — softer and more whistled than English “she”.",

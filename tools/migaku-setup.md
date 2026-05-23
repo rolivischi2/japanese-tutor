@@ -3,7 +3,7 @@ module: meta
 file: migaku-setup
 lang_focus: tooling
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Migaku Setup
@@ -16,7 +16,7 @@ TODO: Pricing note — subscription required (check migaku.io for current plans)
 
 TODO: Installation steps for Mac (browser extension + companion app).
 
-TODO: Configuration for Japanese — subtitle language settings, Anki deck target (`Roland::Mining`).
+TODO: Configuration for Japanese — subtitle language settings, Anki deck target (e.g. `YourName::Mining` — choose a deck name that matches your Anki setup).
 
 TODO: Free alternative workflow: Yomitan + ManabiDojo extension for Crunchyroll; ttsu Reader for epub/web reading.
 

@@ -3,22 +3,22 @@ module: meta
 file: common-mistakes
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Common Mistakes
 
-Append-only catalogue. Roland adds entries from Preply lessons and AI corrections. Claude Code can inject flagged items into Anki review queue.
+Append-only catalogue. Add entries from tutor lessons and AI corrections. Claude Code can inject flagged items into Anki review queue.
 
 ## Format
 
-Each entry: `Date | Module | Mistake (✗) → Correct (✓) | Context | Source (Preply/AI/self)`
+Each entry: `Date | Module | Mistake (✗) → Correct (✓) | Context | Source (tutor/AI/self)`
 
 ---
 
 ## Entries
 
-TODO: Begin logging mistakes from the first Preply lesson. Cross-reference `progress/preply-lesson-log.md` for the lesson notes.
+TODO: Begin logging mistakes from your first tutor lesson. Cross-reference `progress/tutor-lesson-log.md` for the lesson notes.
 
 Pre-seeded entries from INSTRUCTIONS.md known error flags:
 

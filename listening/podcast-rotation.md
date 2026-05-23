@@ -3,7 +3,7 @@ module: meta
 file: podcast-rotation
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Podcast Rotation
@@ -26,7 +26,7 @@ TODO: Build a per-module rotation table. Example structure:
 | M04 | Nihongo con Teppei Beginners | Japanese with Shun N5 ep | + Game Gengo 1×/week |
 | M05 | Japanese with Shun N5–N4 | YUYU Nihongo N4 ep | |
 | M06+ | YUYU Nihongo / CIJ Intermediate | Rebuild.fm (very short segment) | |
-| M08–09 | Rebuild.fm (Roland's IT interest) | NHK News Web Easy | |
+| M08–09 | Rebuild.fm (Japanese IT podcast) | NHK News Web Easy | |
 | M10+ | NHK News Web Easy | NHK News | |
 
 ## Episode Log

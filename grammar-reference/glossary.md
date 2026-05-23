@@ -3,7 +3,7 @@ module: meta
 file: glossary
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Glossary
@@ -46,7 +46,7 @@ TODO: Define: compound kana formed by combining a consonant kana with small や�
 TODO: Define: the dictionary/base register of Japanese — used in casual speech, subordinate clauses, journaling, internal monologue. Verb dictionary form, adjective citation form, だ copula.
 
 ## polite form
-TODO: Define: the ます/です register — appropriate for strangers, service interactions, professional contexts, and Preply lessons. Required in M01–05 output.
+TODO: Define: the ます/です register — appropriate for strangers, service interactions, professional contexts, and tutor lessons. Required in M01–05 output.
 
 ## honorific
 TODO: Define: forms of speech that elevate the perceived status of the subject or the addressee. In Japanese: 尊敬語 (sonkeigo) elevates others; 謙譲語 (kenjōgo) lowers the speaker. Covered in M11.

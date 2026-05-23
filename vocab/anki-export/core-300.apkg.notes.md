@@ -3,7 +3,7 @@ module: meta
 file: core-300-apkg-notes
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Anki Export Notes — core-300.apkg
@@ -15,7 +15,7 @@ TODO: Explain that this file contains notes about the core-300 Anki deck export.
 ## Deck Structure
 
 TODO: Document the deck:
-- Deck name: `Roland::Core`
+- Deck name: `Learner::Core` (rename the `Learner` prefix to match your Anki deck hierarchy)
 - Source CSV: `vocab/tier-1-core-300.csv`
 - Note type: Custom (see below)
 

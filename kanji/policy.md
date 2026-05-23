@@ -3,20 +3,20 @@ module: meta
 file: kanji-policy
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Kanji Policy
 
 ## Recognition Only — No Handwriting, No Production
 
-Recognition only. No handwriting practice, no RTK keyword-to-kanji production drilling. Kanji writing is a separate optional skill and is not a prerequisite for spoken fluency. The time cost of kanji writing practice would be better invested in listening and vocab for Roland's conversational goal.
+Recognition only. No handwriting practice, no RTK keyword-to-kanji production drilling. Kanji writing is a separate optional skill and is not a prerequisite for spoken fluency. The time cost of kanji writing practice would be better invested in listening and vocab for the conversational goal of this curriculum.
 
 ## No Isolated Kanji Study
 
-Kanji are introduced only when Roland already knows a vocab word that uses them. This avoids the WaniKani problem of "learning readings out of context that don't stick" (documented across the donkuri immersion guide and the LearnKanji guide).
+Kanji are introduced only when the learner already knows a vocab word that uses them. This avoids the WaniKani problem of "learning readings out of context that don't stick" (documented across the donkuri immersion guide and the LearnKanji guide).
 
-Every kanji entry in `kanji-master.json` must have at least one `vocab_using` reference to a word that Roland already knows from audio/kana context before the kanji is introduced.
+Every kanji entry in `kanji-master.json` must have at least one `vocab_using` reference to a word already known from audio/kana context before the kanji is introduced.
 
 ## Targets
 

@@ -3,7 +3,7 @@ module: meta
 file: dialogue-bank
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Dialogue Bank
@@ -30,7 +30,7 @@ TODO: Write a dialogue stub: opening a bank account in Japan. Focus: polite ま�
 
 ## Tech Meetup Self-Introduction (Module 04–07)
 
-TODO: Write a dialogue stub tailored to Roland as a software developer. Include: name, nationality, job (engineer), programming language interests, reason for learning Japanese.
+TODO: Write a dialogue stub for a tech meetup context. Include: name, nationality, job (engineer), programming language interests, reason for learning Japanese. Adapt details to your own background.
 
 ## Explaining Software Development to a Non-Technical Person (Module 06–08)
 
@@ -52,6 +52,6 @@ TODO: Write a dialogue stub: discussing weather with a friend. Focus: adjective 
 
 TODO: Write a dialogue stub: comparing Swiss and Japanese cuisine. Focus: comparatives (より、のほうが), preferences, taste adjectives.
 
-## Hungary / Roland's Background (Module 04–07)
+## Your Home Country (Module 04–07)
 
-TODO: Write a dialogue stub: explaining to a Japanese person where Hungary is and what it is like. Focus: geography vocabulary, copula sentences, adjective descriptions.
+TODO: Write a dialogue stub: explaining to a Japanese person where your home country is and what it is like. Focus: geography vocabulary, copula sentences, adjective descriptions. Adapt the country and details to your own background.

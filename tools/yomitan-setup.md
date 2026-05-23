@@ -69,10 +69,10 @@ Mining = one-click "save this word to Anki for review." Setup:
 3. Yomitan dashboard → **Anki** → toggle **Enable Anki integration** ON.
 4. Configure:
    - **Card template:** start with the **Lapis** card model (or donkuri's fork). Both are community standards designed for Yomitan's field set (expression, reading, gloss, sentence, audio, pitch).
-   - **Deck:** `Roland::Mining` — create it in Anki first (deck name with `::` makes it a sub-deck).
+   - **Deck:** your mining deck (e.g. `Learner::Mining`) — create it in Anki first (deck name with `::` makes it a sub-deck).
    - **Note type:** the Lapis note type after you import it.
    - **Field bindings:** map Yomitan's `{expression}` `{reading}` `{glossary}` `{sentence}` `{audio}` `{pitch-accents}` to the matching Lapis fields.
-5. Hover a word → press `+` → it appears in `Roland::Mining` after Anki syncs.
+5. Hover a word → press `+` → it appears in your mining deck after Anki syncs.
 
 Optional: install the **Local Audio Server** companion (linked from Yomitan docs) to bake offline NHK / Forvo pitch audio into mined cards.
 
@@ -86,7 +86,7 @@ Once wired, the workflow is four interactions:
 |---|---|
 | **Hover word with `Shift` held** | Opens the popup over the word under your cursor. (No-modifier hover is configurable in *Settings → General → Scan input modifier*.) |
 | **Mouse-wheel inside popup** | Walks forward / back through entries — Yomitan parses the *whole sentence*, not one word. |
-| **Click `+` (or `Alt+e`)** | Mines the current entry to `Roland::Mining`. |
+| **Click `+` (or `Alt+e`)** | Mines the current entry to your mining deck. |
 | **Click `🔊`** | Plays the word's audio. |
 | **`Esc`** | Dismisses the popup. |
 
@@ -136,6 +136,6 @@ Turn it **off** at the end of the session. Default state: off.
 
 ## What this file does NOT replace
 
-- The curriculum. Yomitan accelerates *reading*; you still need active recall (Anki), output (Preply), and pitch drilling (Kotu / Dogen).
+- The curriculum. Yomitan accelerates *reading*; you still need active recall (Anki), output (tutor sessions or AI conversation), and pitch drilling (Kotu / Dogen).
 - Stroke-order practice for kana — that lives in [`modules/00-writing-systems/kana-guide.html`](../modules/00-writing-systems/kana-guide.html).
 - It is *not* a furigana injector by default. That role belongs to 10ten in its narrow §6 use case.

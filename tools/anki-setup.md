@@ -3,7 +3,7 @@ module: meta
 file: anki-setup
 lang_focus: tooling
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Anki Setup
@@ -19,8 +19,8 @@ TODO: Required add-ons with installation codes:
 - Optional: Kanji Grid, Heatmap, AutoReorder, Batch Editing
 
 TODO: Deck configuration recipe (from INSTRUCTIONS.md §3.3):
-- Two decks: `Roland::Core` (Kaishi 1.5k + module-vocab) and `Roland::Mining` (Yomitan-mined)
-- One kanji deck: `Roland::Kanji` (recognition only)
+- Two decks: `Learner::Core` (Kaishi 1.5k + module-vocab) and `Learner::Mining` (Yomitan-mined). Rename the `Learner` prefix to whatever name you use in Anki — the `::` creates a sub-deck hierarchy.
+- One kanji deck: `Learner::Kanji` (recognition only)
 - New cards/day: 10 for M00–04, then 15
 - Max reviews/day: 200
 - FSRS: default settings

@@ -3,7 +3,7 @@ module: meta
 file: ai-conversation-prompts
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # AI Conversation Prompts
@@ -31,9 +31,9 @@ TODO: Narrative prompts. Example: "Tell the AI about yesterday."
 ### Module 07+ — Casual Conversation
 TODO: Open-ended casual conversation prompts with specific topic suggestions.
 
-## Preply-Prep Prompts by Module
+## Tutor-Prep Prompts by Module
 
-TODO: For each module, one Preply-prep prompt template. Example for M01: "Given the topic 'self-introduction', produce 10 questions a tutor might ask me in plain Japanese, and 5 sample answers using only Module 01 grammar."
+TODO: For each module, one tutor-prep prompt template. Example for M01: "Given the topic 'self-introduction', produce 10 questions a tutor might ask me in plain Japanese, and 5 sample answers using only Module 01 grammar."
 
 ## Structured Correction Prompts
 
@@ -44,4 +44,4 @@ TODO: Write 3–4 variations of the structured correction prompt for different u
 
 ## Topic Suggestions for AI Conversations
 
-TODO: List 20 concrete topic suggestions suitable for AI conversation, tagged by module. Include some tailored to Roland's background (software development, Switzerland, Hungary, travel).
+TODO: List 20 concrete topic suggestions suitable for AI conversation, tagged by module. Include a range of topics across professional backgrounds, hobbies, home countries, and travel — adapt to your own interests.

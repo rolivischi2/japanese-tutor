@@ -3,7 +3,7 @@ module: meta
 file: kanji-readme
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Kanji
@@ -32,7 +32,7 @@ TODO: Describe each file:
 ## Workflow
 
 TODO: Explain the workflow for adding new kanji:
-1. Identify a vocab word Roland already knows in audio/kana form
+1. Identify a vocab word already known in audio/kana form
 2. Add entry to `kanji-master.json`
 3. Run `python tools/validate.py` to check consistency
 4. `kanji-by-module.csv` is regenerated from `kanji-master.json` automatically — never edit manually
