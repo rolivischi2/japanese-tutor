@@ -3,13 +3,23 @@ module: meta
 file: tools-readme
 lang_focus: tooling
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # tools/
 
-Two Python 3 helper scripts for the japan-learning knowledge base.
-Standard library only for `validate.py`; `export_to_anki.py` requires `genanki`.
+Three Python 3 helper scripts for the japan-learning knowledge base.
+Python is managed by **uv** — never invoke the system `python3` directly. The
+project's Python version is pinned in `.python-version` (3.13) and metadata
+lives in `pyproject.toml`. First-time setup:
+
+```bash
+uv sync          # creates .venv with pinned Python, no third-party deps yet
+```
+
+`validate.py` and `build_kana_guide.py` are standard-library only and run under
+the bare venv. `export_to_anki.py` needs `genanki` — its PEP 723 inline
+metadata lets uv resolve that ephemerally, so no global install ever happens.
 
 ---
 
@@ -41,13 +51,13 @@ crash — this is expected for a partially scaffolded repo.
 
 ```bash
 # From the repo root:
-python3 tools/validate.py
+uv run python tools/validate.py
 
 # With explicit repo root (useful if running from a different directory):
-python3 tools/validate.py --repo-root /path/to/japan-learning
+uv run python tools/validate.py --repo-root /path/to/japan-learning
 
 # Help:
-python3 tools/validate.py --help
+uv run python tools/validate.py --help
 ```
 
 **Exit codes:** 0 = PASS, 1 = one or more errors found.
@@ -78,26 +88,29 @@ Card format (kanji deck):
 
 Header-only or absent CSV files are skipped gracefully with a message.
 
-**Dependencies:**
-
-```bash
-pip install genanki
-```
-
-If `genanki` is not installed the script prints a clear message and exits 0.
+**Dependencies:** `genanki` (declared inline in the script's PEP 723 header).
 
 **How to run:**
 
 ```bash
-# From the repo root:
-python3 tools/export_to_anki.py
+# From the repo root — uv resolves genanki ephemerally from the PEP 723 header:
+uv run tools/export_to_anki.py
 
 # Custom output directory:
-python3 tools/export_to_anki.py --output-dir /path/to/output
+uv run tools/export_to_anki.py --output-dir /path/to/output
 
 # Help:
-python3 tools/export_to_anki.py --help
+uv run tools/export_to_anki.py --help
 ```
+
+Equivalent alternative using the named dependency group from `pyproject.toml`
+(installs `genanki` into `.venv` persistently rather than ephemerally):
+
+```bash
+uv run --group anki python tools/export_to_anki.py
+```
+
+If `genanki` is not available the script prints a clear message and exits 0.
 
 ---
 
@@ -118,7 +131,7 @@ metadata in the script, then re-run to regenerate the guide.
 **How to run:**
 
 ```bash
-python3 tools/build_kana_guide.py
+uv run python tools/build_kana_guide.py
 ```
 
 The generated `kana-guide.html` is committed to the repo; open it directly in
@@ -128,8 +141,8 @@ any browser (no server needed).
 
 ## Dependency summary
 
-| Script                 | External dependencies |
-|------------------------|-----------------------|
-| `validate.py`          | None (stdlib only)    |
-| `build_kana_guide.py`  | None (stdlib only)    |
-| `export_to_anki.py`    | `genanki` (`pip install genanki`) |
+| Script                 | External dependencies | uv invocation |
+|------------------------|-----------------------|---------------|
+| `validate.py`          | None (stdlib only)    | `uv run python tools/validate.py` |
+| `build_kana_guide.py`  | None (stdlib only)    | `uv run python tools/build_kana_guide.py` |
+| `export_to_anki.py`    | `genanki` (declared inline via PEP 723) | `uv run tools/export_to_anki.py` |

@@ -6,23 +6,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A personal Japanese-language curriculum for one learner ("Roland") aimed at **conversational mastery**, not JLPT certification. It is a content repository — Markdown lessons, CSV/JSON vocab and kanji data, and two Python helper scripts — designed so Claude Code can extend it deterministically as the learner progresses.
 
-**Current state:** the repo is unscaffolded. `INSTRUCTIONS.md` is the complete blueprint and the source of truth. Read it before doing anything substantive. Nothing else exists yet: the directory tree, content files, and tools all still need to be built.
+**Current state:** the directory tree is fully scaffolded, **Module 00** (writing systems) and **Module 01** (copula basics) are built, and the helper scripts exist. Modules 02–12 have `00-overview.md` and `module-vocab.json` only — their drills and dialogues are filled in chapter-by-chapter as the learner advances. `INSTRUCTIONS.md` is the original blueprint and the source of truth for pedagogy and per-module content outlines (§3.5); consult it before authoring any module. `INDEX.md` holds the live module status table (locked/active/done) — it is the authoritative record of the learner's current position.
 
-## First-time scaffolding tasks
+## Extending the curriculum
 
-`INSTRUCTIONS.md` §6 defines the initial deliverables, in order:
+The repo is **self-extending**: when the learner finishes Module N, the request is "build Module N+1's drills and dialogues from its overview." To do that:
 
-1. Scaffold the full directory tree (§2 of `INSTRUCTIONS.md`) as files with frontmatter populated and `TODO` markers per section.
-2. Populate `vocab/tier-1-core-300.csv` (intersection of JLPT N5 + first 300 Kaishi 1.5k cards), conforming to `vocab/schema.json`, with pitch accent from the Kanjium dictionary.
-3. Fully build **Module 00** (`modules/00-writing-systems/`) — the only module completed at scaffold time. All later modules are filled in chapter-by-chapter as the learner advances.
-4. Author `tools/validate.py` and `tools/export_to_anki.py` (see Tools below).
+1. Read the module's existing `00-overview.md` and the matching outline in `INSTRUCTIONS.md` §3.5.
+2. Author the per-concept grammar `.md` files, `dialogues.md`, `exercises.md`, `self-talk.md`, and (M04+) `kanji-introduced.md`, following the authoring conventions below.
+3. Add new entries to `module-vocab.json` and the relevant `vocab/tier-*.csv`; add kanji to `kanji/kanji-master.json`.
+4. Run `python tools/validate.py` and fix any reported errors.
+5. Update the status row in `INDEX.md`.
 
 ## Commands
 
-No build/test tooling exists yet. Once authored, the two scripts are the only commands:
+Python is managed by **uv**. Never invoke the system `python3` directly — always go through `uv run` so the project's pinned Python (3.13 per `.python-version`) and ephemeral dependencies are used. First-time setup: `uv sync`. Standard library only for `validate.py` and `build_kana_guide.py`; `export_to_anki.py` declares `genanki` via PEP 723 inline metadata so uv resolves it ephemerally without any global install.
 
-- `python tools/validate.py` — checks every kanji used in any module's `dialogues.md` exists in `kanji/kanji-master.json` with `module_introduced` ≤ that module's number, and every vocab `id` referenced by a kanji entry exists in a tier CSV. Run this after editing any module content, vocab, or kanji data.
-- `python tools/export_to_anki.py` — regenerates `tier-1`, `tier-2`, `tier-3`, and `kanji` `.apkg` decks from the CSV/JSON sources.
+- `uv run python tools/validate.py` — checks every kanji used in any module's `dialogues.md` exists in `kanji/kanji-master.json` with `module_introduced` ≤ that module's number, every vocab `id` in a kanji entry's `vocab_using` exists in a tier CSV, and every `module-vocab.json` entry has the schema-required fields. Run this after editing any module content, vocab, or kanji data.
+- `uv run tools/export_to_anki.py` — regenerates `tier-1`, `tier-2`, `tier-3`, and `kanji` `.apkg` decks into `vocab/anki-export/`. uv pulls `genanki` ephemerally via the script's PEP 723 header. `.apkg` files are gitignored.
+- `uv run python tools/build_kana_guide.py` — regenerates the self-contained interactive `modules/00-writing-systems/kana-guide.html` from `tools/data/kana-strokes.json`. Re-run after editing the stroke data or the kana metadata inside the script.
 
 ## Content authoring conventions (the Claude Code contract)
 
@@ -36,7 +38,7 @@ These rules are non-negotiable; they keep content consistent across modules buil
 - **Cross-linking:** every grammar point links each example word to its `vocab/` entry by `id`.
 - **Data schemas:** vocab entries follow `vocab/schema.json`; kanji entries follow the structure in `INSTRUCTIONS.md` §3.7. `kanji/kanji-by-module.csv` is denormalised and regenerated from `kanji/kanji-master.json` — never hand-edit the CSV.
 
-Each `modules/NN-*/` folder contains: `00-overview.md`, one `.md` per grammar concept, `dialogues.md`, `exercises.md`, `self-talk.md` (M01+), `kanji-introduced.md` (M04+), and `module-vocab.json`.
+Each `modules/NN-*/` folder contains: `00-overview.md`, one `.md` per grammar concept, `dialogues.md`, `exercises.md`, `self-talk.md` (M01+), `kanji-introduced.md` (M04+), and `module-vocab.json`. The `preply/` directory holds tutor-facing companion worksheets (e.g. `01-copula-companion.md`), one per module, named to match.
 
 ## Permissions
 
@@ -53,4 +55,4 @@ The 13-module curriculum (M00–M12) is a "verb-form complexity ladder," not a J
 
 Other intentional ordering choices: existence verbs (あります/います) before adjectives; te-form gets its own module (M05); plain forms (M06) precede sentence-ending particles (M07). The learner's Hungarian L1 / German (Swiss German) L2 background drives specific pronunciation content — see `INSTRUCTIONS.md` §1.3.
 
-**The repo is self-extending:** when the learner finishes Module N, the workflow is "build Module N+1's drills and dialogues from its overview." Claude Code reads these conventions and produces consistent content. The learner's current position is **Module 01** (per `INSTRUCTIONS.md` §3.5).
+The learner's current position is whatever module is marked `active` in `INDEX.md` (Module 01 at last update). When asked to build the next module, follow the workflow in "Extending the curriculum" above.

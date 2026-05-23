@@ -6,7 +6,7 @@
 <title>The Kana Guide — かな</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Shippori+Mincho:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#f1e8d6; --paper-2:#e9dcc2; --ink:#2b2620; --ink-soft:#6f6557;
@@ -26,7 +26,7 @@ body{
     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/></svg>");
   min-height:100%;
 }
-.jp{font-family:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif}
+.jp{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;font-feature-settings:"palt"}
 
 /* ---- shell ---- */
 .wrap{max-width:1080px;margin:0 auto;padding:46px 28px 90px}
@@ -59,7 +59,7 @@ nav.tabs{display:flex;justify-content:center;gap:6px;margin:30px 0 8px;flex-wrap
 .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;
   padding-bottom:7px;border-bottom:1px solid var(--cell-line)}
 .sec-head h2{font-size:21px;font-weight:600}
-.sec-head .sec-jp{font-family:"Shippori Mincho",serif;color:var(--vermilion);
+.sec-head .sec-jp{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;color:var(--vermilion);
   font-size:16px;letter-spacing:.16em}
 .sec-head .sec-hint{margin-left:auto;font-size:12.5px;font-style:italic;
   color:var(--ink-soft)}
@@ -75,7 +75,7 @@ nav.tabs{display:flex;justify-content:center;gap:6px;margin:30px 0 8px;flex-wrap
     box-shadow .14s ease;
   opacity:0;animation:pop .42s ease forwards}
 @keyframes pop{to{opacity:1}}
-.cell .k{font-family:"Shippori Mincho",serif;font-size:30px;font-weight:700;
+.cell .k{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;font-size:30px;font-weight:500;
   line-height:1;color:var(--ink);display:block}
 .cell .ro{font-size:10.5px;color:var(--ink-soft);margin-top:5px;
   letter-spacing:.04em;font-style:italic}
@@ -108,8 +108,8 @@ nav.tabs{display:flex;justify-content:center;gap:6px;margin:30px 0 8px;flex-wrap
 .icon-btn:hover{border-color:var(--vermilion);color:var(--vermilion);
   background:#fff}
 .d-hero{text-align:center;margin:10px 0 4px}
-.d-hero .big{font-family:"Shippori Mincho",serif;font-size:108px;
-  font-weight:800;line-height:1;color:var(--ink)}
+.d-hero .big{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;font-size:108px;
+  font-weight:500;line-height:1;color:var(--ink)}
 .d-hero .ro{font-size:24px;font-style:italic;color:var(--vermilion-deep);
   margin-top:2px}
 .d-hero .kindtag{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
@@ -155,7 +155,7 @@ nav.tabs{display:flex;justify-content:center;gap:6px;margin:30px 0 8px;flex-wrap
 .card p{font-size:15px;line-height:1.5}
 .card p b{color:var(--vermilion-deep);font-weight:700}
 .look{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
-.look .lk{font-family:"Shippori Mincho",serif;font-size:26px;
+.look .lk{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;font-size:26px;font-weight:500;
   background:#fbf6e9;border:1px solid var(--cell-line);border-radius:5px;
   width:46px;height:46px;display:flex;align-items:center;justify-content:center;
   cursor:pointer;transition:all .14s ease;color:var(--ink)}
@@ -189,16 +189,16 @@ nav.tabs{display:flex;justify-content:center;gap:6px;margin:30px 0 8px;flex-wrap
   border-radius:8px;padding:34px 20px;text-align:center;margin-bottom:16px}
 .prompt .ask{font-size:12px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink-soft);margin-bottom:12px}
-.prompt .big-q{font-family:"Shippori Mincho",serif;font-size:88px;
-  font-weight:800;line-height:1;color:var(--ink)}
+.prompt .big-q{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;font-size:88px;
+  font-weight:500;line-height:1;color:var(--ink)}
 .prompt .big-q.romaji{font-family:"Fraunces",serif;font-style:italic;
   font-size:62px;color:var(--vermilion-deep)}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .opt{background:var(--cell);border:1.5px solid var(--cell-line);
   border-radius:7px;padding:18px 8px;cursor:pointer;text-align:center;
-  transition:all .13s ease;font-family:"Shippori Mincho",serif;
-  font-size:34px;font-weight:700;color:var(--ink)}
-.opt.romaji{font-family:"Fraunces",serif;font-style:italic;font-size:24px}
+  transition:all .13s ease;font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-size:34px;font-weight:500;color:var(--ink)}
+.opt.romaji{font-family:"Fraunces",serif;font-style:italic;font-size:24px;font-weight:700}
 .opt:hover{border-color:var(--vermilion);transform:translateY(-2px)}
 .opt.correct{background:var(--good);border-color:var(--good);color:#fff}
 .opt.wrong{background:var(--vermilion);border-color:var(--vermilion);

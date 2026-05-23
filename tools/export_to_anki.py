@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["genanki>=0.13"]
+# ///
 """export_to_anki.py — Convert vocab tier CSVs and kanji CSV into Anki .apkg decks.
 
 Reads:

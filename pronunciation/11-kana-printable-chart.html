@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kana Recall Chart — Hiragana &amp; Katakana</title>
+<style>
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #ecebe6;
+    color: #2b2b33;
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.3;
+  }
+  .kana, .k, .yk, .qk { font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif; }
+
+  /* --- page --- */
+  .sheet {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 11mm 12mm 9mm;
+    background: #ffffff;
+    position: relative;
+  }
+  @media screen { .sheet { margin: 18px auto; box-shadow: 0 3px 22px rgba(0,0,0,.16); } }
+  @media print {
+    body { background: #fff; }
+    .sheet { margin: 0; box-shadow: none; page-break-after: always; }
+    .sheet:last-child { page-break-after: auto; }
+  }
+
+  /* --- header --- */
+  header { display: flex; align-items: baseline; justify-content: space-between;
+           border-bottom: 3px solid #2b2b33; padding-bottom: 5px; margin-bottom: 4px; }
+  .title { font-size: 24px; font-weight: 800; letter-spacing: -.3px; }
+  .title .jp { font-size: 18px; opacity: .55; margin-left: 7px; }
+  .title .mode { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+                 background: #2b2b33; color: #fff; padding: 3px 8px; border-radius: 4px;
+                 margin-left: 10px; vertical-align: 4px; }
+  .title .mode.test { background: #b03a4c; }
+  .tag { font-size: 11px; font-weight: 700; text-transform: uppercase;
+         letter-spacing: 1.5px; color: #9a9a9a; }
+  .howto { font-size: 10.5px; color: #6a6a73; margin: 5px 0 9px; }
+  .howto b { color: #2b2b33; }
+  .howto.callout-howto { background: #FFF7E0; border: 1.4px solid #EAD27E;
+                         padding: 7px 11px; border-radius: 7px; }
+
+  .section-label { font-size: 13px; font-weight: 800; text-transform: uppercase;
+                   letter-spacing: 1.2px; margin: 11px 0 6px; color: #2b2b33; }
+  .section-label:first-of-type { margin-top: 4px; }
+  .section-label .note { font-weight: 600; text-transform: none; letter-spacing: 0;
+                         font-size: 10.5px; color: #7a7a82; margin-left: 6px; }
+
+  /* --- grids --- */
+  .grid  { display: grid; grid-template-columns: 30px repeat(5, 1fr); gap: 5px; }
+  .grid3 { display: grid; grid-template-columns: 36px repeat(3, 1fr); gap: 5px; }
+
+  .hd { display: flex; align-items: center; justify-content: center;
+        font-size: 11px; font-weight: 800; text-transform: uppercase;
+        color: #a6a6ac; letter-spacing: 1px; }
+  .rl { display: flex; align-items: center; justify-content: center;
+        font-size: 13px; font-weight: 800; text-transform: uppercase;
+        border-radius: 7px; color: #3a3a3a; }
+
+  /* STUDY cells — kana + mnemonic, NO romaji */
+  .cell { border-radius: 7px; padding: 5px 3px; border: 1px solid rgba(0,0,0,.05);
+          display: flex; flex-direction: column; align-items: center; justify-content: center;
+          min-height: 86px; text-align: center; }
+  .k { font-size: 36px; line-height: 1; }
+  .m { font-size: 9.2px; line-height: 1.28; color: #56565f; margin-top: 6px; max-width: 100%; }
+  .cell.empty { background: #fafafa !important; border: 1px dashed rgba(0,0,0,.1); }
+
+  /* compact (dakuten / yoon) — romaji stays here, transformation IS the lesson */
+  .compact .cell { min-height: 52px; padding: 3px 2px; }
+  .compact .k { font-size: 26px; margin-bottom: 1px; }
+  .compact .r { font-size: 10.5px; font-weight: 800; letter-spacing: 1px;
+                text-transform: uppercase; color: #5f5f68; margin-top: 1px; }
+  .compact .rl { font-size: 12px; }
+  .yk { font-size: 23px; line-height: 1; }
+
+  /* QUIZ cells — kana only with a writing-line under */
+  .quizcell { background: #fff; border: 1.6px solid #c8c8d0; border-radius: 7px;
+              min-height: 86px; padding: 5px 3px; display: flex; flex-direction: column;
+              align-items: center; justify-content: flex-start; }
+  .quizcell .qk { font-size: 36px; line-height: 1; }
+  .quizcell .blank { width: 78%; border-bottom: 1.2px solid #b8b8c0; min-height: 18px;
+                     margin-top: 14px; }
+  .quizcell.empty { border-style: dashed; border-color: rgba(0,0,0,.1); background: #fafafa; }
+
+  /* row colours */
+  .c-a  { background: #FBE4D6; } .rl.c-a  { background: #EFC0A2; }
+  .c-k  { background: #FFF1C5; } .rl.c-k  { background: #F1DA84; }
+  .c-s  { background: #DEF1D7; } .rl.c-s  { background: #B2DAA3; }
+  .c-t  { background: #CFEDEA; } .rl.c-t  { background: #9DD7CF; }
+  .c-n  { background: #D8E8F8; } .rl.c-n  { background: #A9CBEC; }
+  .c-h  { background: #E4DEF4; } .rl.c-h  { background: #BFB2E2; }
+  .c-m  { background: #FADEEB; } .rl.c-m  { background: #EBB1CC; }
+  .c-y  { background: #FCE2CB; } .rl.c-y  { background: #F0C08C; }
+  .c-r  { background: #F7D9DD; } .rl.c-r  { background: #E7A8B1; }
+  .c-w  { background: #E5E6E9; } .rl.c-w  { background: #C5C7CC; }
+
+  /* --- foldable answer key --- */
+  .foldstrip { margin-top: 14px; padding-top: 9px; position: relative;
+               border-top: 2px dashed #b0b0b6; }
+  .foldstrip::before { content: "✂  FOLD HERE TO HIDE ROMAJI  ✂";
+                       position: absolute; top: -8px; left: 14px;
+                       background: #fff; padding: 0 8px;
+                       font-size: 9.5px; color: #9a9aa2; letter-spacing: 1.6px; font-weight: 800; }
+  .foldstrip-label { font-size: 10px; font-weight: 800; text-transform: uppercase;
+                     color: #8a8a92; letter-spacing: 1.5px; margin-bottom: 5px; }
+  .akgrid { display: grid; grid-template-columns: 30px repeat(5, 1fr); gap: 3px; }
+  .akcell { text-align: center; font-size: 11.5px; font-weight: 700;
+            color: #5a5a62; text-transform: uppercase; letter-spacing: .8px;
+            padding: 3px 0; background: #f1f1f3; border-radius: 4px; }
+  .akcell.dim { color: #b8b8c0; background: #f9f9fa; font-weight: 600; }
+  .akcell.empty { background: transparent; }
+  .akrl { font-size: 10px; font-weight: 800; color: #aaa; display: flex;
+          align-items: center; justify-content: center; letter-spacing: 1px; }
+
+  /* --- look-alike boxes --- */
+  .callout { border-radius: 11px; padding: 9px 13px; margin-top: 11px;
+             background: #FFF7E0; border: 1.6px solid #EAD27E; }
+  .callout h3 { font-size: 12.5px; font-weight: 800; text-transform: uppercase;
+                letter-spacing: 1px; margin-bottom: 6px; }
+  .callout h3 span { font-weight: 600; text-transform: none; letter-spacing: 0;
+                     color: #8a7a3a; font-size: 10.5px; }
+  .pairs { display: flex; flex-wrap: wrap; gap: 6px 10px; }
+  .pair  { background: #fff; border: 1px solid #E7DBA8; border-radius: 8px;
+           padding: 5px 9px; font-size: 9.6px; color: #55554a; flex: 1 1 30%;
+           min-width: 150px; }
+  .pair b { font-size: 19px; color: #2b2b33; vertical-align: -2px; }
+  .pair b.kana { margin: 0 1px; }
+
+  .stsn { border-radius: 11px; padding: 10px 14px; margin-top: 11px;
+          background: #FCEEF1; border: 1.8px solid #E7A8B1; }
+  .stsn h3 { font-size: 13px; font-weight: 800; text-transform: uppercase;
+             letter-spacing: 1px; margin-bottom: 7px; }
+  .stsn-row { display: flex; gap: 9px; }
+  .stsn-card { flex: 1; background: #fff; border: 1px solid #E7C2C8; border-radius: 9px;
+               padding: 6px 5px; text-align: center; }
+  .stsn-card .big { font-size: 40px; line-height: 1; }
+  .stsn-card .lab { font-size: 10px; font-weight: 800; text-transform: uppercase;
+                    letter-spacing: .5px; color: #5f5f68; margin-top: 3px; }
+  .stsn-card .cue { font-size: 9px; color: #56565f; margin-top: 3px; line-height: 1.3; }
+  .stsn .rule { font-size: 10px; color: #4a4a52; margin-top: 7px; }
+  .stsn .rule b { color: #b03a4c; }
+
+  footer { margin-top: 9px; font-size: 8.5px; color: #b0b0b6; text-align: right; }
+</style>
+</head>
+<body>
+
+<!-- ================= SHEET 1 — HIRAGANA STUDY ================= -->
+<section class="sheet">
+  <header>
+    <div class="title">Hiragana<span class="jp kana">ひらがな</span><span class="mode">Study</span></div>
+    <div class="tag">Recall Chart · 1 / 4</div>
+  </header>
+  <p class="howto callout-howto">
+    <b>How this chart works.</b> The cell shows you the <b>shape + a picture cue</b> — you
+    say the sound. Romaji is at the bottom on a <b>fold-under strip</b> — only check it
+    <i>after</i> you've tried. A chart you read is a crutch; a chart you recall from
+    teaches you. Pair with the interactive <code>kana-guide.html</code> for stroke order
+    and <code>realkana.com</code> for daily timed drills.
+  </p>
+
+  <div class="section-label">The 46 Basic Sounds <span class="note">五十音 — try to name each from the picture cue alone</span></div>
+  <div class="grid">
+    <div class="hd"></div>
+    <div class="hd">a</div><div class="hd">i</div><div class="hd">u</div><div class="hd">e</div><div class="hd">o</div>
+
+    <div class="rl c-a">—</div>
+    <div class="cell c-a"><span class="k">あ</span><span class="m">an Apple with a leaf &amp; stem</span></div>
+    <div class="cell c-a"><span class="k">い</span><span class="m">two Eels side by side</span></div>
+    <div class="cell c-a"><span class="k">う</span><span class="m">a U-turn — "oof!"</span></div>
+    <div class="cell c-a"><span class="k">え</span><span class="m">an Exotic bird, fancy tail</span></div>
+    <div class="cell c-a"><span class="k">お</span><span class="m">"Oh!" — a fist raised up</span></div>
+
+    <div class="rl c-k">k</div>
+    <div class="cell c-k"><span class="k">か</span><span class="m">a Karate chop</span></div>
+    <div class="cell c-k"><span class="k">き</span><span class="m">a Key</span></div>
+    <div class="cell c-k"><span class="k">く</span><span class="m">a Cuckoo's open beak</span></div>
+    <div class="cell c-k"><span class="k">け</span><span class="m">a Keg on its side</span></div>
+    <div class="cell c-k"><span class="k">こ</span><span class="m">two Coils of coral</span></div>
+
+    <div class="rl c-s">s</div>
+    <div class="cell c-s"><span class="k">さ</span><span class="m">a Salmon hooked on a line</span></div>
+    <div class="cell c-s"><span class="k">し</span><span class="m">a She-smiling fishing hook</span></div>
+    <div class="cell c-s"><span class="k">す</span><span class="m">a curly Straw / a Swing</span></div>
+    <div class="cell c-s"><span class="k">せ</span><span class="m">"Say cheese!" — open mouth</span></div>
+    <div class="cell c-s"><span class="k">そ</span><span class="m">a zig-zag of Sewing thread</span></div>
+
+    <div class="rl c-t">t</div>
+    <div class="cell c-t"><span class="k">た</span><span class="m">a Torii gate's cross-beam</span></div>
+    <div class="cell c-t"><span class="k">ち</span><span class="m">a Cheerleader kicking</span></div>
+    <div class="cell c-t"><span class="k">つ</span><span class="m">a Tsunami wave curling</span></div>
+    <div class="cell c-t"><span class="k">て</span><span class="m">手 = hand — a bent arm</span></div>
+    <div class="cell c-t"><span class="k">と</span><span class="m">a Toe with a thorn in it</span></div>
+
+    <div class="rl c-n">n</div>
+    <div class="cell c-n"><span class="k">な</span><span class="m">a Nun kneeling in prayer</span></div>
+    <div class="cell c-n"><span class="k">に</span><span class="m">bend your kNee — "ni"</span></div>
+    <div class="cell c-n"><span class="k">ぬ</span><span class="m">Noodles on chopsticks (has loop)</span></div>
+    <div class="cell c-n"><span class="k">ね</span><span class="m">a cat (neko) — curly tail</span></div>
+    <div class="cell c-n"><span class="k">の</span><span class="m">a NO-entry swirl</span></div>
+
+    <div class="rl c-h">h</div>
+    <div class="cell c-h"><span class="k">は</span><span class="m">a person in a "ha-t"</span></div>
+    <div class="cell c-h"><span class="k">ひ</span><span class="m">a big smile — "hee hee"</span></div>
+    <div class="cell c-h"><span class="k">ふ</span><span class="m">Mount Fuji + a hiker</span></div>
+    <div class="cell c-h"><span class="k">へ</span><span class="m">a Hill to head over</span></div>
+    <div class="cell c-h"><span class="k">ほ</span><span class="m">は + a line — Santa "ho ho"</span></div>
+
+    <div class="rl c-m">m</div>
+    <div class="cell c-m"><span class="k">ま</span><span class="m">a Mama with coiled hair</span></div>
+    <div class="cell c-m"><span class="k">み</span><span class="m">the number 21 — do-re-MI</span></div>
+    <div class="cell c-m"><span class="k">む</span><span class="m">a cow — "muuu"</span></div>
+    <div class="cell c-m"><span class="k">め</span><span class="m">目 = eye (no loop — vs ぬ)</span></div>
+    <div class="cell c-m"><span class="k">も</span><span class="m">a hook for "mo-re" fish</span></div>
+
+    <div class="rl c-y">y</div>
+    <div class="cell c-y"><span class="k">や</span><span class="m">a Yacht sailing</span></div>
+    <div class="cell empty"></div>
+    <div class="cell c-y"><span class="k">ゆ</span><span class="m">a Unique fish</span></div>
+    <div class="cell empty"></div>
+    <div class="cell c-y"><span class="k">よ</span><span class="m">a Yo-yo on a string</span></div>
+
+    <div class="rl c-r">r</div>
+    <div class="cell c-r"><span class="k">ら</span><span class="m">a bent Rabbit ear</span></div>
+    <div class="cell c-r"><span class="k">り</span><span class="m">two Reeds in a row</span></div>
+    <div class="cell c-r"><span class="k">る</span><span class="m">a Road looping at the end</span></div>
+    <div class="cell c-r"><span class="k">れ</span><span class="m">a Relaxing figure (hook, no loop)</span></div>
+    <div class="cell c-r"><span class="k">ろ</span><span class="m">a Road — no loop</span></div>
+
+    <div class="rl c-w">w</div>
+    <div class="cell c-w"><span class="k">わ</span><span class="m">a swan saying "Wah!"</span></div>
+    <div class="cell empty"></div>
+    <div class="cell empty"></div>
+    <div class="cell empty"></div>
+    <div class="cell c-w"><span class="k">を</span><span class="m">tossing — particle "o" only</span></div>
+
+    <div class="rl c-w">n</div>
+    <div class="cell c-w"><span class="k">ん</span><span class="m">a little "n" squiggle</span></div>
+    <div class="cell empty"></div>
+    <div class="cell empty"></div>
+    <div class="cell empty"></div>
+    <div class="cell empty"></div>
+  </div>
+
+  <div class="callout">
+    <h3>Don't mix these up <span>— the difference is the whole word</span></h3>
+    <div class="pairs">
+      <div class="pair"><b class="kana">き</b> vs <b class="kana">さ</b> — き has the extra <b style="font-size:11px">cross stroke</b>; さ does not.</div>
+      <div class="pair"><b class="kana">ぬ</b> vs <b class="kana">め</b> — ぬ ends in a <b style="font-size:11px">loop</b>; め has none.</div>
+      <div class="pair"><b class="kana">る</b> vs <b class="kana">ろ</b> — る closes into a <b style="font-size:11px">loop</b>; ろ stops short.</div>
+      <div class="pair"><b class="kana">は</b> vs <b class="kana">ほ</b> — ほ has an <b style="font-size:11px">extra top line</b>.</div>
+      <div class="pair"><b class="kana">ね</b> · <b class="kana">れ</b> · <b class="kana">わ</b> — loop = ね · straight hook = れ · open hook = わ.</div>
+      <div class="pair"><b class="kana">し</b> vs <b class="kana">つ</b> — し curves <b style="font-size:11px">down</b> a vertical; つ curves across the <b style="font-size:11px">top</b>.</div>
+    </div>
+  </div>
+
+  <div class="foldstrip">
+    <div class="foldstrip-label">Answer key — fold this strip under the page when self-testing</div>
+    <div class="akgrid">
+      <div class="akrl">—</div>
+      <div class="akcell">a</div><div class="akcell">i</div><div class="akcell">u</div><div class="akcell">e</div><div class="akcell">o</div>
+      <div class="akrl">k</div>
+      <div class="akcell">ka</div><div class="akcell">ki</div><div class="akcell">ku</div><div class="akcell">ke</div><div class="akcell">ko</div>
+      <div class="akrl">s</div>
+      <div class="akcell">sa</div><div class="akcell">shi</div><div class="akcell">su</div><div class="akcell">se</div><div class="akcell">so</div>
+      <div class="akrl">t</div>
+      <div class="akcell">ta</div><div class="akcell">chi</div><div class="akcell">tsu</div><div class="akcell">te</div><div class="akcell">to</div>
+      <div class="akrl">n</div>
+      <div class="akcell">na</div><div class="akcell">ni</div><div class="akcell">nu</div><div class="akcell">ne</div><div class="akcell">no</div>
+      <div class="akrl">h</div>
+      <div class="akcell">ha</div><div class="akcell">hi</div><div class="akcell">fu</div><div class="akcell">he</div><div class="akcell">ho</div>
+      <div class="akrl">m</div>
+      <div class="akcell">ma</div><div class="akcell">mi</div><div class="akcell">mu</div><div class="akcell">me</div><div class="akcell">mo</div>
+      <div class="akrl">y</div>
+      <div class="akcell">ya</div><div class="akcell empty"></div><div class="akcell">yu</div><div class="akcell empty"></div><div class="akcell">yo</div>
+      <div class="akrl">r</div>
+      <div class="akcell">ra</div><div class="akcell">ri</div><div class="akcell">ru</div><div class="akcell">re</div><div class="akcell">ro</div>
+      <div class="akrl">w</div>
+      <div class="akcell">wa</div><div class="akcell empty"></div><div class="akcell empty"></div><div class="akcell empty"></div><div class="akcell">o</div>
+      <div class="akrl">n</div>
+      <div class="akcell">n</div><div class="akcell empty"></div><div class="akcell empty"></div><div class="akcell empty"></div><div class="akcell empty"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SHEET 2 — HIRAGANA RECALL TEST + DAKUTEN/YOON ================= -->
+<section class="sheet">
+  <header>
+    <div class="title">Hiragana<span class="jp kana">ひらがな</span><span class="mode test">Recall Test</span></div>
+    <div class="tag">Recall Chart · 2 / 4</div>
+  </header>
+  <p class="howto callout-howto">
+    <b>Self-test daily.</b> Cover the page below the dashed line. Whisper or write the
+    romaji for each kana. Aim for 40 mora/min with no chart. <b>Track the cells you miss</b>
+    — those are tomorrow's drills.
+  </p>
+
+  <div class="section-label">Name each sound <span class="note">no mnemonic, no romaji — just the shape</span></div>
+  <div class="grid">
+    <div class="hd"></div>
+    <div class="hd">a</div><div class="hd">i</div><div class="hd">u</div><div class="hd">e</div><div class="hd">o</div>
+
+    <div class="rl c-a">—</div>
+    <div class="quizcell"><span class="qk">あ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">い</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">う</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">え</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">お</span><span class="blank"></span></div>
+
+    <div class="rl c-k">k</div>
+    <div class="quizcell"><span class="qk">か</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">き</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">く</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">け</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">こ</span><span class="blank"></span></div>
+
+    <div class="rl c-s">s</div>
+    <div class="quizcell"><span class="qk">さ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">し</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">す</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">せ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">そ</span><span class="blank"></span></div>
+
+    <div class="rl c-t">t</div>
+    <div class="quizcell"><span class="qk">た</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ち</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">つ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">て</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">と</span><span class="blank"></span></div>
+
+    <div class="rl c-n">n</div>
+    <div class="quizcell"><span class="qk">な</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">に</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ぬ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ね</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">の</span><span class="blank"></span></div>
+
+    <div class="rl c-h">h</div>
+    <div class="quizcell"><span class="qk">は</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ひ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ふ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">へ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ほ</span><span class="blank"></span></div>
+
+    <div class="rl c-m">m</div>
+    <div class="quizcell"><span class="qk">ま</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">み</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">む</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">め</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">も</span><span class="blank"></span></div>
+
+    <div class="rl c-y">y</div>
+    <div class="quizcell"><span class="qk">や</span><span class="blank"></span></div>
+    <div class="quizcell empty"></div>
+    <div class="quizcell"><span class="qk">ゆ</span><span class="blank"></span></div>
+    <div class="quizcell empty"></div>
+    <div class="quizcell"><span class="qk">よ</span><span class="blank"></span></div>
+
+    <div class="rl c-r">r</div>
+    <div class="quizcell"><span class="qk">ら</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">り</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">る</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">れ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ろ</span><span class="blank"></span></div>
+
+    <div class="rl c-w">w/n</div>
+    <div class="quizcell"><span class="qk">わ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">を</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ん</span><span class="blank"></span></div>
+    <div class="quizcell empty"></div>
+    <div class="quizcell empty"></div>
+  </div>
+
+  <div class="section-label">Voiced &amp; combined sounds <span class="note">these are <i>rule-based</i> — learn the rules, not 71 new shapes</span></div>
+  <div class="callout" style="margin-top:0">
+    <h3>The two rules</h3>
+    <div class="pairs">
+      <div class="pair"><b style="font-size:13px">゛ dakuten</b> (two ticks) "switches the voice on": <b style="font-size:11px">k→g · s→z · t→d · h→b</b>.</div>
+      <div class="pair"><b style="font-size:13px">゜ handakuten</b> (small circle) only ever turns <b style="font-size:11px">h→p</b>.</div>
+      <div class="pair">A small ゃ ゅ ょ blends with an "i"-kana into <b style="font-size:11px">one beat</b> (きゃ = kya, not ki-ya).</div>
+    </div>
+  </div>
+
+  <div class="grid compact" style="margin-top:8px">
+    <div class="hd"></div>
+    <div class="hd">a</div><div class="hd">i</div><div class="hd">u</div><div class="hd">e</div><div class="hd">o</div>
+
+    <div class="rl c-k">g</div>
+    <div class="cell c-k"><span class="k">が</span><span class="r">ga</span></div>
+    <div class="cell c-k"><span class="k">ぎ</span><span class="r">gi</span></div>
+    <div class="cell c-k"><span class="k">ぐ</span><span class="r">gu</span></div>
+    <div class="cell c-k"><span class="k">げ</span><span class="r">ge</span></div>
+    <div class="cell c-k"><span class="k">ご</span><span class="r">go</span></div>
+
+    <div class="rl c-s">z</div>
+    <div class="cell c-s"><span class="k">ざ</span><span class="r">za</span></div>
+    <div class="cell c-s"><span class="k">じ</span><span class="r">ji</span></div>
+    <div class="cell c-s"><span class="k">ず</span><span class="r">zu</span></div>
+    <div class="cell c-s"><span class="k">ぜ</span><span class="r">ze</span></div>
+    <div class="cell c-s"><span class="k">ぞ</span><span class="r">zo</span></div>
+
+    <div class="rl c-t">d</div>
+    <div class="cell c-t"><span class="k">だ</span><span class="r">da</span></div>
+    <div class="cell c-t"><span class="k">ぢ</span><span class="r">ji *</span></div>
+    <div class="cell c-t"><span class="k">づ</span><span class="r">zu *</span></div>
+    <div class="cell c-t"><span class="k">で</span><span class="r">de</span></div>
+    <div class="cell c-t"><span class="k">ど</span><span class="r">do</span></div>
+
+    <div class="rl c-h">b</div>
+    <div class="cell c-h"><span class="k">ば</span><span class="r">ba</span></div>
+    <div class="cell c-h"><span class="k">び</span><span class="r">bi</span></div>
+    <div class="cell c-h"><span class="k">ぶ</span><span class="r">bu</span></div>
+    <div class="cell c-h"><span class="k">べ</span><span class="r">be</span></div>
+    <div class="cell c-h"><span class="k">ぼ</span><span class="r">bo</span></div>
+
+    <div class="rl c-y">p</div>
+    <div class="cell c-y"><span class="k">ぱ</span><span class="r">pa</span></div>
+    <div class="cell c-y"><span class="k">ぴ</span><span class="r">pi</span></div>
+    <div class="cell c-y"><span class="k">ぷ</span><span class="r">pu</span></div>
+    <div class="cell c-y"><span class="k">ぺ</span><span class="r">pe</span></div>
+    <div class="cell c-y"><span class="k">ぽ</span><span class="r">po</span></div>
+  </div>
+
+  <p class="howto" style="margin-top:6px">
+    <b>Yōon (small ゃゅょ):</b> きゃ kya · きゅ kyu · きょ kyo — and the same pattern for
+    ぎ・し・じ・ち・に・ひ・び・ぴ・み・り. Eleven base consonants × three vowels = 33 combos,
+    all derived from the rule.
+    <span style="color:#9a9aa2">* ぢ / づ are vestigial — almost always written じ / ず.</span>
+  </p>
+</section>
+
+<!-- ================= SHEET 3 — KATAKANA STUDY ================= -->
+<section class="sheet">
+  <header>
+    <div class="title">Katakana<span class="jp kana">カタカナ</span><span class="mode">Study</span></div>
+    <div class="tag">Recall Chart · 3 / 4</div>
+  </header>
+  <p class="howto callout-howto">
+    Same 46 sounds, sharper strokes — for <b>loan-words, names &amp; emphasis</b>. Many katakana
+    echo their hiragana twin (カ≈か, キ≈き, テ≈て, モ≈も, セ=せ, ヘ=へ) — lean on the
+    overlap.
+  </p>
+
+  <div class="section-label">The 46 Basic Sounds <span class="note">五十音 — picture cue → say the sound; check the strip after</span></div>
+  <div class="grid">
+    <div class="hd"></div>
+    <div class="hd">a</div><div class="hd">i</div><div class="hd">u</div><div class="hd">e</div><div class="hd">o</div>
+
+    <div class="rl c-a">—</div>
+    <div class="cell c-a"><span class="k">ア</span><span class="m">an A-frame Antenna</span></div>
+    <div class="cell c-a"><span class="k">イ</span><span class="m">two Icicles hanging</span></div>
+    <div class="cell c-a"><span class="k">ウ</span><span class="m">a roof with a chimney</span></div>
+    <div class="cell c-a"><span class="k">エ</span><span class="m">an Engineer's I-beam</span></div>
+    <div class="cell c-a"><span class="k">オ</span><span class="m">"Oh!" — a kneeling person</span></div>
+
+    <div class="rl c-k">k</div>
+    <div class="cell c-k"><span class="k">カ</span><span class="m">a Karate chop (≈ か)</span></div>
+    <div class="cell c-k"><span class="k">キ</span><span class="m">a Key (≈ き)</span></div>
+    <div class="cell c-k"><span class="k">ク</span><span class="m">a Cuckoo's beak</span></div>
+    <div class="cell c-k"><span class="k">ケ</span><span class="m">a tipped-over Keg</span></div>
+    <div class="cell c-k"><span class="k">コ</span><span class="m">a Corner of a box</span></div>
+
+    <div class="rl c-s">s</div>
+    <div class="cell c-s"><span class="k">サ</span><span class="m">a Satellite dish on a pole</span></div>
+    <div class="cell c-s"><span class="k">シ</span><span class="m">She smiles — strokes sweep UP ⬈</span></div>
+    <div class="cell c-s"><span class="k">ス</span><span class="m">a Ski slope</span></div>
+    <div class="cell c-s"><span class="k">セ</span><span class="m">a Seat (= せ)</span></div>
+    <div class="cell c-s"><span class="k">ソ</span><span class="m">Sewing — one stitch DOWN ⬊</span></div>
+
+    <div class="rl c-t">t</div>
+    <div class="cell c-t"><span class="k">タ</span><span class="m">a Tadpole with a tail</span></div>
+    <div class="cell c-t"><span class="k">チ</span><span class="m">a Cheerful "+" (≈ ち)</span></div>
+    <div class="cell c-t"><span class="k">ツ</span><span class="m">Tsunami — strokes splash DOWN ⬇</span></div>
+    <div class="cell c-t"><span class="k">テ</span><span class="m">a Telephone pole (≈ て)</span></div>
+    <div class="cell c-t"><span class="k">ト</span><span class="m">a Toe / a Totem pole</span></div>
+
+    <div class="rl c-n">n</div>
+    <div class="cell c-n"><span class="k">ナ</span><span class="m">a kNife</span></div>
+    <div class="cell c-n"><span class="k">ニ</span><span class="m">two Needles lying flat</span></div>
+    <div class="cell c-n"><span class="k">ヌ</span><span class="m">crossed Noodles</span></div>
+    <div class="cell c-n"><span class="k">ネ</span><span class="m">a Necktie on a pole</span></div>
+    <div class="cell c-n"><span class="k">ノ</span><span class="m">a NO slash</span></div>
+
+    <div class="rl c-h">h</div>
+    <div class="cell c-h"><span class="k">ハ</span><span class="m">two wings (≈ は)</span></div>
+    <div class="cell c-h"><span class="k">ヒ</span><span class="m">a Heel of a shoe</span></div>
+    <div class="cell c-h"><span class="k">フ</span><span class="m">a single Fuji slope</span></div>
+    <div class="cell c-h"><span class="k">ヘ</span><span class="m">a Hill (= へ)</span></div>
+    <div class="cell c-h"><span class="k">ホ</span><span class="m">a Holy cross / 木 tree</span></div>
+
+    <div class="rl c-m">m</div>
+    <div class="cell c-m"><span class="k">マ</span><span class="m">a Martini glass</span></div>
+    <div class="cell c-m"><span class="k">ミ</span><span class="m">three lines — number 3</span></div>
+    <div class="cell c-m"><span class="k">ム</span><span class="m">a cow's face — "muuu"</span></div>
+    <div class="cell c-m"><span class="k">メ</span><span class="m">an X marks the eye (≈ め)</span></div>
+    <div class="cell c-m"><span class="k">モ</span><span class="m">a hook for "mo-re" (≈ も)</span></div>
+
+    <div class="rl c-y">y</div>
+    <div class="cell c-y"><span class="k">ヤ</span><span class="m">a Yak's horns</span></div>
+    <div class="cell empty"></div>
+    <div class="cell c-y"><span class="k">ユ</span><span class="m">a U-shaped cup</span></div>
+    <div class="cell empty"></div>
+    <div class="cell c-y"><span class="k">ヨ</span><span class="m">an "E" flipped — 3 prongs</span></div>
+
+    <div class="rl c-r">r</div>
+    <div class="cell c-r"><span class="k">ラ</span><span class="m">an antenna under a Roof</span></div>
+    <div class="cell c-r"><span class="k">リ</span><span class="m">two Reeds (≈ り)</span></div>
+    <div class="cell c-r"><span class="k">ル</span><span class="m">two legs on a Runway</span></div>
+    <div class="cell c-r"><span class="k">レ</span><span class="m">a check mark ✓</span></div>
+    <div class="cell c-r"><span class="k">ロ</span><span class="m">a Round box / road sign</span></div>
+
+    <div class="rl c-w">w</div>
+    <div class="cell c-w"><span class="k">ワ</span><span class="m">an open mouth — "Wah!"</span></div>
+    <div class="cell empty"></div>
+    <div class="cell empty"></div>
+    <div class="cell empty"></div>
+    <div class="cell c-w"><span class="k">ヲ</span><span class="m">rare — particle "o" only</span></div>
+
+    <div class="rl c-w">n</div>
+    <div class="cell c-w"><span class="k">ン</span><span class="m">2 strokes — bottom sweeps UP ⬈</span></div>
+    <div class="cell empty"></div>
+    <div class="cell empty"></div>
+    <div class="cell empty"></div>
+    <div class="cell empty"></div>
+  </div>
+
+  <div class="stsn">
+    <h3>The big four — シ ツ ソ ン</h3>
+    <div class="stsn-row">
+      <div class="stsn-card"><div class="big kana">シ</div><div class="lab">shi</div><div class="cue">2 ticks · long stroke UP ⬈</div></div>
+      <div class="stsn-card"><div class="big kana">ツ</div><div class="lab">tsu</div><div class="cue">2 ticks · long stroke DOWN ⬇</div></div>
+      <div class="stsn-card"><div class="big kana">ソ</div><div class="lab">so</div><div class="cue">1 tick · long stroke DOWN ⬊</div></div>
+      <div class="stsn-card"><div class="big kana">ン</div><div class="lab">n</div><div class="cue">1 tick · long stroke UP ⬈</div></div>
+    </div>
+    <p class="rule">
+      <b>Count first, then aim:</b> two short ticks → シ / ツ &nbsp;·&nbsp; one short tick → ソ / ン.
+      Then the long stroke goes <b>UP for シ &amp; ン</b>, <b>DOWN for ツ &amp; ソ</b>.
+    </p>
+  </div>
+
+  <div class="foldstrip">
+    <div class="foldstrip-label">Answer key — fold this strip under the page when self-testing</div>
+    <div class="akgrid">
+      <div class="akrl">—</div>
+      <div class="akcell">a</div><div class="akcell">i</div><div class="akcell">u</div><div class="akcell">e</div><div class="akcell">o</div>
+      <div class="akrl">k</div>
+      <div class="akcell">ka</div><div class="akcell">ki</div><div class="akcell">ku</div><div class="akcell">ke</div><div class="akcell">ko</div>
+      <div class="akrl">s</div>
+      <div class="akcell">sa</div><div class="akcell">shi</div><div class="akcell">su</div><div class="akcell">se</div><div class="akcell">so</div>
+      <div class="akrl">t</div>
+      <div class="akcell">ta</div><div class="akcell">chi</div><div class="akcell">tsu</div><div class="akcell">te</div><div class="akcell">to</div>
+      <div class="akrl">n</div>
+      <div class="akcell">na</div><div class="akcell">ni</div><div class="akcell">nu</div><div class="akcell">ne</div><div class="akcell">no</div>
+      <div class="akrl">h</div>
+      <div class="akcell">ha</div><div class="akcell">hi</div><div class="akcell">fu</div><div class="akcell">he</div><div class="akcell">ho</div>
+      <div class="akrl">m</div>
+      <div class="akcell">ma</div><div class="akcell">mi</div><div class="akcell">mu</div><div class="akcell">me</div><div class="akcell">mo</div>
+      <div class="akrl">y</div>
+      <div class="akcell">ya</div><div class="akcell empty"></div><div class="akcell">yu</div><div class="akcell empty"></div><div class="akcell">yo</div>
+      <div class="akrl">r</div>
+      <div class="akcell">ra</div><div class="akcell">ri</div><div class="akcell">ru</div><div class="akcell">re</div><div class="akcell">ro</div>
+      <div class="akrl">w/n</div>
+      <div class="akcell">wa</div><div class="akcell">o*</div><div class="akcell">n</div><div class="akcell empty"></div><div class="akcell empty"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SHEET 4 — KATAKANA RECALL TEST + DAKUTEN/YOON ================= -->
+<section class="sheet">
+  <header>
+    <div class="title">Katakana<span class="jp kana">カタカナ</span><span class="mode test">Recall Test</span></div>
+    <div class="tag">Recall Chart · 4 / 4</div>
+  </header>
+  <p class="howto callout-howto">
+    <b>Test the harder script second.</b> Katakana shapes are sharper and easier to confuse —
+    spend twice as long here as on hiragana. Run シ ツ ソ ン as a separate flash drill.
+  </p>
+
+  <div class="section-label">Name each sound <span class="note">no mnemonic, no romaji</span></div>
+  <div class="grid">
+    <div class="hd"></div>
+    <div class="hd">a</div><div class="hd">i</div><div class="hd">u</div><div class="hd">e</div><div class="hd">o</div>
+
+    <div class="rl c-a">—</div>
+    <div class="quizcell"><span class="qk">ア</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">イ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ウ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">エ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">オ</span><span class="blank"></span></div>
+
+    <div class="rl c-k">k</div>
+    <div class="quizcell"><span class="qk">カ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">キ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ク</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ケ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">コ</span><span class="blank"></span></div>
+
+    <div class="rl c-s">s</div>
+    <div class="quizcell"><span class="qk">サ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">シ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ス</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">セ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ソ</span><span class="blank"></span></div>
+
+    <div class="rl c-t">t</div>
+    <div class="quizcell"><span class="qk">タ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">チ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ツ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">テ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ト</span><span class="blank"></span></div>
+
+    <div class="rl c-n">n</div>
+    <div class="quizcell"><span class="qk">ナ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ニ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ヌ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ネ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ノ</span><span class="blank"></span></div>
+
+    <div class="rl c-h">h</div>
+    <div class="quizcell"><span class="qk">ハ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ヒ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">フ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ヘ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ホ</span><span class="blank"></span></div>
+
+    <div class="rl c-m">m</div>
+    <div class="quizcell"><span class="qk">マ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ミ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ム</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">メ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">モ</span><span class="blank"></span></div>
+
+    <div class="rl c-y">y</div>
+    <div class="quizcell"><span class="qk">ヤ</span><span class="blank"></span></div>
+    <div class="quizcell empty"></div>
+    <div class="quizcell"><span class="qk">ユ</span><span class="blank"></span></div>
+    <div class="quizcell empty"></div>
+    <div class="quizcell"><span class="qk">ヨ</span><span class="blank"></span></div>
+
+    <div class="rl c-r">r</div>
+    <div class="quizcell"><span class="qk">ラ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">リ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ル</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">レ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ロ</span><span class="blank"></span></div>
+
+    <div class="rl c-w">w/n</div>
+    <div class="quizcell"><span class="qk">ワ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ヲ</span><span class="blank"></span></div>
+    <div class="quizcell"><span class="qk">ン</span><span class="blank"></span></div>
+    <div class="quizcell empty"></div>
+    <div class="quizcell empty"></div>
+  </div>
+
+  <div class="section-label">Voiced &amp; combined <span class="note">same rules as hiragana — k→g · s→z · t→d · h→b · h→p</span></div>
+  <div class="grid compact">
+    <div class="hd"></div>
+    <div class="hd">a</div><div class="hd">i</div><div class="hd">u</div><div class="hd">e</div><div class="hd">o</div>
+
+    <div class="rl c-k">g</div>
+    <div class="cell c-k"><span class="k">ガ</span><span class="r">ga</span></div>
+    <div class="cell c-k"><span class="k">ギ</span><span class="r">gi</span></div>
+    <div class="cell c-k"><span class="k">グ</span><span class="r">gu</span></div>
+    <div class="cell c-k"><span class="k">ゲ</span><span class="r">ge</span></div>
+    <div class="cell c-k"><span class="k">ゴ</span><span class="r">go</span></div>
+
+    <div class="rl c-s">z</div>
+    <div class="cell c-s"><span class="k">ザ</span><span class="r">za</span></div>
+    <div class="cell c-s"><span class="k">ジ</span><span class="r">ji</span></div>
+    <div class="cell c-s"><span class="k">ズ</span><span class="r">zu</span></div>
+    <div class="cell c-s"><span class="k">ゼ</span><span class="r">ze</span></div>
+    <div class="cell c-s"><span class="k">ゾ</span><span class="r">zo</span></div>
+
+    <div class="rl c-t">d</div>
+    <div class="cell c-t"><span class="k">ダ</span><span class="r">da</span></div>
+    <div class="cell c-t"><span class="k">ヂ</span><span class="r">ji *</span></div>
+    <div class="cell c-t"><span class="k">ヅ</span><span class="r">zu *</span></div>
+    <div class="cell c-t"><span class="k">デ</span><span class="r">de</span></div>
+    <div class="cell c-t"><span class="k">ド</span><span class="r">do</span></div>
+
+    <div class="rl c-h">b</div>
+    <div class="cell c-h"><span class="k">バ</span><span class="r">ba</span></div>
+    <div class="cell c-h"><span class="k">ビ</span><span class="r">bi</span></div>
+    <div class="cell c-h"><span class="k">ブ</span><span class="r">bu</span></div>
+    <div class="cell c-h"><span class="k">ベ</span><span class="r">be</span></div>
+    <div class="cell c-h"><span class="k">ボ</span><span class="r">bo</span></div>
+
+    <div class="rl c-y">p</div>
+    <div class="cell c-y"><span class="k">パ</span><span class="r">pa</span></div>
+    <div class="cell c-y"><span class="k">ピ</span><span class="r">pi</span></div>
+    <div class="cell c-y"><span class="k">プ</span><span class="r">pu</span></div>
+    <div class="cell c-y"><span class="k">ペ</span><span class="r">pe</span></div>
+    <div class="cell c-y"><span class="k">ポ</span><span class="r">po</span></div>
+  </div>
+
+  <div class="callout">
+    <h3>Other katakana look-alikes</h3>
+    <div class="pairs">
+      <div class="pair"><b class="kana">ウ</b> · <b class="kana">ク</b> · <b class="kana">ワ</b> — ウ has a top tick · ク has a sharp shoulder · ワ is wide &amp; open.</div>
+      <div class="pair"><b class="kana">ロ</b> · <b class="kana">ヨ</b> · <b class="kana">ユ</b> — ロ is a closed box · ヨ has 3 prongs · ユ opens at the top.</div>
+      <div class="pair"><b class="kana">ア</b> · <b class="kana">マ</b> · <b class="kana">ヤ</b> — check the inner stroke: ア hooks · マ is plain · ヤ slants.</div>
+      <div class="pair"><b class="kana">テ</b> vs <b class="kana">チ</b> — テ is flat &amp; level; チ tilts like ち.</div>
+      <div class="pair"><b class="kana">ナ</b> vs <b class="kana">メ</b> — ナ keeps a right angle; メ fully crosses.</div>
+      <div class="pair"><b class="kana">ノ</b> · <b class="kana">ソ</b> · <b class="kana">ン</b> — ノ is one slash; add a tick → ソ (down) or ン (up).</div>
+    </div>
+  </div>
+  <footer>japan-learning · pronunciation/11-kana-printable-chart.html · print A4 portrait, colour on · pair with realkana.com + Anki kana deck</footer>
+</section>
+
+</body>
+</html>

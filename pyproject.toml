@@ -1,0 +1,23 @@
+[project]
+name = "japan-learning"
+version = "0.0.0"
+description = "Personal Japanese-language curriculum — content repo with helper scripts."
+requires-python = ">=3.11"
+# The two daily-use scripts (validate.py, build_kana_guide.py) are stdlib-only.
+# Third-party deps live under [dependency-groups] so they don't get pulled by
+# default — only when explicitly requested.
+dependencies = []
+
+[dependency-groups]
+# genanki is only needed by tools/export_to_anki.py.
+# Invoke as:   uv run --group anki python tools/export_to_anki.py
+# (Or run the script directly — it carries PEP 723 inline metadata that
+#  uv will resolve ephemerally without needing this group.)
+anki = [
+    "genanki>=0.13",
+]
+
+[tool.uv]
+# This repo is a content repo, not an installable Python package.
+# Disable wheel/sdist building so `uv sync` doesn't try to install ourselves.
+package = false
