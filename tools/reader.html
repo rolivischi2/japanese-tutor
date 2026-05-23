@@ -8,6 +8,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="https://unpkg.com/wanakana@5/wanakana.min.js"></script>
+<script src="https://unpkg.com/kuroshiro@1.2.0/dist/kuroshiro.min.js"></script>
+<script src="https://unpkg.com/kuroshiro-analyzer-kuromoji@1.1.0/dist/kuroshiro-analyzer-kuromoji.min.js"></script>
 <style>
   :root{
     --paper:#f1e8d6; --paper-2:#e9dcc2; --ink:#2b2620; --ink-soft:#6f6557;
@@ -138,6 +141,94 @@ async function captureScreen() {
 }
 
 // ──────────────────────────────────────────────────────────────
+// Romaji rendering: pure-kana via wanakana, mixed via kuroshiro
+// ──────────────────────────────────────────────────────────────
+const KANJI_RE = /[一-鿿㐀-䶿]/;
+
+function hasKanji(text) {
+  return KANJI_RE.test(text);
+}
+
+const SMALL_KANA = new Set("ぁぃぅぇぉゃゅょゎァィゥェォャュョヮ");
+const SOKUON = new Set("っッ");
+const LONG_MARK = "ー";
+
+function splitKanaIntoMorae(text) {
+  const out = [];
+  let i = 0;
+  while (i < text.length) {
+    let mora = text[i++];
+    if (SOKUON.has(mora) && i < text.length) {
+      let next = text[i++];
+      while (i < text.length && (SMALL_KANA.has(text[i]) || text[i] === LONG_MARK)) {
+        next += text[i++];
+      }
+      out.push(mora + next);
+      continue;
+    }
+    while (i < text.length && (SMALL_KANA.has(text[i]) || text[i] === LONG_MARK)) {
+      mora += text[i++];
+    }
+    out.push(mora);
+  }
+  return out;
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[c]));
+}
+
+function renderWithWanakana(text) {
+  const out = [];
+  for (const line of text.split("\n")) {
+    const morae = splitKanaIntoMorae(line);
+    const lineHtml = morae.map(m => {
+      if (/[ぁ-んァ-ヶー]/.test(m)) {
+        const romaji = wanakana.toRomaji(m);
+        return `<ruby>${escapeHtml(m)}<rt>${escapeHtml(romaji)}</rt></ruby>`;
+      }
+      return escapeHtml(m);
+    }).join("");
+    out.push(lineHtml);
+  }
+  return out.join("<br>");
+}
+
+let kuroshiro = null;
+async function getKuroshiro() {
+  if (kuroshiro) return kuroshiro;
+  setStatus("Loading kanji dictionary (~25 MB, first time only)…");
+  kuroshiro = new Kuroshiro();
+  await kuroshiro.init(new KuromojiAnalyzer({
+    dictPath: "https://unpkg.com/kuromoji@0.1.2/dict/",
+  }));
+  return kuroshiro;
+}
+
+async function renderWithKuroshiro(text) {
+  const k = await getKuroshiro();
+  return await k.convert(text, {
+    mode: "furigana",
+    to: "romaji",
+    romajiSystem: "hepburn",
+  });
+}
+
+async function renderRomaji(text) {
+  if (!text) return "(no text)";
+  try {
+    if (hasKanji(text)) {
+      return await renderWithKuroshiro(text);
+    }
+    return renderWithWanakana(text);
+  } catch (err) {
+    return `(romaji render failed: ${escapeHtml(err.message)})`;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────
 // OCR via Tesseract.js (Japanese)
 // ──────────────────────────────────────────────────────────────
 let ocrWorker = null;
@@ -162,14 +253,17 @@ async function runOCR(blob) {
 }
 
 async function processBlob(blob) {
-  romajiOut.textContent = "(romaji rendering in next commit)";
+  romajiOut.textContent = "";
   rawOut.textContent = "";
   try {
     const { text, confidence } = await runOCR(blob);
     rawOut.textContent = text || "(empty OCR result)";
-    setStatus(`Done. Confidence: ${Math.round(confidence)}%.`);
+    setStatus("Rendering romaji…");
+    const html = await renderRomaji(text);
+    romajiOut.innerHTML = html;
+    setStatus(`Done. OCR confidence: ${Math.round(confidence)}%.`);
   } catch (err) {
-    setStatus("OCR failed: " + err.message, true);
+    setStatus("Processing failed: " + err.message, true);
   }
 }
 
