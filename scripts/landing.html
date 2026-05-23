@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>japanese-tutor — kana tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f1e8d6; --paper-2:#e9dcc2; --ink:#2b2620; --ink-soft:#6f6557;
+    --vermilion:#bd3b2c; --vermilion-deep:#9c2f23; --gold:#b08a4a;
+    --cell:#f7f0e0; --cell-line:#d8c8a6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Fraunces",Georgia,serif;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 18% 12%, rgba(255,255,255,.45), transparent 42%),
+      radial-gradient(circle at 86% 88%, rgba(157,47,35,.06), transparent 46%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/></svg>");
+    display:flex;flex-direction:column;
+  }
+  .jp{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif}
+
+  main{flex:1;max-width:920px;width:100%;margin:0 auto;padding:60px 28px 40px}
+  header{text-align:center;margin-bottom:54px;position:relative;padding-bottom:24px}
+  header::after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+    width:64px;height:2px;background:var(--vermilion)}
+  .kicker{font-size:12px;letter-spacing:.42em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:600}
+  h1{font-size:78px;line-height:.96;font-weight:800;letter-spacing:.05em;
+    margin:10px 0 6px;color:var(--ink)}
+  h1 .jp{color:var(--vermilion);margin-right:6px;font-weight:700}
+  .lede{font-style:italic;font-size:16px;color:var(--ink-soft);max-width:540px;margin:0 auto}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:6px}
+  @media (max-width:680px){
+    .cards{grid-template-columns:1fr}
+    h1{font-size:54px}
+    main{padding:42px 18px 32px}
+    header{margin-bottom:36px}
+  }
+  .card{
+    background:var(--cell);border:1px solid var(--cell-line);border-radius:9px;
+    padding:30px 28px 26px;text-decoration:none;color:inherit;
+    display:flex;flex-direction:column;gap:14px;
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    position:relative;overflow:hidden;
+  }
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:var(--vermilion);transform:scaleX(0);transform-origin:left;
+    transition:transform .25s ease}
+  .card:hover{background:#fff;border-color:var(--vermilion);
+    transform:translateY(-4px);box-shadow:0 14px 30px -18px rgba(43,38,32,.5)}
+  .card:hover::before{transform:scaleX(1)}
+  .card .ch{font-size:54px;line-height:1;font-weight:500;color:var(--ink);
+    display:flex;gap:6px;align-items:flex-end}
+  .card .ch .small{font-size:32px;color:var(--ink-soft)}
+  .card h2{font-size:22px;font-weight:600;letter-spacing:.01em;line-height:1.2}
+  .card p{font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+  .card .arrow{margin-top:auto;font-size:13px;font-weight:600;color:var(--vermilion);
+    letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+  .card .arrow::after{content:"→";transition:transform .18s ease}
+  .card:hover .arrow{color:var(--vermilion-deep)}
+  .card:hover .arrow::after{transform:translateX(4px)}
+
+  .meta{margin-top:42px;font-size:13px;color:var(--ink-soft);line-height:1.6;
+    background:rgba(255,255,255,.4);border-left:3px solid var(--gold);
+    padding:14px 18px;border-radius:0 6px 6px 0}
+  .meta b{color:var(--ink)}
+
+  footer{margin-top:auto;padding:30px 28px 22px;text-align:center;
+    font-size:11.5px;color:var(--ink-soft);line-height:1.7}
+  footer a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:2px}
+  footer a:hover{color:var(--vermilion-deep)}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="kicker">japanese-tutor</div>
+    <h1><span class="jp">かな</span>tools</h1>
+    <p class="lede">Two browser-based study aids for hiragana &amp; katakana — built for the japan-learning curriculum.</p>
+  </header>
+
+  <section class="cards">
+    <a class="card" href="/kana">
+      <div class="ch jp">あ<span class="small">ア</span></div>
+      <h2>Interactive Kana Guide</h2>
+      <p>Every hiragana &amp; katakana with stroke-order animation, browser audio, mnemonics, look-alike warnings, and a built-in recognition + recall quiz.</p>
+      <span class="arrow">Open</span>
+    </a>
+    <a class="card" href="/chart">
+      <div class="ch jp">表</div>
+      <h2>Printable Recall Chart</h2>
+      <p>Four-page A4 chart — Study sides with kana &amp; picture mnemonics, Test sides for self-quizzing, romaji on foldable answer strips. Cmd+P → PDF.</p>
+      <span class="arrow">Open</span>
+    </a>
+  </section>
+
+  <p class="meta">
+    <b>Pedagogy:</b> on-demand, never always-on. Mnemonics bridge shape→sound; romaji
+    lives on foldable strips, not in-cell; the quiz forces retrieval. Pair with Anki +
+    Yomitan + daily comprehensible input — these tools cover Module 00 (writing systems)
+    and retire by week 2.
+  </p>
+</main>
+<footer>
+  Source &middot;
+  <a href="https://github.com/rolivischi2/japanese-tutor" target="_blank" rel="noopener">github.com/rolivischi2/japanese-tutor</a>
+  &middot; Stroke data from <a href="https://kanjivg.tagaini.net/" target="_blank" rel="noopener">KanjiVG</a> (CC BY-SA 3.0)
+</footer>
+</body>
+</html>

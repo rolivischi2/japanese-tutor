@@ -1,0 +1,11 @@
+# Keep the Vercel build context lean.
+# (outputDirectory=public means only public/ ships, but the build runner
+#  still uploads the full repo first — ignore heavy / irrelevant paths.)
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.claude/
+.superpowers/
+*.apkg
+vocab/anki-export/*.apkg
