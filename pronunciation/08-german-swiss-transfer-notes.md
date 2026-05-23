@@ -6,6 +6,9 @@ kanji_level: 0
 last_updated: 2026-05-22
 ---
 
+> **Audience:** This file is for learners whose L1 (or strong L2) is German or Swiss German. Skip if it doesn't apply to you.
+> **Forkers:** Add your own L1 file alongside (e.g. `09-spanish-transfer-notes.md`) using the same structure — vowel inventory, consonant traps, prosody/pitch contrasts.
+
 # German and Swiss German Transfer Notes
 
 ## Overview
