@@ -782,9 +782,17 @@ if('speechSynthesis' in window){
 function speak(text){
   if(!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang='ja-JP'; u.rate=.78; u.pitch=1;
-  if(jaVoice) u.voice=jaVoice;
+  // Doubling with a Japanese comma gives the TTS engine a proper 2-mora
+  // utterance to enunciate, then a natural pause, then a second clear
+  // pronunciation. Single-mora playback alone is the hard case for any
+  // synthesizer and tends to mangle vowel quality.
+  const phrase = text + '、' + text;
+  const u = new SpeechSynthesisUtterance(phrase);
+  u.lang  = 'ja-JP';
+  u.rate  = 0.55;   // was 0.78 — significantly slower for clarity
+  u.pitch = 1;
+  u.volume = 1;
+  if(jaVoice) u.voice = jaVoice;
   speechSynthesis.speak(u);
 }
 
