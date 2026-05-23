@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} — japan-learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f1e8d6; --paper-2:#e9dcc2; --ink:#2b2620; --ink-soft:#6f6557;
+    --vermilion:#bd3b2c; --vermilion-deep:#9c2f23; --gold:#b08a4a;
+    --cell:#f7f0e0; --cell-line:#d8c8a6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Fraunces",Georgia,serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex;flex-direction:column;
+  }
+  .jp,article :lang(ja){font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif}
+
+  main{flex:1;max-width:1100px;width:100%;margin:0 auto;padding:36px 28px 28px}
+
+  nav.breadcrumb{font-size:13px;color:var(--ink-soft);letter-spacing:.04em;margin-bottom:24px}
+  nav.breadcrumb a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s}
+  nav.breadcrumb a:hover{border-bottom-color:var(--vermilion)}
+
+  .layout{display:grid;grid-template-columns:240px 1fr;gap:48px}
+  @media (max-width:760px){
+    .layout{grid-template-columns:1fr;gap:24px}
+    .sidebar{order:2;border-top:1px solid var(--cell-line);padding-top:16px}
+  }
+
+  aside.sidebar h4{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:10px}
+  aside.sidebar ul{list-style:none}
+  aside.sidebar li{margin-bottom:6px}
+  aside.sidebar a{color:var(--ink);text-decoration:none;font-size:14px;line-height:1.45;display:block;padding:3px 0;border-left:2px solid transparent;padding-left:10px;margin-left:-12px}
+  aside.sidebar a:hover{color:var(--vermilion-deep)}
+  aside.sidebar a.current{color:var(--vermilion);font-weight:600;border-left-color:var(--vermilion)}
+
+  article.content{font-size:16.5px;line-height:1.68;max-width:760px}
+  article.content h1{font-size:34px;font-weight:700;letter-spacing:.01em;margin-bottom:18px;line-height:1.18}
+  article.content h2{font-size:22px;font-weight:600;margin:34px 0 12px}
+  article.content h3{font-size:18px;font-weight:600;margin:24px 0 10px;color:var(--vermilion-deep)}
+  article.content p{margin-bottom:14px}
+  article.content ul,article.content ol{margin:0 0 16px 22px}
+  article.content li{margin-bottom:6px}
+  article.content blockquote{border-left:3px solid var(--gold);padding:6px 16px;margin:14px 0;background:rgba(255,255,255,.4);font-style:italic;color:var(--ink-soft)}
+  article.content blockquote p{margin:0 0 6px}
+  article.content blockquote p:last-child{margin:0}
+  article.content code{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.92em;background:var(--cell);padding:1px 5px;border-radius:3px}
+  article.content pre{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:13px;background:var(--cell);border:1px solid var(--cell-line);padding:12px 14px;border-radius:5px;overflow-x:auto;margin:14px 0;line-height:1.55}
+  article.content pre code{background:none;padding:0}
+  article.content a{color:var(--vermilion);text-decoration:none;border-bottom:1px solid rgba(189,59,44,.25);transition:border-color .15s}
+  article.content a:hover{border-bottom-color:var(--vermilion)}
+  article.content table{border-collapse:collapse;margin:14px 0;font-size:.95em}
+  article.content th,article.content td{border:1px solid var(--cell-line);padding:6px 10px;text-align:left}
+  article.content th{background:var(--cell);font-weight:600}
+  article.content ruby rt{font-size:.55em;color:var(--ink-soft);font-weight:400}
+  article.content hr{border:none;border-top:1px solid var(--cell-line);margin:24px 0}
+
+  footer{margin-top:48px;padding:24px 28px 22px;text-align:center;font-size:11.5px;color:var(--ink-soft);line-height:1.7;border-top:1px solid var(--cell-line)}
+  footer a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:2px}
+  footer a:hover{color:var(--vermilion-deep)}
+</style>
+</head>
+<body>
+<main>
+  <nav class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/#curriculum">Module {{MODULE_NUM}}</a></nav>
+  <div class="layout">
+    <aside class="sidebar">
+      <h4>{{MODULE_TITLE}}</h4>
+      <ul>{{SIDEBAR_LIST}}</ul>
+    </aside>
+    <article class="content">
+      {{RENDERED_HTML}}
+    </article>
+  </div>
+</main>
+<footer>
+  Last updated: {{LAST_UPDATED}} &middot;
+  <a href="{{SOURCE_URL}}" target="_blank" rel="noopener">View source on GitHub</a>
+</footer>
+</body>
+</html>
