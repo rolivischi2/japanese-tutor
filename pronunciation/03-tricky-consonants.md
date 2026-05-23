@@ -3,26 +3,26 @@ module: meta
 file: 03-tricky-consonants
 lang_focus: pronunciation
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Tricky Consonants
 
 ## り — Alveolar Tap [ɾ]
 
-TODO: IPA: [ɾ]. Mouth description: tongue tip briefly touches the alveolar ridge — one quick tap, not a trill. Hungarian transfer note: Hungarian /r/ is often realised as a tap allophone — Roland must suppress the trilled allophone and use only the tap. Strong advantage overall. 6 minimal-pair drills: contrast り vs other sounds.
+TODO: IPA: [ɾ]. Mouth description: tongue tip briefly touches the alveolar ridge — one quick tap, not a trill. Some L1s (e.g. Hungarian, Spanish) have a tap allophone of /r/ that transfers well; speakers of L1s with only a trill or a uvular /ʁ/ need active practice. Regardless of L1, use only the tap — never a trill. (If your L1 is Hungarian, see `pronunciation/07-` — the tap transfers directly. If your L1 is German/Swiss German, see `pronunciation/08-` for the Swiss-alveolar advantage.) 6 minimal-pair drills: contrast り vs other sounds.
 
 ## つ — Dental Affricate [ts] + Compressed /u/
 
-TODO: IPA: [tsɯ̜]. Mouth description: tongue touches upper teeth then releases — the [ts] is the same as Hungarian "c" (e.g. *cukor*). The difficulty is the /u/ quality after — must not round. Hungarian advantage for [ts]; trap on the vowel. 6 drills.
+TODO: IPA: [tsɯ̜]. Mouth description: tongue touches upper teeth then releases — the [ts] cluster appears in several European languages (Hungarian "c", German "z"). The difficulty is the /u/ quality after — must not round. The [ts] transfers well from those L1s; the vowel is the trap. 6 drills.
 
 ## ふ — Bilabial Fricative [ɸ] + Compressed /u/
 
-TODO: IPA: [ɸɯ̜]. Mouth description: both lips lightly approximate (do not touch), air flows between them — different from labiodental [f] where upper teeth touch lower lip. Not in Hungarian phoneme inventory. Roland will default to [f]; needs active correction. 6 drills contrasting ふ with は and other sounds.
+TODO: IPA: [ɸɯ̜]. Mouth description: both lips lightly approximate (do not touch), air flows between them — different from labiodental [f] where upper teeth touch lower lip. This sound does not exist in most European L1s; learners will default to [f] and need active correction. 6 drills contrasting ふ with は and other sounds.
 
 ## ひ — Palatal Fricative [ç]
 
-TODO: IPA: [çi]. Mouth description: tongue body raised toward hard palate; narrow groove in the middle; air forced through. Hungarian has mild difficulty with this. Swiss German advantage: the "ich-Laut" in German (e.g. *ich*, *nicht*, *mich*) is an exact phonetic match. Roland should recruit his Swiss German habit. 6 drills.
+TODO: IPA: [çi]. Mouth description: tongue body raised toward hard palate; narrow groove in the middle; air forced through. Most L1s lack this sound and need deliberate practice. Exception: German/Swiss German speakers can recruit the "ich-Laut" (*ich*, *nicht*, *mich*) — an exact phonetic match (see `pronunciation/08-german-swiss-transfer-notes.md`). 6 drills.
 
 ## し — Alveolopalatal Fricative [ɕ]
 
@@ -38,4 +38,4 @@ TODO: IPA: [dʑi] (or fricative [ʑ] intervocalically). Mouth description: voice
 
 ## Summary Table
 
-TODO: Compile a concise table: consonant | IPA | Hungarian difficulty | German/Swiss advantage | Key drill.
+TODO: Compile a concise table: consonant | IPA | Common L1 difficulty | Notable L1 advantage | Key drill. (Detailed per-L1 data in `pronunciation/07-` and `pronunciation/08-`.)

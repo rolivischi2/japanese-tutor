@@ -3,7 +3,7 @@ module: meta
 file: 06-pitch-accent-four-patterns
 lang_focus: pronunciation
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Pitch Accent — The Four Patterns
@@ -16,7 +16,7 @@ TODO: Describe each pattern clearly with the dictionary-notation number, pitch s
 TODO: Dictionary notation: 0. Pitch shape: L on mora 1, H from mora 2 to end, H on following particle. Example: はな (flower, 0). Important: heiban and odaka sound IDENTICAL in isolation — they only differ when a particle follows.
 
 ### Atamadaka (頭高) — Pattern 1: Drop after mora 1
-TODO: Dictionary notation: 1. Pitch shape: H on mora 1, L from mora 2 onward. Example: はし (chopsticks, 1) = HL. This is the pattern Roland will over-apply due to Hungarian first-mora stress. Needs active monitoring.
+TODO: Dictionary notation: 1. Pitch shape: H on mora 1, L from mora 2 onward. Example: はし (chopsticks, 1) = HL. Learners from L1s with first-mora stress (e.g. Hungarian — see `pronunciation/07-`) will over-apply this pattern. Needs active monitoring regardless of L1.
 
 ### Nakadaka (中高) — Drop somewhere in the middle
 TODO: Dictionary notation: n (where n > 1 and n < word length). Pitch shape: L on mora 1, H from mora 2 to mora n, L from mora n+1 onward. Example: たまご (egg, 2) = LHL.
@@ -34,4 +34,4 @@ TODO: Explain that dictionaries (NHK, Kanjium) use a drop-position number: 0 = h
 
 ## Drills
 
-TODO: List 5 example words per pattern for Roland to drill. Recommend Kotu.io for perception and recording voice memos for production self-assessment. Cross-reference `pronunciation/10-pitch-drills.json` which has 4 patterns × 20 words with mora count, drop position, and particle behaviour.
+TODO: List 5 example words per pattern to drill. Recommend Kotu.io for perception and recording voice memos for production self-assessment. Cross-reference `pronunciation/10-pitch-drills.json` which has 4 patterns × 20 words with mora count, drop position, and particle behaviour.

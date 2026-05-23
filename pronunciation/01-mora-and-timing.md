@@ -3,7 +3,7 @@ module: meta
 file: 01-mora-and-timing
 lang_focus: pronunciation
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Mora and Timing
@@ -27,9 +27,9 @@ TODO: Explain the three special morae:
 - The geminate marker っ — counts as one beat (the "silent" beat before the doubled consonant)
 - Long vowels (ーおうええ etc.) — the extension is one extra beat
 
-## Hungarian/German Transfer Note
+## L1 Transfer Note
 
-TODO: Note that Hungarian has syllable-timed prosody (Siptár & Törkenczy 2000), which is better transfer than English stress-timing but Hungarian syllables are unequal in weight, whereas Japanese morae are equal. The learner must resist making some morae shorter than others. Cross-reference `pronunciation/07-hungarian-transfer-notes.md`.
+TODO: Note that some L1s (e.g. syllable-timed languages) offer better transfer than English stress-timing, but your L1 syllables may still be unequal in weight whereas Japanese morae are equal. Resist the pull to make some morae shorter than others. If your L1 is Hungarian, see `pronunciation/07-hungarian-transfer-notes.md` for a detailed contrastive analysis.
 
 ## Practice Targets
 

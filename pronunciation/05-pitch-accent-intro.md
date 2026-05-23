@@ -3,7 +3,7 @@ module: meta
 file: 05-pitch-accent-intro
 lang_focus: pronunciation
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Pitch Accent Introduction
@@ -31,6 +31,6 @@ TODO: Point to the two main tools:
 - Also: `pronunciation/10-pitch-drills.json` pre-built drill list.
 Cross-reference `pronunciation/06-pitch-accent-four-patterns.md` for the four pattern types.
 
-## Roland's Specific Challenge
+## Your L1's Specific Challenge
 
-TODO: Explain the Hungarian first-mora intensity stress (Szeredi 2010 WCCFL) as the primary pitch-accent risk. Roland will naturally bash the first mora louder/stronger, which maps to Atamadaka pattern on every word regardless of actual pattern. Cross-reference `pronunciation/07-hungarian-transfer-notes.md`.
+TODO: Identify what your L1 stress system does and how it conflicts with Japanese pitch. The most common trap is fixed-position lexical stress (first-mora, last-mora, or penultimate): speakers tend to apply their L1 stress pattern to every Japanese word regardless of actual pitch pattern. For example, Hungarian first-mora intensity stress (Szeredi 2010 WCCFL) maps to an over-applied Atamadaka pattern. Consult `pronunciation/07-hungarian-transfer-notes.md` or `pronunciation/08-german-swiss-transfer-notes.md` for those L1s, or analyse your own L1's stress system and adapt the drills accordingly.
