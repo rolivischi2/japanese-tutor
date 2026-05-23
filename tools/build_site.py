@@ -287,21 +287,51 @@ def render_module(module: ModuleMeta, out_dir: Path, template: str) -> int:
     return written
 
 
+def _render_module_card(module: ModuleMeta) -> str:
+    """Single module card. Locked → div, otherwise → anchor."""
+    href = f"/modules/{module.slug}/"
+    pill = f'<span class="status-pill {module.status}">{module.status}</span>'
+    inner = (
+        f'<div class="module-num">M{module.number}</div>\n'
+        f'        <h3>{module.title}</h3>\n'
+        f'        <p class="key-grammar jp">{module.key_grammar}</p>\n'
+        f'        {pill}'
+    )
+    if module.status == "locked":
+        return f'<div class="card module-card locked">\n        {inner}\n      </div>'
+    return f'<a class="card module-card" href="{href}">\n        {inner}\n      </a>'
+
+
+def build_landing(modules: dict[str, ModuleMeta], template: str) -> str:
+    cards = "\n      ".join(
+        _render_module_card(modules[s]) for s in sorted(modules)
+    )
+    return template.replace("{{MODULE_CARDS}}", cards)
+
+
 def main(argv: list[str]) -> int:
     if "--self-test" in argv:
         return run_self_tests()
 
     page_template = (TEMPLATES_DIR / "page.html").read_text(encoding="utf-8")
+    landing_template = (TEMPLATES_DIR / "landing.html").read_text(encoding="utf-8")
     modules = parse_index_md(ROOT / "INDEX.md", MODULES_DIR)
 
     if OUT_DIR.exists():
         shutil.rmtree(OUT_DIR)
     OUT_DIR.mkdir(parents=True)
+    (OUT_DIR / "kana").mkdir()
+    (OUT_DIR / "chart").mkdir()
 
     total = 0
     for slug in sorted(modules):
         total += render_module(modules[slug], OUT_DIR, page_template)
+
+    landing_html = build_landing(modules, landing_template)
+    (OUT_DIR / "index.html").write_text(landing_html, encoding="utf-8")
+
     print(f"Rendered {total} module page(s) into {OUT_DIR}/modules/")
+    print(f"Wrote landing → {OUT_DIR}/index.html")
     return 0
 
 
