@@ -3,15 +3,14 @@ module: 01
 file: 01-copula-companion
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
-# Module 01 — The Copula です — Expanded Preply Companion
+# Module 01 — The Copula です — Expanded Tutor Companion
 
-This worksheet expands your Preply lesson PDF (`ぶんぽうとカタカナ`) with fuller
-explanations, pronunciation notes tuned to a Hungarian/German speaker, common
-mistakes, and extra practice. It mirrors the PDF's order so you can use them
-side by side.
+This worksheet expands a tutor session on (`ぶんぽうとカタカナ`) with fuller
+explanations, pronunciation notes, common mistakes, and extra practice. It is
+designed to be used alongside Module 01's grammar files.
 
 > **About romaji.** Romaji (Latin-letter spelling) appears here only as a
 > bridge while the kana are still new. Read the **kana line first** and treat
@@ -76,9 +75,9 @@ German.
 
 ### 1.2 Examples
 
-> わたし は ローラント です。
-> *(watashi wa rōranto desu.)*
-> I am Roland.
+> わたし は アレックス です。
+> *(watashi wa arekkusu desu.)*
+> I am Alex.
 
 > わたし は がくせい です。
 > *(watashi wa gakusei desu.)*
@@ -105,16 +104,17 @@ And **20 years old is irregular: はたち** (you will hear にじゅっさい t
 
 **です sounds like "dess," not "deh-soo."** The final す is usually *devoiced* —
 the う almost disappears, leaving a soft "s." And the う itself is not the
-rounded Hungarian/German "u": Japanese /u/ is **compressed, nearly unrounded** —
-do not push your lips forward. This is your single most salient vowel trap.
+rounded /u/ (as in German or Hungarian): Japanese /u/ is **compressed, nearly unrounded** —
+do not push your lips forward. This is a very common vowel trap.
 
 **Mora timing.** Each kana is one equal beat. です = **de-su**, 2 beats.
 がくせい = **ga-ku-se-i**, 4 beats. Tap one beat per kana.
 
-**Pitch, not stress.** Hungarian marks the first syllable with *loudness*.
+**Pitch, not stress.** Some languages mark the first syllable with *loudness*.
 Japanese does not use loudness for accent at all — it uses **pitch** (high vs
-low), and every mora stays **equally loud**. Suppressing the Hungarian
-first-mora thump is the #1 pronunciation habit to break, starting now.
+low), and every mora stays **equally loud**. Suppressing any first-mora stress
+habit is the #1 pronunciation priority, starting now. (Hungarian L1 speakers:
+this applies strongly — see `pronunciation/07-hungarian-transfer-notes.md`.)
 
 - がくせい — pitch pattern **low-high-high-high**, no drop (a "flat" word).
 - せんせい — **low-high-high-low**: the pitch drops after せい's first mora.
@@ -139,7 +139,7 @@ Write the Japanese. Answers in §6.
 2. Mika is a student. → ________________________
 3. I am an engineer. → ________________________
 4. I am twenty years old. *(careful — irregular!)* → ________________________
-5. Roland is Swiss. → ________________________
+5. Alex is Swiss. → ________________________
 
 ---
 
@@ -161,12 +161,12 @@ from most formal to most casual. They mean the same thing; they differ in tone:
 | Form | Register | Use it for |
 |---|---|---|
 | ではありません | formal / written | formal writing, announcements |
-| じゃありません | polite spoken | polite conversation — **good for Preply** |
-| じゃないです | conversational polite | everyday polite speech — **also good for Preply** |
+| じゃありません | polite spoken | polite conversation — **good for tutor sessions** |
+| じゃないです | conversational polite | everyday polite speech — **also good for tutor sessions** |
 | じゃない / ではない | plain (casual) | friends, family — Module 06 |
 
 **じゃ is simply a spoken contraction of では.** So じゃありません = では
-ありません, just faster and softer. In a real lesson with your tutor,
+ありません, just faster and softer. In a real lesson,
 **じゃありません** or **じゃないです** will sound the most natural. ではありません
 is not wrong — it just sounds a bit stiff in conversation.
 
@@ -195,8 +195,8 @@ is not wrong — it just sounds a bit stiff in conversation.
 ### 2.3 Pronunciation & pitch
 
 **ありません** = **a-ri-ma-se-n**, 5 morae. The ん is its own full beat — don't
-swallow it. The り is a light alveolar **tap**, not a trill — your Hungarian tap
-allophone is already correct; just don't roll it.
+swallow it. The り is a light alveolar **tap**, not a trill. (Hungarian L1
+speakers: your tap allophone is already correct — just don't roll it.)
 
 **じゃ** is one mora (a small や). じゃありません = **ja-a-ri-ma-se-n**.
 
@@ -418,7 +418,7 @@ Entries marked **†** vary between sources — verify on OJAD.
 2. ミカ は がくせい です。
 3. わたし は エンジニア です。
 4. わたし は はたち です。 *(20 is irregular — はたち, not にじゅっさい)*
-5. ローラント は スイスじん です。
+5. アレックス は スイスじん です。
 
 ### Section 2
 1. わたし は がくせい じゃありません。
@@ -439,7 +439,7 @@ Entries marked **†** vary between sources — verify on OJAD.
 
 ## 7. PDF fill-in-the-blanks (pages 6–7) — worked answers
 
-These are the gaps from your original Preply worksheet, filled in.
+These are sample worksheet gaps, filled in.
 
 | # | Question | Answer |
 |---|---|---|
