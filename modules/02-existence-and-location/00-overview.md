@@ -3,14 +3,14 @@ module: 02
 file: 00-overview
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Module 02 — Existence and Location
 
 ## Module Goals
 
-TODO: Write 3–4 sentences describing what Roland will be able to do after completing this module. Target milestone: describe a room and three people in it (Milestone M3, shared with end of M03).
+TODO: Write 3–4 sentences describing what you will be able to do after completing this module. Target milestone: describe a room and three people in it (Milestone M3, shared with end of M03).
 
 ## あります vs います — Inanimate vs Animate
 

@@ -3,14 +3,14 @@ module: 12
 file: 00-overview
 lang_focus: grammar
 kanji_level: 0-400
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Module 12 — Advanced Conversational Nuance
 
 ## Module Goals
 
-TODO: Write 3–4 sentences. Target milestone M12: 10+ minute unprepared conversation with natural aizuchi. This is an open-ended module — Claude Code may extend it with new topics on demand as Roland advances.
+TODO: Write 3–4 sentences. Target milestone M12: 10+ minute unprepared conversation with natural aizuchi. This is an open-ended module — Claude Code may extend it with new topics on demand as the learner advances.
 
 ## Aizuchi (Back-Channels)
 
@@ -86,4 +86,4 @@ TODO: ~150+ words. See `module-vocab.json`. Kanji count: cumulative ~400+. Open-
 
 ## Extension Notes
 
-TODO: Note that this module is designed to be extended by Claude Code on demand. When Roland requests a new topic, Claude Code reads this file and the current module-vocab.json, then adds a new section following the established conventions.
+TODO: Note that this module is designed to be extended by Claude Code on demand. When the learner requests a new topic, Claude Code reads this file and the current module-vocab.json, then adds a new section following the established conventions.

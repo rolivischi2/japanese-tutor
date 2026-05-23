@@ -3,7 +3,7 @@ module: 06
 file: 00-overview
 lang_focus: grammar
 kanji_level: 0-85
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Module 06 — Past Tense and Plain Forms
@@ -49,7 +49,7 @@ TODO: Cover plain forms for adjectives:
 TODO: Describe the two core exercises for this module:
 1. Convert 10 polite sentences (from M01–05 dialogues) into plain form
 2. Take 10 plain-form dialogues from Comprehensible Japanese → convert to polite form
-These exercises are in the module's exercises file (to be built when Roland reaches this module).
+These exercises are in the module's exercises file (to be built when you reach this module).
 
 ## Why This Is the Gateway Module
 

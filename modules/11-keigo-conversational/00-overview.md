@@ -3,7 +3,7 @@ module: 11
 file: 00-overview
 lang_focus: grammar
 kanji_level: 0-215
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Module 11 — Conversational Keigo
@@ -47,7 +47,7 @@ TODO: Cover the productive patterns:
 
 ## Shop and Service Phrases to Recognise (Not Produce)
 
-TODO: List the key reception-context phrases Roland will encounter in Japan:
+TODO: List the key reception-context phrases you will encounter in Japan:
 - いらっしゃいませ (welcome)
 - よろしいでしょうか (is that alright?)
 - おまちください (please wait)

@@ -3,7 +3,7 @@ module: 04
 file: 00-overview
 lang_focus: grammar
 kanji_level: 0-30
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Module 04 — Verbs (Present Polite) and First Kanji
@@ -53,13 +53,13 @@ TODO: Cover the 10 counters from INSTRUCTIONS.md §3.5: 人 (にん/り)、つ (
 
 ## First Kanji (~30)
 
-TODO: Introduce the ~30 kanji from INSTRUCTIONS.md §3.5. Each tied to vocab Roland already knows:
+TODO: Introduce the ~30 kanji from INSTRUCTIONS.md §3.5. Each tied to vocab you already know:
 - Numbers: 一二三四五六七八九十百千万
 - Days: 日月火水木金土
 - People/pronouns: 人、私、何
 - Common verbs (recognition): 行、食、飲、見、聞、来
 - Common adjectives: 大、小
-All are introduced only because Roland knows the spoken word already. Cross-reference `kanji/kanji-by-module.csv`.
+All are introduced only because the learner knows the spoken word already. Cross-reference `kanji/kanji-by-module.csv`.
 
 ## Vocab
 

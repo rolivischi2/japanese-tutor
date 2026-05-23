@@ -3,14 +3,14 @@ module: 03
 file: 00-overview
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Module 03 — Adjectives
 
 ## Module Goals
 
-TODO: Write 3–4 sentences describing what Roland will be able to do after completing this module. Shared target milestone M3: describe a room and three people in it (full version with adjectives added to the M02 existential base).
+TODO: Write 3–4 sentences describing what you will be able to do after completing this module. Shared target milestone M3: describe a room and three people in it (full version with adjectives added to the M02 existential base).
 
 ## い-Adjectives
 
