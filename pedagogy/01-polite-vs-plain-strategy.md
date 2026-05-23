@@ -3,20 +3,20 @@ module: meta
 file: 01-polite-vs-plain-strategy
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Polite vs Plain Form Strategy
 
 ## The Debate
 
-TODO: Summarise the two sides: polite-first (standard textbook) vs plain-first (Cure Dolly "Organic Japanese", Tae Kim). Explain why neither extreme is correct for Roland's goals.
+TODO: Summarise the two sides: polite-first (standard textbook) vs plain-first (Cure Dolly "Organic Japanese", Tae Kim). Explain why neither extreme is correct for the learner's goals.
 
 ## This Curriculum's Position: Polite-First, Plain-Form-Fast
 
 TODO: Explain the chosen approach:
-- Modules 01–05 use ます/です polite forms throughout, so Roland can use what he learns in Preply lessons immediately.
-- Module 06 is a plain-form crash course — by that point Roland has enough exposure to recognise plain form in listening.
+- Modules 01–05 use ます/です polite forms throughout, so you can use what you learn in tutor lessons immediately.
+- Module 06 is a plain-form crash course — by that point you have enough exposure to recognise plain form in listening.
 - From Module 07 onward every new structure is shown in side-by-side polite/plain tables, with casual register marked primary for listening comprehension and polite marked primary for output.
 
 ## Plain Form for Input from Day 1

@@ -3,14 +3,14 @@ module: meta
 file: 06-ai-conversation-prompts
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # AI Conversation Prompts
 
 ## Overview
 
-TODO: Explain when and how to use AI as a conversation partner. Three modes: (1) open-ended conversation partner, (2) Preply prep, (3) structured correction. Available from Module 03 onward (before that, grammar base is too thin).
+TODO: Explain when and how to use AI as a conversation partner. Three modes: (1) open-ended conversation partner, (2) tutor prep, (3) structured correction. Available from Module 03 onward (before that, grammar base is too thin).
 
 ## Template 1: Conversation Partner
 
@@ -18,11 +18,11 @@ TODO: Write out the conversation-partner system prompt template:
 - "Act as a Japanese friend with kind patience. Use plain form. Speak at the level of someone who has finished Module N of my curriculum (file attached). If I make a grammar mistake, repeat my sentence back in correct Japanese using ね, then continue naturally. Do not give English unless I ask."
 - Add guidance on which module number to specify at each stage.
 
-## Template 2: Preply Prep
+## Template 2: Tutor Prep
 
-TODO: Write out the Preply-prep prompt template:
+TODO: Write out the tutor-prep prompt template:
 - "Given the topic [X], produce 10 example questions a tutor might ask me in plain Japanese, and 5 prompt answers using only grammar from Modules 00–[current]."
-- Suggest running this in the 10 minutes before each Preply lesson, using the current module's `dialogues.md` as context.
+- Suggest running this in the 10 minutes before each tutor lesson, using the current module's `dialogues.md` as context.
 
 ## Template 3: Structured Correction
 

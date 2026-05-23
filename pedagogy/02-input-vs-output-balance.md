@@ -3,7 +3,7 @@ module: meta
 file: 02-input-vs-output-balance
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Input vs Output Balance
@@ -27,7 +27,7 @@ TODO: Define qualifying input sources by module gate. Reference `listening/resou
 ## What Counts as Output
 
 TODO: Define qualifying output activities:
-- Preply lessons
+- Tutor lessons
 - Self-talk recording sessions (see `pedagogy/05-self-talk-protocol.md`)
 - AI conversation sessions (see `pedagogy/06-ai-conversation-prompts.md`)
 - Written output (journaling, not prioritised)

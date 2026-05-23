@@ -3,7 +3,7 @@ module: meta
 file: 00-philosophy
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Learning Philosophy
@@ -14,7 +14,7 @@ TODO: Explain the Krashen i+1 hypothesis as applied to this curriculum. The brai
 
 ## Operating Principle 2: Output Constrained Early, Then Expanded Aggressively
 
-TODO: Explain the output constraint: limited to Preply-prepared sentences in M00–M03; from M04 self-talk and AI conversation are added; from M06 all output modalities are available. Rationale: flooding with output before sufficient input creates fossilised errors. Cross-reference `pedagogy/02-input-vs-output-balance.md` for the weekly-minute breakdown.
+TODO: Explain the output constraint: limited to tutor-prepared sentences in M00–M03; from M04 self-talk and AI conversation are added; from M06 all output modalities are available. Rationale: flooding with output before sufficient input creates fossilised errors. Cross-reference `pedagogy/02-input-vs-output-balance.md` for the weekly-minute breakdown.
 
 ## Operating Principle 3: SRS for Vocab and Kanji Recognition Only — Not for Grammar
 
@@ -22,4 +22,4 @@ TODO: Explain that grammar is acquired through reading, listening, and targeted 
 
 ## Operating Principle 4: Pitch Accent as Perception First, Production Second
 
-TODO: Explain why pitch accent is front-loaded. Hungarian L1 imposes first-mora intensity stress (Szeredi 2010 WCCFL), which is the single biggest accent-killer for this learner. Perception training (Kotu.io) starts in Module 00; production drilling (Dogen) escalates from Module 04. Cross-reference `pronunciation/05-pitch-accent-intro.md` and `pedagogy/04-shadowing-protocol.md`.
+TODO: Explain why pitch accent is front-loaded. Depending on your L1, first-language stress patterns can interfere significantly with Japanese pitch accent — for example, Hungarian L1 imposes first-mora intensity stress (Szeredi 2010 WCCFL; see `pronunciation/07-hungarian-transfer-notes.md`), which is a major accent-killer for speakers of that background. Perception training (Kotu.io) starts in Module 00; production drilling (Dogen) escalates from Module 04. Cross-reference `pronunciation/05-pitch-accent-intro.md` and `pedagogy/04-shadowing-protocol.md`.

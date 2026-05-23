@@ -3,7 +3,7 @@ module: meta
 file: 03-srs-strategy
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # SRS Strategy
@@ -19,9 +19,9 @@ TODO: Document the exact Anki settings:
 ## Deck Structure
 
 TODO: Describe the three decks:
-- `Roland::Core` — Kaishi 1.5k frequency deck + module-vocab CSVs
-- `Roland::Mining` — Yomitan-added cards from immersion content
-- `Roland::Kanji` — recognition-only; front = kanji + prompt "what does this mean?"; back = reading + English + example sentence + module tag
+- `YourName::Core` — Kaishi 1.5k frequency deck + module-vocab CSVs
+- `YourName::Mining` — Yomitan-added cards from immersion content
+- `YourName::Kanji` — recognition-only; front = kanji + prompt "what does this mean?"; back = reading + English + example sentence + module tag
 
 ## Card Format
 
