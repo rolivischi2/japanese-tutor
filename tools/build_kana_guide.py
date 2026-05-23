@@ -187,7 +187,7 @@ MNEMONIC = {
     "れ": "る’s cousin, kneeling without the loop — “<b>re</b>”.",
     "ろ": "る with the loop opened — an open <b>ro</b>ad.",
     "わ": "れ’s cousin with a loop — a swirl of “<b>wa</b>”nder.",
-    "を": "A person kicking a ball — the rare <b>o</b> particle.",
+    "を": "A person kicking a ball — the rare <b>o</b> particle. <b>Sounds exactly like お</b>; only ever used to mark a direct object.",
     "ん": "A lazy <b>n</b> squiggle, like the end of a signature.",
     "ア": "An <b>A</b> with one leg kicked out.",
     "イ": "An <b>ee</b>l leaning on a post.",
@@ -233,7 +233,7 @@ MNEMONIC = {
     "レ": "A single <b>re</b>laxed lean.",
     "ロ": "A plain square <b>roo</b>m.",
     "ワ": "An open mouth at a <b>wa</b>terfall.",
-    "ヲ": "A three-stroke “<b>wo</b>” — almost never written today.",
+    "ヲ": "A three-stroke “<b>wo</b>” — almost never written today. <b>Sounds exactly like オ</b>.",
     "ン": "A short up-flick ↗ — compare ソ, which flicks down.",
 }
 
@@ -251,8 +251,21 @@ NOTE = {
     "れ": "Tapped [ɾ] — a light flick of the tongue, never trilled.",
     "ろ": "Tapped [ɾ] — a light flick of the tongue, never trilled.",
     "を": "Pronounced exactly like お — used only as the object particle.",
+    "ぢ": "Pronounced exactly like じ in modern Japanese. The spelling survives in a few words (e.g. 鼻血 はなぢ \"nosebleed\"); otherwise always written じ.",
+    "づ": "Pronounced exactly like ず in modern Japanese. The spelling survives in compounds where two morphemes meet (e.g. 三日月 みかづき \"crescent moon\"); otherwise always written ず.",
+    "ヂ": "Pronounced exactly like ジ. Effectively never appears in modern katakana — included only for completeness.",
+    "ヅ": "Pronounced exactly like ズ. Effectively never appears in modern katakana — included only for completeness.",
+    "ヲ": "Pronounced exactly like オ. Effectively never appears in modern katakana — included only for completeness.",
     "ん": "A full mora [ɴ/n/m]; its sound shifts to match the next consonant.",
     "へ": "As the direction particle it is pronounced “e”, not “he”.",
+    "は": "As the topic particle it is pronounced “wa”, not “ha”.",
+}
+
+# Homophones — kana with identical pronunciation. Rendered as a small "=X"
+# badge in the chart and a strongly-worded NOTE in the detail drawer.
+SAME_AS = {
+    "ぢ": "じ", "づ": "ず", "を": "お",
+    "ヂ": "ジ", "ヅ": "ズ", "ヲ": "オ",
 }
 
 # Look-alike clusters — easily confused shapes
@@ -316,6 +329,7 @@ def build_meta(strokes):
                 "kind": kind,
                 "script": script_of(ch),
                 "strokes": strokes.get(ch, []),
+                "same_as": SAME_AS.get(ch, ""),
             }
     return meta
 
@@ -465,6 +479,12 @@ nav.tabs{display:flex;justify-content:center;gap:6px;margin:30px 0 8px;flex-wrap
   animation:none;opacity:.5}
 .cell.empty:hover{transform:none;box-shadow:none;border-color:#d3c4a3}
 .cell.yoon .k{font-size:23px}
+.cell.homophone{border-color:var(--gold);border-width:1.4px}
+.cell.homophone:hover{border-color:var(--vermilion)}
+.cell .eq{position:absolute;top:3px;right:4px;font-size:10px;line-height:1;
+  font-weight:700;color:var(--vermilion);opacity:.78;letter-spacing:.3px;
+  background:rgba(253,246,230,.85);padding:2px 4px;border-radius:3px}
+.cell.homophone:hover .eq{color:var(--vermilion-deep);opacity:1}
 
 /* ---- detail drawer ---- */
 .scrim{position:fixed;inset:0;background:rgba(35,30,24,.34);opacity:0;
@@ -493,6 +513,11 @@ nav.tabs{display:flex;justify-content:center;gap:6px;margin:30px 0 8px;flex-wrap
   margin-top:2px}
 .d-hero .kindtag{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--ink-soft);margin-top:5px}
+.d-same-as{font-family:"Fraunces",serif;font-size:15px;font-weight:600;
+  color:var(--vermilion-deep);margin-top:6px;letter-spacing:.02em}
+.d-same-as .jp{font-size:22px;vertical-align:-3px;margin:0 2px;font-weight:500}
+.d-same-as small{font-size:11px;font-weight:500;font-style:italic;
+  color:var(--ink-soft);letter-spacing:0;margin-left:4px}
 .play{margin:14px auto 4px;display:flex;align-items:center;gap:9px;
   background:var(--vermilion);color:#fdf6e6;border:none;cursor:pointer;
   font-family:"Fraunces",serif;font-size:14px;font-weight:600;
@@ -698,9 +723,13 @@ function renderScript(name){
         const m = META[ch];
         const delay = (cellIndex++ * 11);
         const yoon = ch.length>1 ? ' yoon' : '';
-        html += '<div class="cell'+yoon+'" data-k="'+ch+'" style="animation-delay:'+delay+'ms">'+
+        const homo = m.same_as ? ' homophone' : '';
+        const eq = m.same_as ? '<span class="eq jp">=' + m.same_as + '</span>' : '';
+        html += '<div class="cell'+yoon+homo+'" data-k="'+ch+'" style="animation-delay:'+delay+'ms">'+
                 '<span class="k jp">'+ch+'</span>'+
-                '<span class="ro">'+m.r+'</span></div>';
+                '<span class="ro">'+m.r+'</span>'+
+                eq+
+                '</div>';
       });
     });
     html += '</div></div>';
@@ -822,8 +851,13 @@ function openDetail(ch){
         '<button class="icon-btn" id="dNext" title="Next (→)">&rsaquo;</button>'+
         '</div>'+
         '<button class="icon-btn" id="dClose" title="Close (Esc)">&times;</button></div>';
+  const sameAsHero = m.same_as
+    ? '<div class="d-same-as">sounds exactly like <span class="jp">'+m.same_as+
+      '</span> <small>('+META[m.same_as].r+')</small></div>'
+    : '';
   html+='<div class="d-hero"><div class="big jp">'+ch+'</div>'+
         '<div class="ro">'+m.r+'</div>'+
+        sameAsHero+
         '<div class="kindtag">'+kindLabel+'</div></div>';
   html+='<button class="play" id="dPlay"><span class="tri">&#9654;</span> Hear it</button>';
   html+='<div class="stroke-wrap"><div class="label">Stroke order</div>'+
