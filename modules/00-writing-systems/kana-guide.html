@@ -40,6 +40,48 @@ h1.title{font-size:84px;line-height:.96;font-weight:800;letter-spacing:.06em;
 h1.title .seal{color:var(--vermilion)}
 .subtitle{font-style:italic;font-size:16px;color:var(--ink-soft)}
 
+/* ---- search ---- */
+.search{position:relative;max-width:560px;margin:28px auto 0;width:100%}
+.search-input{
+  width:100%;display:block;background:var(--cell);
+  border:1.5px solid var(--cell-line);border-radius:9px;
+  padding:13px 16px 13px 44px;color:var(--ink);
+  font-family:"Fraunces",Georgia,serif;font-size:15px;
+  transition:border-color .14s ease, box-shadow .14s ease, background .14s ease;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%236f6557' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='m21 21-4.3-4.3'/></svg>");
+  background-repeat:no-repeat;background-position:14px center;background-size:18px;
+}
+.search-input:focus{outline:none;background:#fff;
+  border-color:var(--vermilion);box-shadow:0 0 0 3px rgba(189,59,44,.12)}
+.search-input::placeholder{color:var(--ink-soft);font-style:italic}
+.search-results{
+  position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:30;
+  background:#fff;border:1px solid var(--cell-line);border-radius:9px;
+  padding:13px 14px;display:none;
+  box-shadow:0 14px 36px -18px rgba(43,38,32,.45)}
+.search-results.on{display:block}
+.search-hint{font-size:11.5px;color:var(--ink-soft);font-style:italic;
+  margin-bottom:9px;line-height:1.45}
+.search-hint b{color:var(--ink);font-style:normal;font-weight:600}
+.search-row{display:flex;flex-wrap:wrap;gap:6px}
+.search-group{display:inline-flex;align-items:center;gap:3px;
+  background:var(--cell);border:1px solid var(--cell-line);border-radius:7px;
+  padding:5px 8px}
+.search-group.homo{border-color:var(--gold)}
+.search-romaji{font-size:10.5px;font-weight:700;color:var(--ink-soft);
+  letter-spacing:.7px;text-transform:uppercase;margin-right:3px}
+.search-kana{
+  font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-size:24px;line-height:1;font-weight:500;color:var(--ink);
+  padding:2px 6px;cursor:pointer;border-radius:4px;
+  transition:background .12s ease, color .12s ease, transform .12s ease}
+.search-kana:hover{background:var(--vermilion);color:#fff;transform:translateY(-1px)}
+.search-kana.unknown{color:var(--vermilion-deep);opacity:.45;font-style:italic;
+  cursor:default;font-family:"Fraunces",serif;font-size:18px}
+.search-kana.unknown:hover{background:transparent;color:var(--vermilion-deep);transform:none}
+.search-empty{font-size:13px;color:var(--ink-soft);text-align:center;
+  padding:8px 4px;font-style:italic}
+
 /* ---- tabs ---- */
 nav.tabs{display:flex;justify-content:center;gap:6px;margin:30px 0 8px;flex-wrap:wrap}
 .tab{font-family:"Fraunces",serif;font-size:15px;font-weight:600;
@@ -247,6 +289,13 @@ footer a{color:var(--ink-soft)}
     <h1 class="title jp">か<span class="seal">な</span></h1>
     <div class="subtitle">The Kana Guide &mdash; hiragana &amp; katakana, stroke by stroke</div>
   </header>
+
+  <div class="search">
+    <input type="text" id="searchInput" class="search-input"
+           placeholder="Search romaji or a name — e.g. shi · kya · ruisu · konnichiwa"
+           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <div class="search-results" id="searchResults"></div>
+  </div>
 
   <nav class="tabs" id="tabs">
     <button class="tab on" data-view="hiragana">Hiragana<span class="tab-jp jp">ひらがな</span></button>
@@ -646,6 +695,166 @@ document.addEventListener('keydown',e=>{
     if(opts[+e.key-1]) opts[+e.key-1].click();
   }
   if(e.key==='Enter'){const n=document.getElementById('qNext');if(n)n.click();}
+});
+
+/* ---------- search ---------- */
+// Reverse index: romaji "shi" → { hira: ["し"], kata: ["シ"] }. Homophones
+// (ぢ/じ, づ/ず, を/お, …) appear together under the same key.
+const ROMAJI_INDEX = (function(){
+  const idx = {};
+  // Process plain forms before homophone vestigials so the standard kana
+  // appears first in the result list.
+  const keys = Object.keys(META).sort((a,b)=>{
+    const va = META[a].same_as ? 1 : 0;
+    const vb = META[b].same_as ? 1 : 0;
+    return va - vb;
+  });
+  keys.forEach(ch=>{
+    const r = META[ch].r;
+    if(!idx[r]) idx[r] = { hira: [], kata: [] };
+    const slot = META[ch].script === 'hiragana' ? 'hira' : 'kata';
+    idx[r][slot].push(ch);
+  });
+  return idx;
+})();
+
+// Light English → romaji preprocessing. Heuristics, not a true transliterator.
+// Handles common patterns so e.g. "louis" → "ruisu" → ル イ ス.
+function englishToRomaji(input){
+  let s = (input||'').toLowerCase().trim().replace(/[^a-z]/g,'');
+  if(!s) return '';
+  // 1. Consonants Japanese lacks → closest Japanese consonant.
+  s = s.replace(/l/g,'r').replace(/v/g,'b').replace(/x/g,'ks');
+  // 2. English silent / aspirated 'h' between a vowel and a non-vowel — drop.
+  //    "john" → "jon" → じょん. "sarah" → "sara" → さら.
+  //    Preserves "shi", "chi", "ohio" (h between vowels stays).
+  s = s.replace(/([aeiou])h(?![aeiou])/g,'$1');
+  // 3. English vowel digraphs → single Japanese mora, BUT only when followed
+  //    by another vowel (mid-word coalescence like Louis→Ruisu).
+  //    At end of word, "ou" / "oo" represent Japanese long-ō / long-ū and
+  //    must stay as two morae (arigatou → arigatō → ありがとう).
+  s = s.replace(/ou(?=[aeiou])/g,'u').replace(/oo(?=[aeiou])/g,'u')
+       .replace(/ee(?=[aeiou])/g,'i').replace(/ea(?=[aeiou])/g,'i');
+  // 3. Insert "u" between consecutive consonants — but PRESERVE Japanese
+  //    digraphs (sh, ch, ts, *y), geminates (kk, pp, tt, ss = sokuon),
+  //    and the moraic 'n' which never takes a vowel.
+  const keepPair = (a, b) => {
+    if(/^(sh|ch|ts)$/.test(a+b)) return true;   // sibilant digraphs
+    if(b === 'y') return true;                  // *y palatalisation
+    if(a === b) return true;                    // geminate consonant
+    return false;
+  };
+  // 'n' is excluded from the regex on both sides so e.g. "anna" stays "anna".
+  for(let i=0;i<3;i++){
+    s = s.replace(/([bcdfghjkmprstvwz])([bcdfghjkmprstvwz])/g,
+                  (m,a,b) => keepPair(a,b) ? m : a+'u'+b);
+  }
+  // 4. Final stranded consonant → add a vowel. 'n' deliberately excluded —
+  //    it's the standalone moraic ん.
+  s = s.replace(/([td])$/,'$1o').replace(/([bcdfghjkmprsvwxz])$/,'$1u');
+  return s;
+}
+
+function parseRomaji(input){
+  const processed = englishToRomaji(input);
+  const tokens = [];
+  let i = 0;
+  while(i < processed.length){
+    let matched = false;
+    for(const len of [3,2,1]){
+      const chunk = processed.slice(i, i+len);
+      if(ROMAJI_INDEX[chunk]){
+        tokens.push(Object.assign({romaji: chunk}, ROMAJI_INDEX[chunk]));
+        i += len;
+        matched = true;
+        break;
+      }
+    }
+    if(!matched){
+      tokens.push({romaji: processed[i], unknown: true});
+      i += 1;
+    }
+  }
+  return { processed, tokens };
+}
+
+function renderSearch(query){
+  const panel = document.getElementById('searchResults');
+  const raw = (query||'').trim();
+  if(!raw){ panel.classList.remove('on'); panel.innerHTML=''; return; }
+
+  const { processed, tokens } = parseRomaji(raw);
+  const matched = tokens.filter(t=>!t.unknown);
+  const allUnknown = tokens.length>0 && matched.length===0;
+
+  if(allUnknown){
+    panel.innerHTML = '<div class="search-empty">No kana for "'+raw+'". Try romaji — '+
+                      '<b>shi</b>, <b>kya</b>, <b>ruisu</b>, <b>konnichiwa</b>.</div>';
+    panel.classList.add('on'); return;
+  }
+
+  // Hint line — show preprocessing transformation when it changed the input.
+  const rawNorm = raw.toLowerCase().replace(/[^a-z]/g,'');
+  let html = '<div class="search-hint">';
+  if(processed !== rawNorm){
+    html += 'Heard as <b>'+processed+'</b> &middot; ';
+  }
+  html += matched.length + ' segment' + (matched.length===1?'':'s') +
+          ' &middot; tap any kana for strokes &amp; sound';
+  html += '</div>';
+
+  html += '<div class="search-row">';
+  tokens.forEach(t=>{
+    if(t.unknown){
+      html += '<div class="search-group"><span class="search-romaji">'+t.romaji+
+              '</span><span class="search-kana unknown" title="no match">?</span></div>';
+      return;
+    }
+    // Mark this segment as homophone-bearing if any of its kana are homophones
+    const all = [].concat(t.hira||[], t.kata||[]);
+    const isHomo = all.some(c => META[c] && META[c].same_as);
+    html += '<div class="search-group'+(isHomo?' homo':'')+'">';
+    html += '<span class="search-romaji">'+t.romaji+'</span>';
+    (t.hira||[]).forEach(ch=>{
+      html += '<span class="search-kana jp" data-k="'+ch+'" title="hiragana">'+ch+'</span>';
+    });
+    (t.kata||[]).forEach(ch=>{
+      html += '<span class="search-kana jp" data-k="'+ch+'" title="katakana">'+ch+'</span>';
+    });
+    html += '</div>';
+  });
+  html += '</div>';
+
+  panel.innerHTML = html;
+  panel.classList.add('on');
+  panel.querySelectorAll('.search-kana[data-k]').forEach(el=>{
+    el.onclick = (e)=>{ e.stopPropagation(); openDetail(el.dataset.k); };
+  });
+}
+
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', e => renderSearch(e.target.value));
+searchInput.addEventListener('keydown', e => {
+  if(e.key === 'Escape'){
+    searchInput.value = '';
+    renderSearch('');
+    searchInput.blur();
+  }
+});
+// Dismiss panel on outside click
+document.addEventListener('click', e => {
+  const search = document.querySelector('.search');
+  if(search && !search.contains(e.target)){
+    document.getElementById('searchResults').classList.remove('on');
+  }
+});
+// "/" anywhere focuses the search box
+document.addEventListener('keydown', e => {
+  if(e.key === '/' && document.activeElement !== searchInput &&
+     !drawerKey && e.target.tagName !== 'INPUT'){
+    e.preventDefault();
+    searchInput.focus();
+  }
 });
 </script>
 </body>
