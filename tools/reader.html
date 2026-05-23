@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/tesseract.js@5/dist/tesseract.min.js"></script>
 <style>
   :root{
     --paper:#f1e8d6; --paper-2:#e9dcc2; --ink:#2b2620; --ink-soft:#6f6557;
@@ -136,6 +137,42 @@ async function captureScreen() {
   return blob;
 }
 
+// ──────────────────────────────────────────────────────────────
+// OCR via Tesseract.js (Japanese)
+// ──────────────────────────────────────────────────────────────
+let ocrWorker = null;
+async function getOcrWorker() {
+  if (ocrWorker) return ocrWorker;
+  setStatus("Loading OCR model (~10 MB, first time only)…");
+  ocrWorker = await Tesseract.createWorker("jpn", 1, {
+    logger: m => {
+      if (m.status && m.progress != null) {
+        setStatus(`OCR: ${m.status} (${Math.round(m.progress * 100)}%)`);
+      }
+    },
+  });
+  return ocrWorker;
+}
+
+async function runOCR(blob) {
+  const worker = await getOcrWorker();
+  setStatus("Recognizing…");
+  const { data } = await worker.recognize(blob);
+  return { text: data.text.trim(), confidence: data.confidence };
+}
+
+async function processBlob(blob) {
+  romajiOut.textContent = "(romaji rendering in next commit)";
+  rawOut.textContent = "";
+  try {
+    const { text, confidence } = await runOCR(blob);
+    rawOut.textContent = text || "(empty OCR result)";
+    setStatus(`Done. Confidence: ${Math.round(confidence)}%.`);
+  } catch (err) {
+    setStatus("OCR failed: " + err.message, true);
+  }
+}
+
 captureBtn.addEventListener("click", async () => {
   captureBtn.disabled = true;
   romajiOut.textContent = "—";
@@ -145,7 +182,7 @@ captureBtn.addEventListener("click", async () => {
     if (blob) {
       lastBlob = blob;
       rereadBtn.disabled = false;
-      // OCR + romaji rendering added in Tasks 3 and 4.
+      await processBlob(blob);
     }
   } catch (err) {
     setStatus("Capture failed: " + err.message, true);
@@ -154,9 +191,14 @@ captureBtn.addEventListener("click", async () => {
   }
 });
 
-rereadBtn.addEventListener("click", () => {
+rereadBtn.addEventListener("click", async () => {
   if (!lastBlob) return;
-  setStatus("Re-OCR not implemented yet (Task 3).");
+  rereadBtn.disabled = true;
+  try {
+    await processBlob(lastBlob);
+  } finally {
+    rereadBtn.disabled = false;
+  }
 });
 </script>
 </body>
