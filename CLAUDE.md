@@ -38,7 +38,7 @@ These rules are non-negotiable; they keep content consistent across modules buil
 - **Cross-linking:** every grammar point links each example word to its `vocab/` entry by `id`.
 - **Data schemas:** vocab entries follow `vocab/schema.json`; kanji entries follow the structure in `INSTRUCTIONS.md` §3.7. `kanji/kanji-by-module.csv` is denormalised and regenerated from `kanji/kanji-master.json` — never hand-edit the CSV.
 
-Each `modules/NN-*/` folder contains: `00-overview.md`, one `.md` per grammar concept, `dialogues.md`, `exercises.md`, `self-talk.md` (M01+), `kanji-introduced.md` (M04+), and `module-vocab.json`. The `preply/` directory holds tutor-facing companion worksheets (e.g. `01-copula-companion.md`), one per module, named to match.
+Each `modules/NN-*/` folder contains: `00-overview.md`, one `.md` per grammar concept, `dialogues.md`, `exercises.md`, `self-talk.md` (M01+), `kanji-introduced.md` (M04+), and `module-vocab.json`. The `tutor/` directory holds tutor-facing companion worksheets (e.g. `01-copula-companion.md`), one per module, named to match.
 
 ## Permissions
 

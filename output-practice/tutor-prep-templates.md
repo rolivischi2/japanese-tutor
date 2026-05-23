@@ -1,6 +1,6 @@
 ---
 module: meta
-file: preply-prep-templates
+file: tutor-prep-templates
 lang_focus: meta
 kanji_level: 0
 last_updated: 2026-05-22

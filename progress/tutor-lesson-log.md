@@ -1,6 +1,6 @@
 ---
 module: meta
-file: preply-lesson-log
+file: tutor-lesson-log
 lang_focus: meta
 kanji_level: 0
 last_updated: 2026-05-22

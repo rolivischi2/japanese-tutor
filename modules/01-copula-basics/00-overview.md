@@ -63,7 +63,7 @@ sentence — produced live, without a script. `self-talk.md` builds you up to it
 
 ## Companion resource
 
-`preply/01-copula-companion.md` is an expanded worksheet covering this exact
+`tutor/01-copula-companion.md` is an expanded worksheet covering this exact
 grammar, mirroring your Preply lesson PDF. It uses romaji as a beginner crutch;
 this module does not. Use the companion alongside these files — but read the
 **kana** here as your primary text.
