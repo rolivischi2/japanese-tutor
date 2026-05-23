@@ -3,16 +3,14 @@ module: meta
 file: index
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Curriculum Index
 
 ## Module Status Table
 
-TODO: Build and maintain this linear table. Columns: Module | Status (locked/active/done) | Estimated weeks | Key grammar points | Cumulative vocab count | Cumulative kanji count | Milestone unlocked.
-
-Example structure (fill in as modules are completed):
+A linear view of the curriculum. Update the `Status` column as modules move from `locked` → `active` → `done`.
 
 | Module | Status | Est. weeks | Key grammar | Vocab (cum.) | Kanji (cum.) | Milestone |
 |--------|--------|------------|-------------|-------------|-------------|-----------|
@@ -32,4 +30,7 @@ Example structure (fill in as modules are completed):
 
 ## Notes
 
-TODO: Add navigation notes — e.g. how to unlock the next module (complete exercises + Preply session), how to log progress, how to request Claude Code to build the next module's content.
+- To unlock the next module: complete its exercises, run a tutor session covering its grammar, and update the `Status` column above.
+- To request Claude Code to build the next module's content, ask: "build Module N+1's drills and dialogues from its overview." See `CLAUDE.md` for the authoring contract.
+- Cumulative vocab/kanji counts are estimates; the source of truth is `vocab/tier-*.csv` and `kanji/kanji-master.json`.
+- Progress is logged in `progress/progress.md`; tutor sessions in `progress/tutor-lesson-log.md`.
