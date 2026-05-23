@@ -17,6 +17,7 @@ Run with --self-test to exercise the pure helper functions.
 
 from __future__ import annotations
 
+import json
 import re
 import shutil
 import sys
@@ -172,6 +173,8 @@ def rewrite_links(html: str, current_md_path: Path) -> str:
 
     Rules:
     - http(s)://, mailto:, anchors → unchanged
+    - module-vocab.json targets (with optional #anchor) inside modules/ →
+      vocab.html with the same anchor (the JSON is rendered as vocab.html)
     - .md targets resolving under modules/ → .html (00-overview.md →
       index.html for clean URLs)
     - .md targets resolving outside modules/ → GitHub blob URL
@@ -183,6 +186,17 @@ def rewrite_links(html: str, current_md_path: Path) -> str:
         suffix = match.group(2) or ""
         if target.startswith(("http://", "https://", "mailto:", "#")):
             return match.group(0)
+        # module-vocab.json → vocab.html (preserving #anchor / ?query)
+        if target.endswith("module-vocab.json"):
+            resolved = (current_md_path.parent / target).resolve()
+            try:
+                rel = resolved.relative_to(ROOT)
+            except ValueError:
+                return match.group(0)
+            if rel.parts and rel.parts[0] == "modules":
+                new_target = target[:-len("module-vocab.json")] + "vocab.html"
+                return f'href="{new_target}{suffix}"'
+            return f'href="{GITHUB_BLOB}/{rel.as_posix()}{suffix}"'
         if not target.endswith(".md"):
             return match.group(0)
         resolved = (current_md_path.parent / target).resolve()
@@ -229,15 +243,91 @@ def _human_title(slug: str) -> str:
     return core.replace("-", " ").capitalize()
 
 
-def _render_sidebar(module: ModuleMeta, files: list[Path], current: Path) -> str:
+def _render_sidebar(
+    module: ModuleMeta,
+    files: list[Path],
+    current: Path,
+    include_vocab: bool = False,
+    current_is_vocab: bool = False,
+) -> str:
     items: list[str] = []
     for f in sorted(files, key=lambda p: _sidebar_sort_key(p.name)):
-        is_current = f.resolve() == current.resolve()
+        is_current = f.resolve() == current.resolve() and not current_is_vocab
         href = "index.html" if f.name == "00-overview.md" else f.name.replace(".md", ".html")
         label = "Overview" if f.name == "00-overview.md" else _human_title(f.name)
         cls = ' class="current"' if is_current else ""
         items.append(f'<li><a href="{href}"{cls}>{label}</a></li>')
+    if include_vocab:
+        cls = ' class="current"' if current_is_vocab else ""
+        items.append(f'<li><a href="vocab.html"{cls}>Vocabulary</a></li>')
     return "\n        ".join(items)
+
+
+def render_vocab_html(json_path: Path) -> str:
+    """Render module-vocab.json as the inner HTML body for a vocab page.
+
+    Each entry gets an <h3 id="..."> so links like module-vocab.json#watashi
+    (now rewritten to vocab.html#watashi) scroll to the right entry.
+    """
+    import html as _html
+    data = json.loads(json_path.read_text(encoding="utf-8"))
+    if not data:
+        return "<p>No vocabulary entries yet.</p>"
+
+    def esc(s):
+        return _html.escape(str(s), quote=True)
+
+    out = ["<h1>Vocabulary</h1>"]
+    out.append(f"<p><em>{len(data)} entries. Each id links from cross-references"
+               f" in the grammar files.</em></p>")
+    out.append("<hr>")
+    for entry in data:
+        eid = esc(entry.get("id", ""))
+        kana = esc(entry.get("kana", ""))
+        kanji = entry.get("kanji")
+        kanji_html = f" <span class=\"jp\" style=\"color:var(--ink-soft);font-weight:400\">({esc(kanji)})</span>" if kanji else ""
+        english_list = entry.get("english") or []
+        english = ", ".join(esc(e) for e in english_list)
+        reading = entry.get("reading")
+        pos = entry.get("pos") or ""
+        pitch = entry.get("pitch_accent") or {}
+        notes = entry.get("notes")
+        examples = entry.get("example_sentences") or []
+        tags = entry.get("tags") or []
+
+        out.append(f'<section id="{eid}" style="margin:22px 0;padding-bottom:18px;border-bottom:1px dashed var(--cell-line)">')
+        out.append(f'<h3 class="jp" style="font-size:22px;margin:0 0 4px">{kana}{kanji_html} '
+                   f'<span style="font-family:Fraunces,serif;color:var(--ink-soft);font-size:.75em;font-weight:400">— {english}</span></h3>')
+        bits = []
+        if reading and reading != entry.get("kana"):
+            bits.append(f"reading: <span class=\"jp\">{esc(reading)}</span>")
+        if pos:
+            bits.append(f"{esc(pos)}")
+        if pitch.get("pattern"):
+            drop = pitch.get("drop_after_mora")
+            pp = esc(pitch["pattern"])
+            if drop is not None and drop != 0:
+                pp += f" (drop after mora {drop})"
+            bits.append(f"pitch: {pp}")
+        if bits:
+            out.append(f'<p style="font-size:13.5px;color:var(--ink-soft);margin:0 0 8px">{" · ".join(bits)}</p>')
+        if notes:
+            out.append(f'<p style="font-size:14px;margin:6px 0">{esc(notes)}</p>')
+        if examples:
+            out.append("<ul style=\"margin-top:6px\">")
+            for ex in examples:
+                k = esc(ex.get("kana", ""))
+                e = esc(ex.get("english", ""))
+                out.append(f'<li><span class="jp">{k}</span> — <span style="color:var(--ink-soft)">{e}</span></li>')
+            out.append("</ul>")
+        if tags:
+            tag_html = " ".join(
+                f'<span style="display:inline-block;font-size:11px;letter-spacing:.06em;text-transform:lowercase;background:var(--cell);color:var(--ink-soft);padding:1px 8px;border-radius:99px;margin-right:4px">{esc(t)}</span>'
+                for t in tags
+            )
+            out.append(f'<p style="margin-top:8px">{tag_html}</p>')
+        out.append("</section>")
+    return "\n".join(out)
 
 
 def render_md_file(
@@ -245,6 +335,7 @@ def render_md_file(
     module: ModuleMeta,
     sibling_md_files: list[Path],
     template: str,
+    has_vocab: bool = False,
 ) -> str:
     """Render one .md file to a full HTML page string."""
     raw = md_path.read_text(encoding="utf-8")
@@ -256,7 +347,7 @@ def render_md_file(
     rendered = rewrite_links(rendered, md_path)
 
     page_title = module.title if md_path.name == "00-overview.md" else _human_title(md_path.name)
-    sidebar = _render_sidebar(module, sibling_md_files, md_path)
+    sidebar = _render_sidebar(module, sibling_md_files, md_path, include_vocab=has_vocab)
     rel_source = md_path.relative_to(ROOT).as_posix()
 
     return (template
@@ -271,19 +362,52 @@ def render_md_file(
 
 
 def render_module(module: ModuleMeta, out_dir: Path, template: str) -> int:
-    """Render all .md files in a module to out_dir/<slug>/. Returns file count."""
+    """Render all .md files (and module-vocab.json if non-empty) for a module.
+
+    Returns the number of HTML files written.
+    """
     src_dir = MODULES_DIR / module.slug
     md_files = sorted(src_dir.glob("*.md"))
     if not md_files:
         return 0
+
+    vocab_path = src_dir / "module-vocab.json"
+    has_vocab = False
+    if vocab_path.exists():
+        try:
+            data = json.loads(vocab_path.read_text(encoding="utf-8"))
+            has_vocab = bool(data)
+        except json.JSONDecodeError:
+            has_vocab = False
+
     target = out_dir / "modules" / module.slug
     target.mkdir(parents=True, exist_ok=True)
     written = 0
     for f in md_files:
-        html = render_md_file(f, module, md_files, template)
+        html = render_md_file(f, module, md_files, template, has_vocab=has_vocab)
         out_name = "index.html" if f.name == "00-overview.md" else f.name.replace(".md", ".html")
         (target / out_name).write_text(html, encoding="utf-8")
         written += 1
+
+    if has_vocab:
+        vocab_body = render_vocab_html(vocab_path)
+        sidebar = _render_sidebar(
+            module, md_files, vocab_path,
+            include_vocab=True, current_is_vocab=True,
+        )
+        rel_source = vocab_path.relative_to(ROOT).as_posix()
+        page_html = (template
+            .replace("{{TITLE}}", f"{module.title} — Vocabulary")
+            .replace("{{MODULE_NUM}}", module.number)
+            .replace("{{MODULE_TITLE}}", f"M{module.number} — {module.title}")
+            .replace("{{SIDEBAR_LIST}}", sidebar)
+            .replace("{{RENDERED_HTML}}", vocab_body)
+            .replace("{{LAST_UPDATED}}", "—")
+            .replace("{{SOURCE_URL}}", f"{GITHUB_BLOB}/{rel_source}")
+        )
+        (target / "vocab.html").write_text(page_html, encoding="utf-8")
+        written += 1
+
     return written
 
 
@@ -416,7 +540,19 @@ def run_self_tests() -> int:
     if "github.com/rolivischi2/japanese-tutor/blob/main/pronunciation/07-" not in got:
         failures.append(f"rewrite_links external-md: got {got!r}")
 
-    n = 13
+    # module-vocab.json#anchor → vocab.html#anchor (sibling)
+    src = '<a href="module-vocab.json#watashi">X</a>'
+    got = rewrite_links(src, current)
+    if got != '<a href="vocab.html#watashi">X</a>':
+        failures.append(f"rewrite_links vocab-sibling: got {got!r}")
+
+    # ./module-vocab.json#foo → vocab.html#foo
+    src = '<a href="./module-vocab.json#anata">X</a>'
+    got = rewrite_links(src, current)
+    if got != '<a href="./vocab.html#anata">X</a>':
+        failures.append(f"rewrite_links vocab-dotslash: got {got!r}")
+
+    n = 15
     if failures:
         print(f"build_site.py self-tests: FAIL ({len(failures)} failures, {n} cases)", file=sys.stderr)
         for f in failures:
