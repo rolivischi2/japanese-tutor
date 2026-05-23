@@ -15,11 +15,13 @@ uv run "$ROOT/tools/build_site.py"
 
 cp "$ROOT/modules/00-writing-systems/kana-guide.html" "$OUT/kana/index.html"
 cp "$ROOT/pronunciation/11-kana-printable-chart.html" "$OUT/chart/index.html"
+cp "$ROOT/tools/reader.html"                          "$OUT/reader/index.html"
 
 echo
 echo "Built $OUT/"
 echo "  /                        → $OUT/index.html"
 echo "  /kana                    → $OUT/kana/index.html"
 echo "  /chart                   → $OUT/chart/index.html"
+echo "  /reader                  → $OUT/reader/index.html"
 echo "  /modules/<slug>/...      → $OUT/modules/"
 du -sh "$OUT"

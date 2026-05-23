@@ -322,6 +322,7 @@ def main(argv: list[str]) -> int:
     OUT_DIR.mkdir(parents=True)
     (OUT_DIR / "kana").mkdir()
     (OUT_DIR / "chart").mkdir()
+    (OUT_DIR / "reader").mkdir()
 
     total = 0
     for slug in sorted(modules):
