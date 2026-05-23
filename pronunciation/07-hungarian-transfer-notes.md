@@ -3,7 +3,7 @@ module: meta
 file: 07-hungarian-transfer-notes
 lang_focus: pronunciation
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 > **Audience:** This file is for learners whose L1 is Hungarian. Skip if it doesn't apply to you.
@@ -13,7 +13,7 @@ last_updated: 2026-05-22
 
 ## Overview
 
-TODO: Summarise the contrastive analysis from INSTRUCTIONS.md §1.3. Hungarian L1 gives Roland several strong advantages and a few significant traps for Japanese. This file expands the prognosis table with detailed drills.
+TODO: Summarise the contrastive analysis from INSTRUCTIONS.md §1.3. Hungarian L1 gives the learner several strong advantages and a few significant traps for Japanese. This file expands the prognosis table with detailed drills.
 
 ## Strong Advantages
 
@@ -27,12 +27,12 @@ TODO: Detail each advantage with drill guidance:
 ## Significant Traps
 
 TODO: Detail each trap with remediation drills:
-- **Pitch accent — first-mora intensity stress**: Szeredi (2010 WCCFL) shows Hungarian stress is intensity-driven and locked to the first syllable. Roland will tend to make the first mora louder on every word. Drill: pronounce はし three ways (HL, LH, LH+drop-on-particle) with deliberately equal volume/intensity on every mora.
+- **Pitch accent — first-mora intensity stress**: Szeredi (2010 WCCFL) shows Hungarian stress is intensity-driven and locked to the first syllable. You will tend to make the first mora louder on every word. Drill: pronounce はし three ways (HL, LH, LH+drop-on-particle) with deliberately equal volume/intensity on every mora.
 - **/u/ vowel quality**: Hungarian /u/ is fully rounded. Japanese /u/ is compressed and near-unrounded. Cross-reference `pronunciation/02-the-five-vowels.md`.
 - **/e/ vowel quality**: Hungarian short "e" = [ɛ] (too open). Use quality of Hungarian long "é" at short duration.
 - **Mora-timing**: Hungarian is syllable-timed but syllables are unequal in weight; Japanese morae are equal. Resist shortening unstressed-feeling morae.
 
-## Priority Drills for Roland
+## Priority Drills
 
 TODO: Write out 5–8 targeted drills addressing the pitch-accent and vowel traps. Include drill words, expected pitch shape (using H/L notation), and what to watch out for. Emphasise the equal-loudness principle.
 

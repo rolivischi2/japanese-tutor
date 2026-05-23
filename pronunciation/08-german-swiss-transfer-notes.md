@@ -3,7 +3,7 @@ module: meta
 file: 08-german-swiss-transfer-notes
 lang_focus: pronunciation
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 > **Audience:** This file is for learners whose L1 (or strong L2) is German or Swiss German. Skip if it doesn't apply to you.
@@ -13,14 +13,14 @@ last_updated: 2026-05-22
 
 ## Overview
 
-TODO: Summarise the contrastive analysis from INSTRUCTIONS.md §1.3. Roland's German L2 (with Swiss German exposure) provides several advantages over Standard German, particularly on consonants.
+TODO: Summarise the contrastive analysis from INSTRUCTIONS.md §1.3. A German L1 (or strong L2) with Swiss German exposure provides several advantages over Standard German alone, particularly on consonants.
 
 ## Swiss German Advantages Over Standard German
 
 TODO: Detail the three Swiss German-specific advantages:
-- **Alveolar trill /r/**: Swiss German uses an alveolar trill or tap that is much closer to Japanese り than Standard German's uvular /ʁ/. Roland should recruit his Swiss German /r/ habit when producing り.
+- **Alveolar trill /r/**: Swiss German uses an alveolar trill or tap that is much closer to Japanese り than Standard German's uvular /ʁ/. Recruit your Swiss German /r/ habit when producing り.
 - **Consonant length**: Swiss German preserves consonant length, giving an extra advantage for geminate っ beyond what Standard German provides.
-- **[ç] (ich-Laut)**: German *ich*, *nicht*, *mich* contain an exact match for Japanese ひ [çi]. This is a significant advantage — Roland should consciously recruit this habit for ひ.
+- **[ç] (ich-Laut)**: German *ich*, *nicht*, *mich* contain an exact match for Japanese ひ [çi]. This is a significant advantage — consciously recruit this habit for ひ.
 
 ## Standard German Contributions
 
@@ -31,7 +31,7 @@ TODO: Note what Standard German contributes:
 ## Standard German Traps
 
 TODO: Note what Standard German may cause:
-- **Uvular /ʁ/**: if Roland produces Standard German /r/ (uvular fricative) instead of Swiss alveolar variant, り will sound wrong. Explicitly use the Swiss variant.
+- **Uvular /ʁ/**: if you produce Standard German /r/ (uvular fricative) instead of the Swiss alveolar variant, り will sound wrong. Explicitly use the Swiss variant.
 - **Auslautverhärtung (final devoicing)**: German devoices consonants word-finally. Japanese does not. Not a strong risk for Japanese but worth noting.
 
 ## Priority Drills
