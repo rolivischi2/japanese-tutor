@@ -45,7 +45,7 @@
     "english": ["name"],
     "pitch_accent": { "pattern": "nakadaka", "drop_after_mora": 1 },
     "example_sentences": [
-      { "kana": "わたし の なまえ は ローラント です。", "kanji": null, "english": "My name is Roland." }
+      { "kana": "わたし の なまえ は アレックス です。", "kanji": null, "english": "My name is Alex." }
     ],
     "module_introduced": 1,
     "tier": 1,
@@ -248,7 +248,7 @@
     "module_introduced": 1,
     "tier": 1,
     "frequency_rank_bccwj": null,
-    "notes": "Loanword (katakana). Roland's home country.",
+    "notes": "Loanword (katakana). Alex's home country (Switzerland, in this curriculum's example dialogues).",
     "tags": ["country", "loanword", "katakana"]
   },
   {
@@ -284,7 +284,7 @@
     "module_introduced": 1,
     "tier": 1,
     "frequency_rank_bccwj": null,
-    "notes": "Loanword (katakana). Roland's L1 country. Pitch accent: verify on OJAD.",
+    "notes": "Loanword (katakana). Hungary — used as an example L1 country in this curriculum; see pronunciation/07-hungarian-transfer-notes.md. Pitch accent: verify on OJAD.",
     "tags": ["country", "loanword", "katakana"]
   },
   {
@@ -554,7 +554,7 @@
     "module_introduced": 1,
     "tier": 1,
     "frequency_rank_bccwj": null,
-    "notes": "Polite spoken negative copula; じゃ contracts では. The default for Preply conversation.",
+    "notes": "Polite spoken negative copula; じゃ contracts では. The default for polite conversation.",
     "tags": ["copula", "negative", "grammar"]
   },
   {
@@ -824,7 +824,7 @@
     "module_introduced": 1,
     "tier": 1,
     "frequency_rank_bccwj": null,
-    "notes": "つ is [tsɯ] — Hungarian 'c' transfers well.",
+    "notes": "つ is [tsɯ]. (Hungarian L1 speakers: 'c' transfers well — see pronunciation/07-hungarian-transfer-notes.md.)",
     "tags": ["object"]
   },
   {
@@ -896,7 +896,7 @@
     "module_introduced": 1,
     "tier": 1,
     "frequency_rank_bccwj": null,
-    "notes": "Clipped loanword (katakana) from 'personal computer'. Useful for Roland (developer).",
+    "notes": "Clipped loanword (katakana) from 'personal computer'. Useful for technical learners.",
     "tags": ["object", "loanword", "katakana", "work"]
   },
   {
@@ -1125,7 +1125,7 @@
     "english": ["nice to meet you"],
     "pitch_accent": null,
     "example_sentences": [
-      { "kana": "はじめまして。ローラント です。", "kanji": null, "english": "Nice to meet you. I'm Roland." }
+      { "kana": "はじめまして。アレックス です。", "kanji": null, "english": "Nice to meet you. I'm Alex." }
     ],
     "module_introduced": 1,
     "tier": 1,
