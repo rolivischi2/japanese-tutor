@@ -3,7 +3,7 @@ module: 01
 file: self-talk
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Module 01 — Self-Talk Prompts
@@ -14,12 +14,12 @@ pick a prompt, speak it aloud, **record yourself in Voice Memo**, listen back,
 then re-record until it flows.
 
 All output here is **polite form** (です / じゃありません) — Module 01 stays
-polite so you can use it directly in Preply lessons.
+polite so you can use it directly in tutor sessions.
 
 **Pronunciation watch-list while recording** (see `pronunciation/`):
 - は as a particle = "wa," never "ha."
 - です = "dess" — devoiced final す, lips **not** rounded on う.
-- Every mora equally loud — do not thump the first mora (Hungarian habit).
+- Every mora equally loud — do not thump the first mora.
 - か rises at the end of a question.
 
 ---
@@ -95,4 +95,4 @@ One 5-minute self-talk session per day:
 - Days 3–4: Tier 2.
 - Days 5–6: Tier 3.
 - Day 7 and onward: Tier 4 — re-record the 60-second introduction daily until
-  it is automatic. Bring your best take to your next Preply lesson.
+  it is automatic. Bring your best take to your next tutor session.

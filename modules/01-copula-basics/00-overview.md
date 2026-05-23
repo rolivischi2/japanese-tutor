@@ -3,7 +3,7 @@ module: 01
 file: 00-overview
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Module 01 — Copula Basics
@@ -64,9 +64,9 @@ sentence — produced live, without a script. `self-talk.md` builds you up to it
 ## Companion resource
 
 `tutor/01-copula-companion.md` is an expanded worksheet covering this exact
-grammar, mirroring your Preply lesson PDF. It uses romaji as a beginner crutch;
-this module does not. Use the companion alongside these files — but read the
-**kana** here as your primary text.
+grammar, designed to pair with a tutor session. It uses romaji as a beginner
+crutch; this module does not. Use the companion alongside these files — but read
+the **kana** here as your primary text.
 
 ## How to work through it
 

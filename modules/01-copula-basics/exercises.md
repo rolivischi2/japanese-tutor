@@ -3,7 +3,7 @@ module: 01
 file: exercises
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Module 01 — Exercises
@@ -53,7 +53,7 @@ C2. ミカさん は せんせい じゃありません。
 C3. ミカさん は せんせい じゃないです。
 C4. ミカさん は せんせい じゃない。
 
-C5. Of C1–C4, which two are the best choices for a polite Preply conversation?
+C5. Of C1–C4, which two are the best choices for a polite tutor session?
 
 ---
 
@@ -150,7 +150,7 @@ C3. **conversational polite** (じゃないです)
 C4. **plain / casual** (じゃない) — Module 06; recognise only, don't produce yet.
 C5. **C2 (じゃありません)** and **C3 (じゃないです)** — both are polite and
     natural in spoken Japanese. C1 is fine but a little stiff; C4 is too casual
-    for a Preply lesson.
+    for a tutor lesson.
 
 ## Section D
 
@@ -190,7 +190,7 @@ G6. **わたし の ほん** です。 — owner first: *owner + の + thing*.
 
 ## Section H — model self-introduction
 
-> はじめまして。わたし は ローラント です。
+> はじめまして。わたし は アレックス です。
 > わたし は スイスじん です。
 > わたし は さんじゅうなな さい です。
 > わたし は エンジニア です。
