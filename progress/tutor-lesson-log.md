@@ -3,12 +3,12 @@ module: meta
 file: tutor-lesson-log
 lang_focus: meta
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
-# Preply Lesson Log
+# Tutor Lesson Log
 
-One row per lesson. Claude Code can scan flagged mistakes and inject them into a review queue in Anki.
+<!-- One entry per session. Date / module(s) covered / what worked / what to bring back next time. -->
 
 ## Log Format
 
@@ -16,14 +16,28 @@ One row per lesson. Claude Code can scan flagged mistakes and inject them into a
 
 ---
 
+## Template
+
+### YYYY-MM-DD — Lesson N (Module MM)
+
+**Covered:** 
+
+**What clicked:** 
+
+**What didn't:** 
+
+**Homework / bring back:** 
+
+---
+
 ## Entries
 
-TODO: Begin logging Preply lessons here from the next session. Example:
+<!-- Begin logging tutor lessons here from your first session. Example: -->
 
 ```
-2026-05-22 | [Tutor name] | です/じゃない, は topic marker, self-introduction drill | Used です after a verb (✗ いきますです) — needs SRS card | Review module 01 dialogues before next lesson
+2026-01-01 | [Tutor name] | です/じゃない, は topic marker, self-introduction drill | Used です after a verb (✗ いきますです) — needs SRS card | Review module 01 dialogues before next lesson
 ```
 
 ## Recurring Mistake Tracker
 
-TODO: Move persisting mistakes (flagged 2+ lessons in a row) to `grammar-reference/common-mistakes.md` and add a note here with a cross-reference.
+<!-- Move persisting mistakes (flagged 2+ lessons in a row) to grammar-reference/common-mistakes.md and add a note here with a cross-reference. -->
