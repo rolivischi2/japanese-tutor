@@ -201,11 +201,107 @@ def rewrite_links(html: str, current_md_path: Path) -> str:
     return _HREF_RE.sub(rewrite, html)
 
 
+def _sidebar_sort_key(name: str) -> tuple:
+    """Order: 00-overview first, then numbered grammar files, then
+    dialogues, exercises, self-talk, kanji-introduced, then everything
+    else alphabetically."""
+    base = name.removesuffix(".md")
+    fixed_order = {
+        "00-overview": 0,
+        "dialogues": 100,
+        "exercises": 101,
+        "self-talk": 102,
+        "kanji-introduced": 103,
+    }
+    if base in fixed_order:
+        return (fixed_order[base], base)
+    m = re.match(r"^(\d{2})-", base)
+    if m:
+        return (10 + int(m.group(1)), base)
+    return (200, base)
+
+
+def _human_title(slug: str) -> str:
+    """Turn '01-desu-copula' → 'Desu copula'."""
+    base = slug.removesuffix(".md")
+    m = re.match(r"^\d{2}-(.*)$", base)
+    core = m.group(1) if m else base
+    return core.replace("-", " ").capitalize()
+
+
+def _render_sidebar(module: ModuleMeta, files: list[Path], current: Path) -> str:
+    items: list[str] = []
+    for f in sorted(files, key=lambda p: _sidebar_sort_key(p.name)):
+        is_current = f.resolve() == current.resolve()
+        href = "index.html" if f.name == "00-overview.md" else f.name.replace(".md", ".html")
+        label = "Overview" if f.name == "00-overview.md" else _human_title(f.name)
+        cls = ' class="current"' if is_current else ""
+        items.append(f'<li><a href="{href}"{cls}>{label}</a></li>')
+    return "\n        ".join(items)
+
+
+def render_md_file(
+    md_path: Path,
+    module: ModuleMeta,
+    sibling_md_files: list[Path],
+    template: str,
+) -> str:
+    """Render one .md file to a full HTML page string."""
+    raw = md_path.read_text(encoding="utf-8")
+    frontmatter, body = strip_frontmatter(raw)
+    body = preprocess_furigana(body)
+
+    md = md_lib.Markdown(extensions=["fenced_code", "tables", "attr_list"])
+    rendered = md.convert(body)
+    rendered = rewrite_links(rendered, md_path)
+
+    page_title = module.title if md_path.name == "00-overview.md" else _human_title(md_path.name)
+    sidebar = _render_sidebar(module, sibling_md_files, md_path)
+    rel_source = md_path.relative_to(ROOT).as_posix()
+
+    return (template
+        .replace("{{TITLE}}", page_title)
+        .replace("{{MODULE_NUM}}", module.number)
+        .replace("{{MODULE_TITLE}}", f"M{module.number} — {module.title}")
+        .replace("{{SIDEBAR_LIST}}", sidebar)
+        .replace("{{RENDERED_HTML}}", rendered)
+        .replace("{{LAST_UPDATED}}", str(frontmatter.get("last_updated", "—")))
+        .replace("{{SOURCE_URL}}", f"{GITHUB_BLOB}/{rel_source}")
+    )
+
+
+def render_module(module: ModuleMeta, out_dir: Path, template: str) -> int:
+    """Render all .md files in a module to out_dir/<slug>/. Returns file count."""
+    src_dir = MODULES_DIR / module.slug
+    md_files = sorted(src_dir.glob("*.md"))
+    if not md_files:
+        return 0
+    target = out_dir / "modules" / module.slug
+    target.mkdir(parents=True, exist_ok=True)
+    written = 0
+    for f in md_files:
+        html = render_md_file(f, module, md_files, template)
+        out_name = "index.html" if f.name == "00-overview.md" else f.name.replace(".md", ".html")
+        (target / out_name).write_text(html, encoding="utf-8")
+        written += 1
+    return written
+
+
 def main(argv: list[str]) -> int:
     if "--self-test" in argv:
         return run_self_tests()
-    # Full build implemented in later tasks.
-    print("build_site.py: skeleton only — full build not yet implemented")
+
+    page_template = (TEMPLATES_DIR / "page.html").read_text(encoding="utf-8")
+    modules = parse_index_md(ROOT / "INDEX.md", MODULES_DIR)
+
+    if OUT_DIR.exists():
+        shutil.rmtree(OUT_DIR)
+    OUT_DIR.mkdir(parents=True)
+
+    total = 0
+    for slug in sorted(modules):
+        total += render_module(modules[slug], OUT_DIR, page_template)
+    print(f"Rendered {total} module page(s) into {OUT_DIR}/modules/")
     return 0
 
 
