@@ -3,7 +3,7 @@ module: 01
 file: 05-no-possession
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # の — Possession and Noun-Modification
@@ -108,8 +108,8 @@ This is genuinely useful for the self-introduction milestone — "this is mine,"
 > あれ は せんせい の くるま です。
 > That over there is the teacher's car.
 
-> わたし の なまえ は ローラント です。
-> My name is Roland.
+> わたし の なまえ は アレックス です。
+> My name is Alex.
 
 > マリオさん は わたし の ともだち です。
 > Mario is my friend.

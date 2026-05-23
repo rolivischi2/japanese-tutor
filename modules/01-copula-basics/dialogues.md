@@ -3,7 +3,7 @@ module: 01
 file: dialogues
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Module 01 — Dialogues
@@ -19,36 +19,36 @@ Then try swapping in your own true facts (your name, nationality, job).
 
 ## Dialogue 1 — じこしょうかい (Self-introduction)
 
-Roland meets Mika at a meetup.
+Alex meets Mika at a meetup.
 
 > ミカ：はじめまして。ミカ です。
 > Mika: Nice to meet you. I'm Mika.
 
-> ローラント：はじめまして。ローラント です。
-> Roland: Nice to meet you. I'm Roland.
+> アレックス：はじめまして。アレックス です。
+> Alex: Nice to meet you. I'm Alex.
 
-> ミカ：ローラントさん は がくせい です か。
-> Mika: Roland, are you a student?
+> ミカ：アレックスさん は がくせい です か。
+> Mika: Alex, are you a student?
 
-> ローラント：いいえ、がくせい じゃありません。エンジニア です。
-> Roland: No, I'm not a student. I'm an engineer.
+> アレックス：いいえ、がくせい じゃありません。エンジニア です。
+> Alex: No, I'm not a student. I'm an engineer.
 
 > ミカ：エンジニア です か。すごい です ね。
 > Mika: An engineer? That's impressive.
 
-> ローラント：ミカさん は にほんじん です か。
-> Roland: Mika, are you Japanese?
+> アレックス：ミカさん は にほんじん です か。
+> Alex: Mika, are you Japanese?
 
-> ミカ：はい、にほんじん です。ローラントさん は？
-> Mika: Yes, I'm Japanese. And you, Roland?
+> ミカ：はい、にほんじん です。アレックスさん は？
+> Mika: Yes, I'm Japanese. And you, Alex?
 
-> ローラント：わたし は スイスじん です。どうぞ よろしく。
-> Roland: I'm Swiss. Pleased to meet you.
+> アレックス：わたし は スイスじん です。どうぞ よろしく。
+> Alex: I'm Swiss. Pleased to meet you.
 
 **Notes.**
 - はじめまして ("nice to meet you") and どうぞ よろしく ("pleased to meet you")
   are fixed introduction phrases — learn them as whole units.
-- ローラントさん は？ ("And you, Roland?") — trailing は with rising intonation
+- アレックスさん は？ ("And you, Alex?") — trailing は with rising intonation
   bounces the same question back. Very common, very useful.
 - すごい です ね — すごい is an adjective (Module 03); here just take すごい です ね
   as a set reaction, "that's impressive, isn't it." ね is Module 07.
@@ -57,25 +57,25 @@ Roland meets Mika at a meetup.
 
 ## Dialogue 2 — しゃしん (Asking about a photo)
 
-Mika shows Roland a photo on her phone.
+Mika shows Alex a photo on her phone.
 
 > ミカ：これ、わたし の しゃしん です。
 > Mika: This is my photo.
 
-> ローラント：その ひと は だれ です か。
-> Roland: Who is that person (in your photo)?
+> アレックス：その ひと は だれ です か。
+> Alex: Who is that person (in your photo)?
 
 > ミカ：この ひと は わたし の ともだち です。なまえ は ハナ です。
 > Mika: This person is my friend. Her name is Hana.
 
-> ローラント：ハナさん も にほんじん です か。
-> Roland: Is Hana Japanese too?
+> アレックス：ハナさん も にほんじん です か。
+> Alex: Is Hana Japanese too?
 
 > ミカ：いいえ、ハナ は にほんじん じゃありません。アメリカじん です。
 > Mika: No, Hana isn't Japanese. She's American.
 
-> ローラント：あの ひと は？
-> Roland: And that person over there (in the photo)?
+> アレックス：あの ひと は？
+> Alex: And that person over there (in the photo)?
 
 > ミカ：あの ひと は ハナ の せんせい です。
 > Mika: That person is Hana's teacher.
@@ -98,26 +98,26 @@ Mika shows Roland a photo on her phone.
 
 At a table, sorting out whose things are whose.
 
-> ローラント：これ は ミカさん の スマホ です か。
-> Roland: Is this Mika's smartphone?
+> アレックス：これ は ミカさん の スマホ です か。
+> Alex: Is this Mika's smartphone?
 
 > ミカ：いいえ、それ は わたし の じゃありません。マリオさん の です。
 > Mika: No, that isn't mine. It's Mario's.
 
-> ローラント：じゃ、これ は？
-> Roland: Then, what about this one?
+> アレックス：じゃ、これ は？
+> Alex: Then, what about this one?
 
 > ミカ：それ は わたし の スマホ です。
 > Mika: That one is my smartphone.
 
-> ローラント：あれ は なん です か。
-> Roland: What is that over there?
+> アレックス：あれ は なん です か。
+> Alex: What is that over there?
 
 > ミカ：あれ は カメラ です。にほん の カメラ です。
 > Mika: That's a camera. It's a Japanese camera.
 
-> ローラント：どれ が ミカさん の かばん です か。
-> Roland: Which one is your bag, Mika?
+> アレックス：どれ が ミカさん の かばん です か。
+> Alex: Which one is your bag, Mika?
 
 > ミカ：あれ です。あの くろい かばん です。
 > Mika: That one. The black bag over there.

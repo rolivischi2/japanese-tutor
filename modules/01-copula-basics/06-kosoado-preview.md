@@ -3,7 +3,7 @@ module: 01
 file: 06-kosoado-preview
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # これ・それ・あれ・どれ — A Preview
@@ -111,8 +111,8 @@ Module 01 dialogue, say これ は ほん です ("this is a book"), not "この
 ## Pronunciation
 
 All four are 2-mora words read flat and even: こ・れ / そ・れ / あ・れ / ど・れ.
-Resist the Hungarian instinct to thump the first mora — keep both morae
-equally loud. See `pronunciation/07-hungarian-transfer-notes.md`.
+Keep both morae equally loud — resist any instinct to thump the first mora.
+(Hungarian L1 speakers: see `pronunciation/07-hungarian-transfer-notes.md`.)
 
 ## Quick check
 

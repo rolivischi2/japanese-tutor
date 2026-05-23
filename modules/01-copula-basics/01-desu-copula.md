@@ -3,7 +3,7 @@ module: 01
 file: 01-desu-copula
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # です — The Polite Copula
@@ -85,8 +85,8 @@ ever lands on something that is not a noun, it is a mistake.
 
 ## More examples
 
-> わたし は ローラント です。
-> I am Roland.
+> わたし は アレックス です。
+> I am Alex.
 
 > わたし は エンジニア です。
 > I am an engineer.
@@ -112,9 +112,9 @@ standard word).
 
 The final す is usually **devoiced** — the [ɯ] almost disappears and you are
 left with a soft "s." So です is closer to [des] than [desɯ]. And the う itself,
-when it does sound, is **not** the rounded Hungarian/German /u/: Japanese /u/ is
+when it does sound, is **not** a rounded /u/ like German or Hungarian: Japanese /u/ is
 compressed and near-unrounded [ɯ̜] — do not push your lips forward. This is
-your single most salient vowel trap (see `pronunciation/02-the-five-vowels.md`).
+a very common vowel trap (see `pronunciation/02-the-five-vowels.md`).
 
 Mora timing: です = で・す, two equal beats. Tap one beat per kana.
 
@@ -123,7 +123,7 @@ Mora timing: です = で・す, two equal beats. Tap one beat per kana.
 です is the **polite** copula. There is also a **plain** copula, **だ**, used
 with friends and family (わたし は がくせい だ). You will hear it constantly in
 listening practice. **Do not produce it yet** — Module 01 through 05 stay
-polite so you can use everything directly in Preply lessons. Plain だ gets its
+polite so you can use everything directly in tutor sessions. Plain だ gets its
 full treatment in Module 06. For now: recognise it, don't use it.
 
 ## Quick check

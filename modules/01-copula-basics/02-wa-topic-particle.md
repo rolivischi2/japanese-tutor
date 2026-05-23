@@ -3,7 +3,7 @@ module: 01
 file: 02-wa-topic-particle
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # は — The Topic Particle
@@ -99,10 +99,10 @@ Module 02. For Module 01, every sentence uses は.
 
 ## Pronunciation
 
-は as a particle is one light mora, "wa" [wa]. Do not stress it — in Hungarian
-the instinct is to thump the first syllable; here every mora stays equally
-loud, and a grammatical particle especially should stay light and quick. See
-`pronunciation/07-hungarian-transfer-notes.md`.
+は as a particle is one light mora, "wa" [wa]. Do not stress it — every mora
+stays equally loud, and a grammatical particle especially should stay light and
+quick. If your L1 places strong stress on the first syllable, resist that habit
+here. See `pronunciation/07-hungarian-transfer-notes.md` (Hungarian L1 example).
 
 ## Quick check
 

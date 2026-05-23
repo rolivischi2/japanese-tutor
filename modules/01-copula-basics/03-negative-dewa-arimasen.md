@@ -3,7 +3,7 @@ module: 01
 file: 03-negative-dewa-arimasen
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # The Negative — ではありません and the Register Spectrum
@@ -34,8 +34,8 @@ most casual:
 | Form | Register | Use it for |
 |---|---|---|
 | ではありません | formal / written | announcements, formal writing, very polite speech |
-| じゃありません | polite spoken | normal polite conversation — **good for Preply** |
-| じゃないです | conversational polite | everyday polite speech — **also good for Preply** |
+| じゃありません | polite spoken | normal polite conversation — **good for tutor sessions** |
+| じゃないです | conversational polite | everyday polite speech — **also good for tutor sessions** |
 | じゃない / ではない | plain (casual) | friends, family — **Module 06** |
 
 Read the table top-to-bottom as a slider from stiff to relaxed. Same meaning
@@ -55,7 +55,7 @@ polite negative, and ない, the plain negative).
 
 ## Which one should you actually use?
 
-For Module 01 — and for Preply lessons — your two workhorses are:
+For Module 01 — and for tutor sessions — your two workhorses are:
 
 - **じゃありません** — clearly polite, natural in spoken Japanese.
 - **じゃないです** — also polite, slightly more conversational.
@@ -99,8 +99,9 @@ This module's exercises ask for **じゃありません** as the default.
 ## Pronunciation
 
 - **ありません** = a・り・ま・せ・ん, 5 morae. The ん is a **full beat** — do not
-  swallow it. The り is a light alveolar tap [ɾ], not a trill (your Hungarian
-  tap allophone is already correct — just don't roll it).
+  swallow it. The り is a light alveolar tap [ɾ], not a trill. (Hungarian L1
+  speakers: your tap allophone transfers well — just don't roll it. See
+  `pronunciation/07-hungarian-transfer-notes.md`.)
 - **じゃ** is a single mora (じ + small ゃ). じゃありません = じゃ・あ・り・ま・せ・ん.
 - **では** = で・は read "de-wa," two morae.
 

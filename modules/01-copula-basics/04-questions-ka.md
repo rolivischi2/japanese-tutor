@@ -3,7 +3,7 @@ module: 01
 file: 04-questions-ka
 lang_focus: grammar
 kanji_level: 0
-last_updated: 2026-05-22
+last_updated: 2026-05-23
 ---
 
 # Questions — か
@@ -37,8 +37,8 @@ the end does the entire job.
 
 か already marks the sentence as a question, so standard Japanese writing ends a
 か-question with a normal full stop 。 — the か itself is the "question mark."
-You will often see a "?" added for clarity in textbooks and worksheets (your
-Preply PDF does this); both are fine. This module uses 。.
+You will often see a "?" added for clarity in textbooks and worksheets; both are
+fine. This module uses 。.
 
 ## Answering: はい / いいえ + a full sentence
 
