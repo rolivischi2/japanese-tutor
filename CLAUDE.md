@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-A personal Japanese-language curriculum for one learner ("Roland") aimed at **conversational mastery**, not JLPT certification. It is a content repository — Markdown lessons, CSV/JSON vocab and kanji data, and two Python helper scripts — designed so Claude Code can extend it deterministically as the learner progresses.
+A Japanese-language curriculum aimed at **conversational mastery**, not JLPT certification. It is a content repository — Markdown lessons, CSV/JSON vocab and kanji data, and two Python helper scripts — designed so Claude Code can extend it deterministically as the learner progresses.
 
 **Current state:** the directory tree is fully scaffolded, **Module 00** (writing systems) and **Module 01** (copula basics) are built, and the helper scripts exist. Modules 02–12 have `00-overview.md` and `module-vocab.json` only — their drills and dialogues are filled in chapter-by-chapter as the learner advances. `INSTRUCTIONS.md` is the original blueprint and the source of truth for pedagogy and per-module content outlines (§3.5); consult it before authoring any module. `INDEX.md` holds the live module status table (locked/active/done) — it is the authoritative record of the learner's current position.
 
@@ -51,8 +51,8 @@ The 13-module curriculum (M00–M12) is a "verb-form complexity ladder," not a J
 
 1. **Polite-first, plain-form-fast.** Modules 01–05 use ます/です. Module 06 introduces plain forms aggressively (Genki delays this to ~Lesson 11). From M07 onward, structures are shown in side-by-side polite/plain tables.
 2. **Comprehensible input from Day 1** — listening resources start in Module 00, not at the end.
-3. **Pitch accent taught from Module 00** — the learner's Hungarian L1 imposes first-mora intensity stress, so pitch drilling is front-loaded.
+3. **Pitch accent taught from Module 00** — many L1s impose intensity stress that overrides Japanese pitch, so pitch drilling is front-loaded.
 
-Other intentional ordering choices: existence verbs (あります/います) before adjectives; te-form gets its own module (M05); plain forms (M06) precede sentence-ending particles (M07). The learner's Hungarian L1 / German (Swiss German) L2 background drives specific pronunciation content — see `INSTRUCTIONS.md` §1.3.
+Other intentional ordering choices: existence verbs (あります/います) before adjectives; te-form gets its own module (M05); plain forms (M06) precede sentence-ending particles (M07). The pronunciation track ships with L1-specific transfer notes for Hungarian and German/Swiss-German speakers as examples (see `pronunciation/07-hungarian-transfer-notes.md`, `pronunciation/08-german-swiss-transfer-notes.md`). Forkers with other L1s should add their own file alongside.
 
 The learner's current position is whatever module is marked `active` in `INDEX.md` (Module 01 at last update). When asked to build the next module, follow the workflow in "Extending the curriculum" above.
