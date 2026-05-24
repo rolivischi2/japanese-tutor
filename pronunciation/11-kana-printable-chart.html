@@ -149,9 +149,29 @@
   .stsn .rule b { color: #b03a4c; }
 
   footer { margin-top: 9px; font-size: 8.5px; color: #b0b0b6; text-align: right; }
+
+  .site-nav{position:sticky;top:0;z-index:100;background:rgba(241,232,214,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid #d8c8a6}
+  .site-nav-inner{max-width:1100px;margin:0 auto;padding:10px 22px;display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-family:"Fraunces",Georgia,serif;font-size:13.5px;font-weight:600;letter-spacing:.04em}
+  .site-nav a{color:#6f6557;text-decoration:none;padding:4px 0;border-bottom:2px solid transparent;transition:color .12s,border-color .12s}
+  .site-nav a:hover{color:#9c2f23}
+  .site-nav a.active{color:#bd3b2c;border-bottom-color:#bd3b2c}
+  .site-nav .nav-brand{color:#2b2620;letter-spacing:.18em;text-transform:uppercase;font-size:11px;margin-right:6px}
+  @media print{.site-nav{display:none}}
 </style>
 </head>
 <body>
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <span class="nav-brand">japan-learning</span>
+    <a href="/">Home</a>
+    <a href="/#curriculum">Curriculum</a>
+    <a href="/kana/">Kana</a>
+    <a href="/chart/" class="active">Chart</a>
+    <a href="/reader/">Reader</a>
+    <a href="/dict/">Dictionary</a>
+    <a href="/numbers/">Numbers</a>
+  </div>
+</nav>
 
 <!-- ================= SHEET 1 — HIRAGANA STUDY ================= -->
 <section class="sheet">
