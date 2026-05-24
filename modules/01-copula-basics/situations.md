@@ -20,6 +20,9 @@ arrive formally in Module 05 (きました, すんでいます, べんきょう
 しています). Treat those lines as **set phrases** for now: memorise the
 whole pattern, don't try to analyse the grammar.
 
+> Source: the original tutor practice sheet (German translations)
+> is available as a [PDF download](source.pdf).
+
 ---
 
 ## ① あいさつ — Greetings
