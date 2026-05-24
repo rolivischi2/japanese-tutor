@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Numbers 1–99 — japan-learning</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f1e8d6; --paper-2:#e9dcc2; --ink:#2b2620; --ink-soft:#6f6557;
+    --vermilion:#bd3b2c; --vermilion-deep:#9c2f23; --gold:#b08a4a;
+    --cell:#f7f0e0; --cell-line:#d8c8a6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{background:var(--paper);color:var(--ink);font-family:"Fraunces",Georgia,serif;-webkit-font-smoothing:antialiased}
+  .jp{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif}
+
+  main{max-width:880px;width:100%;margin:0 auto;padding:36px 24px 60px}
+  nav.breadcrumb{font-size:13px;color:var(--ink-soft);letter-spacing:.04em;margin-bottom:18px}
+  nav.breadcrumb a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s}
+  nav.breadcrumb a:hover{border-bottom-color:var(--vermilion)}
+
+  header.num-header{margin-bottom:30px;padding-bottom:16px;border-bottom:1px solid var(--cell-line)}
+  .kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  h1{font-size:36px;font-weight:700;letter-spacing:.01em;margin:6px 0 6px}
+  .tagline{font-style:italic;font-size:14.5px;color:var(--ink-soft);max-width:680px}
+
+  .builder{background:#fff;border:1px solid var(--cell-line);border-radius:10px;padding:28px 24px;margin-bottom:24px;text-align:center}
+  .input-wrap{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px}
+  input#num{font-family:"Fraunces",Georgia,serif;font-size:72px;font-weight:600;width:200px;text-align:center;
+    border:none;border-bottom:2px solid var(--cell-line);outline:none;background:transparent;color:var(--ink);
+    padding:4px 0;transition:border-color .15s}
+  input#num:focus{border-bottom-color:var(--vermilion)}
+  input#num::-webkit-outer-spin-button,input#num::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  input#num[type=number]{-moz-appearance:textfield}
+  .range-hint{font-size:13px;color:var(--ink-soft);font-style:italic;margin-bottom:24px}
+
+  .chips{display:flex;justify-content:center;gap:10px;margin-bottom:14px;min-height:120px;flex-wrap:wrap}
+  .chip{
+    background:var(--cell);border:1px solid var(--cell-line);border-radius:9px;
+    padding:12px 18px 10px;min-width:80px;
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    animation:chipIn .25s ease both;
+  }
+  @keyframes chipIn{
+    from{opacity:0;transform:translateY(-6px) scale(.96)}
+    to{opacity:1;transform:none}
+  }
+  .chip .romaji{font-size:13px;color:var(--vermilion);font-weight:600;letter-spacing:.06em;text-transform:lowercase}
+  .chip .kana{font-size:34px;line-height:1.1;font-weight:500;color:var(--ink)}
+  .plus{align-self:center;font-size:20px;color:var(--ink-soft);font-weight:400;margin-top:18px}
+
+  .summary{font-size:18px;color:var(--ink);margin-top:8px;letter-spacing:.01em}
+  .summary .kana{font-size:30px;color:var(--ink);margin-right:8px}
+  .summary .english{color:var(--ink-soft);font-style:italic}
+
+  .empty-state{color:var(--ink-soft);font-style:italic;font-size:14px;padding:30px 0}
+  .err{color:var(--vermilion-deep);font-style:normal;font-weight:500}
+
+  .quick-tries{margin-top:18px;text-align:center}
+  .quick-tries-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-right:8px}
+  .quick-btn{display:inline-block;background:transparent;border:1px solid var(--cell-line);border-radius:99px;
+    padding:5px 14px;font-family:"Fraunces",Georgia,serif;font-size:14px;font-weight:600;color:var(--vermilion);
+    margin:4px;cursor:pointer;transition:background .12s,border-color .12s,color .12s}
+  .quick-btn:hover{background:var(--vermilion);border-color:var(--vermilion);color:#fff}
+
+  .section-title{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;
+    margin:36px 0 14px;border-bottom:1px solid var(--cell-line);padding-bottom:8px}
+
+  .tile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
+  .tile{
+    background:#fff;border:1px solid var(--cell-line);border-radius:8px;
+    padding:14px 8px;text-align:center;cursor:pointer;
+    transition:transform .12s,border-color .15s,box-shadow .15s;
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .tile:hover{border-color:var(--vermilion);transform:translateY(-2px);box-shadow:0 8px 20px -12px rgba(43,38,32,.4)}
+  .tile .digit{font-size:22px;font-weight:600;color:var(--ink);font-family:"Fraunces",Georgia,serif}
+  .tile .kana{font-size:18px;font-weight:500;color:var(--ink)}
+  .tile .romaji{font-size:12px;color:var(--vermilion);font-weight:600;letter-spacing:.04em}
+  .tile.alt{background:var(--cell)}
+
+  .rules{margin-top:24px;background:rgba(255,255,255,.5);border-left:3px solid var(--gold);
+    padding:14px 18px;border-radius:0 6px 6px 0;font-size:14.5px;line-height:1.7;color:var(--ink-soft)}
+  .rules b{color:var(--ink)}
+  .rules ul{list-style:none;margin-top:6px}
+  .rules li{padding:3px 0}
+  .rules .jp{color:var(--vermilion-deep);font-weight:500}
+
+  .footnote{font-size:12.5px;color:var(--ink-soft);font-style:italic;margin-top:18px;line-height:1.6}
+
+  footer{margin-top:60px;padding:24px 0 0;text-align:center;font-size:11.5px;color:var(--ink-soft);line-height:1.7;border-top:1px solid var(--cell-line)}
+  footer a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:2px}
+  footer a:hover{color:var(--vermilion-deep)}
+</style>
+</head>
+<body>
+<main>
+  <nav class="breadcrumb"><a href="/">Home</a> &rsaquo; Numbers</nav>
+  <header class="num-header">
+    <div class="kicker">japan-learning</div>
+    <h1>Numbers 1–99</h1>
+    <p class="tagline">Type any number from 1 to 99 and see how it&rsquo;s built in Japanese. Each kana chip shows its romaji reading. Click any reference tile to load it.</p>
+  </header>
+
+  <div class="builder">
+    <div class="input-wrap">
+      <input id="num" type="number" min="1" max="99" inputmode="numeric" placeholder="25" autofocus>
+    </div>
+    <div class="range-hint">Enter a whole number between 1 and 99.</div>
+    <div id="chips" class="chips"></div>
+    <div id="summary" class="summary"></div>
+    <div class="quick-tries">
+      <span class="quick-tries-label">Try:</span>
+      <button class="quick-btn" data-n="1">1</button>
+      <button class="quick-btn" data-n="7">7</button>
+      <button class="quick-btn" data-n="10">10</button>
+      <button class="quick-btn" data-n="14">14</button>
+      <button class="quick-btn" data-n="25">25</button>
+      <button class="quick-btn" data-n="38">38</button>
+      <button class="quick-btn" data-n="70">70</button>
+      <button class="quick-btn" data-n="99">99</button>
+    </div>
+  </div>
+
+  <h2 class="section-title">1 — 10</h2>
+  <div id="grid-ones" class="tile-grid"></div>
+
+  <h2 class="section-title">Tens (multiples of 10)</h2>
+  <div id="grid-tens" class="tile-grid"></div>
+
+  <div class="rules">
+    <b>Three composition rules</b>
+    <ul>
+      <li>· <b>11–19:</b> <span class="jp">じゅう</span> + ones &nbsp;→&nbsp; 11 = <span class="jp">じゅういち</span></li>
+      <li>· <b>20, 30, … 90:</b> ones + <span class="jp">じゅう</span> &nbsp;→&nbsp; 20 = <span class="jp">にじゅう</span></li>
+      <li>· <b>21–99:</b> tens + ones &nbsp;→&nbsp; 25 = <span class="jp">にじゅう</span> + <span class="jp">ご</span> = <span class="jp">にじゅうご</span></li>
+    </ul>
+  </div>
+
+  <p class="footnote">
+    Reading variants: 4 = よん (also <span class="jp">し</span>), 7 = なな (also <span class="jp">しち</span>),
+    9 = きゅう (also <span class="jp">く</span>). The builder uses the most common forms; the alternatives
+    appear in some compound counters and idioms.
+  </p>
+</main>
+<footer>
+  Source &middot; <a href="https://github.com/rolivischi2/japanese-tutor" target="_blank" rel="noopener">github.com/rolivischi2/japanese-tutor</a>
+</footer>
+
+<script>
+(function() {
+  // Hard-coded lookup tables — no external libs.
+  const ONES = {
+    1: { kana: "いち",  romaji: "ichi" },
+    2: { kana: "に",    romaji: "ni"   },
+    3: { kana: "さん",  romaji: "san"  },
+    4: { kana: "よん",  romaji: "yon"  },
+    5: { kana: "ご",    romaji: "go"   },
+    6: { kana: "ろく",  romaji: "roku" },
+    7: { kana: "なな",  romaji: "nana" },
+    8: { kana: "はち",  romaji: "hachi"},
+    9: { kana: "きゅう", romaji: "kyū" },
+  };
+  const TEN = { kana: "じゅう", romaji: "jū" };
+
+  const ENGLISH = {
+    1:"one", 2:"two", 3:"three", 4:"four", 5:"five",
+    6:"six", 7:"seven", 8:"eight", 9:"nine", 10:"ten",
+    11:"eleven", 12:"twelve", 13:"thirteen", 14:"fourteen", 15:"fifteen",
+    16:"sixteen", 17:"seventeen", 18:"eighteen", 19:"nineteen", 20:"twenty",
+    30:"thirty", 40:"forty", 50:"fifty", 60:"sixty", 70:"seventy", 80:"eighty", 90:"ninety",
+  };
+  function englishFor(n) {
+    if (ENGLISH[n]) return ENGLISH[n];
+    if (n > 20 && n < 100) {
+      const tens = Math.floor(n / 10) * 10;
+      const ones = n % 10;
+      return ENGLISH[tens] + "-" + ENGLISH[ones];
+    }
+    return "";
+  }
+
+  // Compose a number into chips. Returns array of { kana, romaji }.
+  function compose(n) {
+    if (n < 1 || n > 99) return [];
+    if (n <= 9) return [ONES[n]];
+    if (n === 10) return [TEN];
+    if (n < 20) return [TEN, ONES[n - 10]];
+    const tensDigit = Math.floor(n / 10);
+    const onesDigit = n % 10;
+    const out = [ONES[tensDigit], TEN];
+    if (onesDigit > 0) out.push(ONES[onesDigit]);
+    return out;
+  }
+
+  const numEl = document.getElementById("num");
+  const chipsEl = document.getElementById("chips");
+  const summaryEl = document.getElementById("summary");
+  const gridOnes = document.getElementById("grid-ones");
+  const gridTens = document.getElementById("grid-tens");
+
+  function render(rawValue) {
+    chipsEl.innerHTML = "";
+    summaryEl.innerHTML = "";
+    if (rawValue === "" || rawValue === null) {
+      chipsEl.innerHTML = '<div class="empty-state">Type a number above.</div>';
+      return;
+    }
+    const n = parseInt(rawValue, 10);
+    if (!Number.isFinite(n) || n < 1 || n > 99) {
+      chipsEl.innerHTML = '<div class="empty-state err">Enter a whole number between 1 and 99.</div>';
+      return;
+    }
+    const parts = compose(n);
+    parts.forEach((p, i) => {
+      const chip = document.createElement("div");
+      chip.className = "chip";
+      chip.innerHTML = `<div class="romaji">${p.romaji}</div><div class="kana jp">${p.kana}</div>`;
+      chipsEl.appendChild(chip);
+      if (i < parts.length - 1) {
+        const plus = document.createElement("div");
+        plus.className = "plus";
+        plus.textContent = "+";
+        chipsEl.appendChild(plus);
+      }
+    });
+    const fullKana = parts.map(p => p.kana).join("");
+    const fullRomaji = parts.map(p => p.romaji).join("·");
+    const eng = englishFor(n);
+    summaryEl.innerHTML = `<span class="kana jp">${fullKana}</span> &middot; <span style="color:var(--vermilion)">${fullRomaji}</span> &middot; <span class="english">${eng}</span>`;
+  }
+
+  function buildTile(n, alt) {
+    const parts = compose(n);
+    const fullKana = parts.map(p => p.kana).join("");
+    const fullRomaji = parts.map(p => p.romaji).join("");
+    const tile = document.createElement("button");
+    tile.type = "button";
+    tile.className = "tile" + (alt ? " alt" : "");
+    tile.dataset.n = String(n);
+    tile.innerHTML = `<span class="digit">${n}</span><span class="kana jp">${fullKana}</span><span class="romaji">${fullRomaji}</span>`;
+    tile.addEventListener("click", () => {
+      numEl.value = String(n);
+      render(numEl.value);
+      numEl.focus();
+      numEl.select();
+    });
+    return tile;
+  }
+
+  for (let i = 1; i <= 10; i++) gridOnes.appendChild(buildTile(i));
+  [10, 20, 30, 40, 50, 60, 70, 80, 90].forEach((n, i) => gridTens.appendChild(buildTile(n, true)));
+
+  numEl.addEventListener("input", () => render(numEl.value));
+  document.querySelectorAll(".quick-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      numEl.value = btn.dataset.n;
+      render(numEl.value);
+      numEl.focus();
+      numEl.select();
+    });
+  });
+
+  // Initial: show a friendly default
+  numEl.value = "25";
+  render(numEl.value);
+})();
+</script>
+</body>
+</html>
