@@ -16,6 +16,7 @@ uv run "$ROOT/tools/build_site.py"
 cp "$ROOT/modules/00-writing-systems/kana-guide.html" "$OUT/kana/index.html"
 cp "$ROOT/pronunciation/11-kana-printable-chart.html" "$OUT/chart/index.html"
 cp "$ROOT/tools/reader.html"                          "$OUT/reader/index.html"
+cp "$ROOT/tools/assets/favicon.png"                   "$OUT/favicon.png"
 
 echo
 echo "Built $OUT/"
