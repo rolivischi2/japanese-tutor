@@ -829,19 +829,27 @@ if('speechSynthesis' in window){
 }else{
   document.getElementById('audioWarn').style.display='block';
 }
+let _lastSpeakAt = 0;
 function speak(text){
   if(!('speechSynthesis' in window)) return;
+  // Debounce: ignore calls within 250ms of the previous (kills any
+  // accidental double-fire from listeners / re-render races).
+  const now = Date.now();
+  if (now - _lastSpeakAt < 250) return;
+  _lastSpeakAt = now;
+  // Chrome's cancel() is async — give it a tick to flush the queue
+  // before queuing the new utterance, or any buffered remnant of the
+  // previous one plays out as a "ghost" second sound.
   speechSynthesis.cancel();
-  // Single utterance per play. The visible "Hear it" button is the
-  // repeat. (Earlier versions doubled the syllable for TTS clarity;
-  // single playback is cleaner UX even if vowel quality suffers.)
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang  = 'ja-JP';
-  u.rate  = 0.55;
-  u.pitch = 1;
-  u.volume = 1;
-  if(jaVoice) u.voice = jaVoice;
-  speechSynthesis.speak(u);
+  setTimeout(() => {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang  = 'ja-JP';
+    u.rate  = 0.55;
+    u.pitch = 1;
+    u.volume = 1;
+    if(jaVoice) u.voice = jaVoice;
+    speechSynthesis.speak(u);
+  }, 60);
 }
 
 /* ---------- stroke animation ---------- */
