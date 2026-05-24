@@ -324,7 +324,7 @@
   async function getToken() {
     if (token && Date.now() < token.expires) return token;
     setMicState("busy", "Connecting…");
-    const r = await fetch("/api/speech-token");
+    const r = await fetch("/api/speech-token/");
     if (!r.ok) {
       const j = await r.json().catch(() => ({}));
       if (j.error === "speech_not_configured" || r.status === 503) {
@@ -482,7 +482,7 @@
     showPhrase(0);
     // Probe token endpoint to surface setup state early.
     try {
-      const r = await fetch("/api/speech-token");
+      const r = await fetch("/api/speech-token/");
       if (r.status === 503) {
         const j = await r.json().catch(() => ({}));
         setupNote.style.display = "block";
