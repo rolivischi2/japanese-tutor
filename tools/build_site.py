@@ -534,6 +534,7 @@ def main(argv: list[str]) -> int:
     (OUT_DIR / "reader").mkdir()
     (OUT_DIR / "dict").mkdir()
     (OUT_DIR / "numbers").mkdir()
+    (OUT_DIR / "speech").mkdir()
 
     total = 0
     for slug in sorted(modules):
@@ -545,10 +546,16 @@ def main(argv: list[str]) -> int:
     dict_index = build_dict_index(MODULES_DIR)
     dict_html = render_dict_page(dict_template, dict_index)
     (OUT_DIR / "dict" / "index.html").write_text(dict_html, encoding="utf-8")
+    # Standalone JSON for cross-page fetches (e.g. /speech consumes it).
+    (OUT_DIR / "dict-index.json").write_text(
+        json.dumps(dict_index, ensure_ascii=False, separators=(",", ":")),
+        encoding="utf-8",
+    )
 
     print(f"Rendered {total} module page(s) into {OUT_DIR}/modules/")
     print(f"Wrote landing → {OUT_DIR}/index.html")
     print(f"Wrote dictionary → {OUT_DIR}/dict/index.html ({len(dict_index)} entries)")
+    print(f"Wrote dict-index.json → {OUT_DIR}/dict-index.json")
     return 0
 
 

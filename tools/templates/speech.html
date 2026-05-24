@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speech — japan-learning</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://aka.ms/csspeech/jsbrowserpackageraw" defer></script>
+<script src="https://unpkg.com/wanakana@5/wanakana.min.js" defer></script>
+<style>
+  :root{
+    --paper:#f1e8d6; --paper-2:#e9dcc2; --ink:#2b2620; --ink-soft:#6f6557;
+    --vermilion:#bd3b2c; --vermilion-deep:#9c2f23; --gold:#b08a4a;
+    --cell:#f7f0e0; --cell-line:#d8c8a6;
+    --good:#3e8c5b; --ok:#b08a4a; --bad:#bd3b2c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{background:var(--paper);color:var(--ink);font-family:"Fraunces",Georgia,serif;-webkit-font-smoothing:antialiased}
+  .jp,ruby{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif}
+
+  main{max-width:880px;width:100%;margin:0 auto;padding:36px 24px 60px}
+  nav.breadcrumb{font-size:13px;color:var(--ink-soft);letter-spacing:.04em;margin-bottom:18px}
+  nav.breadcrumb a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s}
+  nav.breadcrumb a:hover{border-bottom-color:var(--vermilion)}
+
+  header.s-header{margin-bottom:30px;padding-bottom:16px;border-bottom:1px solid var(--cell-line)}
+  .kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  h1{font-size:36px;font-weight:700;letter-spacing:.01em;margin:6px 0 6px}
+  .tagline{font-style:italic;font-size:14.5px;color:var(--ink-soft);max-width:680px}
+
+  .phrase-card{background:#fff;border:1px solid var(--cell-line);border-radius:10px;padding:30px 28px;margin-bottom:18px;text-align:center}
+  .phrase-kana{font-size:34px;line-height:2.1;color:var(--ink);margin-bottom:6px}
+  .phrase-kana ruby rt{font-size:.45em;color:var(--vermilion);font-weight:600;letter-spacing:.02em;font-family:"Fraunces",Georgia,serif}
+  .phrase-english{font-size:15px;color:var(--ink-soft);font-style:italic;margin-top:4px}
+
+  .row{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;margin:18px 0}
+  .ctrl-btn{font-family:inherit;font-size:14px;font-weight:600;letter-spacing:.04em;padding:9px 16px;
+    background:transparent;border:1px solid var(--cell-line);border-radius:99px;color:var(--ink);cursor:pointer;
+    transition:background .12s,border-color .12s,color .12s}
+  .ctrl-btn:hover:not(:disabled){background:var(--cell);border-color:var(--vermilion);color:var(--vermilion)}
+  .ctrl-btn:disabled{opacity:.5;cursor:not-allowed}
+
+  .mic-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;margin:24px 0}
+  .mic-btn{
+    width:96px;height:96px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--vermilion);color:#fff;font-size:38px;
+    box-shadow:0 8px 22px -10px rgba(189,59,44,.55);
+    transition:transform .12s,background .12s,box-shadow .15s;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .mic-btn:hover:not(:disabled){background:var(--vermilion-deep);transform:translateY(-2px)}
+  .mic-btn:disabled{background:var(--cell);color:var(--ink-soft);box-shadow:none;cursor:not-allowed}
+  .mic-btn.listening{background:var(--vermilion-deep);animation:pulse 1.1s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  .mic-label{font-size:13px;color:var(--ink-soft);font-style:italic;min-height:1.4em;text-align:center}
+  .mic-label.err{color:var(--vermilion-deep);font-style:normal}
+
+  .result{display:none;background:#fff;border:1px solid var(--cell-line);border-radius:10px;padding:22px 22px 18px;margin-bottom:14px}
+  .result.on{display:block;animation:rise .3s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .score-main{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:10px}
+  .score-num{font-size:54px;font-weight:700;line-height:1;font-family:"Fraunces",Georgia,serif}
+  .score-num.good{color:var(--good)}
+  .score-num.ok{color:var(--ok)}
+  .score-num.bad{color:var(--bad)}
+  .score-verdict{font-size:13px;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+  .score-bar{height:10px;background:var(--cell);border-radius:99px;overflow:hidden;margin-bottom:14px}
+  .score-bar-fill{height:100%;background:var(--vermilion);transition:width .4s ease}
+
+  .subscores{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+  .subscore{background:var(--cell);padding:10px 12px;border-radius:6px;text-align:center}
+  .subscore .label{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  .subscore .v{font-size:22px;font-weight:600;color:var(--ink);margin-top:2px}
+
+  .word-strip{display:flex;flex-wrap:wrap;gap:6px;padding:14px 0;font-size:22px;line-height:1.9}
+  .word{padding:2px 8px 0;border-radius:5px;cursor:pointer;border-bottom:3px solid transparent;transition:background .12s}
+  .word.good{border-bottom-color:var(--good)}
+  .word.ok{border-bottom-color:var(--ok)}
+  .word.bad{border-bottom-color:var(--bad)}
+  .word:hover{background:var(--cell)}
+  .word.expanded{background:var(--cell)}
+  .phonemes{display:none;margin:8px 0 0;padding:10px 14px;background:var(--cell);border-radius:6px;font-size:13.5px;color:var(--ink)}
+  .phonemes.on{display:block}
+  .phoneme-row{display:flex;justify-content:space-between;gap:10px;padding:2px 0}
+  .phoneme-row .ph{font-family:"JetBrains Mono",ui-monospace,monospace;color:var(--ink-soft)}
+  .phoneme-row .ps{font-weight:600}
+  .phoneme-row .ps.good{color:var(--good)}
+  .phoneme-row .ps.ok{color:var(--ok)}
+  .phoneme-row .ps.bad{color:var(--bad)}
+
+  .setup-note{background:rgba(255,255,255,.55);border-left:3px solid var(--gold);
+    padding:14px 18px;border-radius:0 6px 6px 0;font-size:13.5px;line-height:1.7;color:var(--ink);margin:14px 0}
+  .setup-note details{margin-top:8px}
+  .setup-note summary{cursor:pointer;font-weight:600;color:var(--vermilion-deep)}
+  .setup-note ol{margin:8px 0 0 22px}
+  .setup-note code{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.92em;background:var(--cell);padding:1px 6px;border-radius:3px}
+
+  footer{margin-top:60px;padding:24px 0 0;text-align:center;font-size:11.5px;color:var(--ink-soft);line-height:1.7;border-top:1px solid var(--cell-line)}
+  footer a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:2px}
+  footer a:hover{color:var(--vermilion-deep)}
+
+  .site-nav{position:sticky;top:0;z-index:100;background:rgba(241,232,214,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--cell-line)}
+  .site-nav-inner{max-width:1100px;margin:0 auto;padding:10px 22px;display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-family:"Fraunces",Georgia,serif;font-size:13.5px;font-weight:600;letter-spacing:.04em}
+  .site-nav a{color:var(--ink-soft);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent;transition:color .12s,border-color .12s}
+  .site-nav a:hover{color:var(--vermilion-deep)}
+  .site-nav a.active{color:var(--vermilion);border-bottom-color:var(--vermilion)}
+  .site-nav .nav-brand{color:var(--ink);letter-spacing:.18em;text-transform:uppercase;font-size:11px;margin-right:6px}
+  @media print{.site-nav{display:none}}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <span class="nav-brand">japan-learning</span>
+    <a href="/">Home</a>
+    <a href="/#curriculum">Curriculum</a>
+    <a href="/kana/">Kana</a>
+    <a href="/chart/">Chart</a>
+    <a href="/reader/">Reader</a>
+    <a href="/dict/">Dictionary</a>
+    <a href="/numbers/">Numbers</a>
+    <a href="/speech/" class="active">Speech</a>
+  </div>
+</nav>
+<main>
+  <nav class="breadcrumb"><a href="/">Home</a> &rsaquo; Speech</nav>
+  <header class="s-header">
+    <div class="kicker">japan-learning</div>
+    <h1>Speech</h1>
+    <p class="tagline">Read a phrase aloud. Microsoft&rsquo;s pronunciation engine scores each word and the overall delivery. Powered by Azure Speech (free tier covers ~5 hours/month).</p>
+  </header>
+
+  <div id="setup" class="setup-note" style="display:none">
+    <b>Setup required.</b> The pronunciation service isn&rsquo;t configured for this deployment yet.
+    <details>
+      <summary>Setup steps (~5 min, free)</summary>
+      <ol>
+        <li>Create a free <a href="https://portal.azure.com" target="_blank" rel="noopener">Azure account</a> (no credit card needed for the F0 tier).</li>
+        <li>In the Azure portal: <b>Create a resource</b> &rarr; <b>Speech</b> &rarr; pricing tier <code>F0</code> (free; 5 hours/month).</li>
+        <li>Open the resource &rarr; <b>Keys and Endpoint</b> &rarr; copy <b>Key 1</b> and the <b>Region</b> (e.g. <code>westeurope</code>).</li>
+        <li>In Vercel project settings &rarr; <b>Environment Variables</b>, add <code>SPEECH_KEY</code> and <code>SPEECH_REGION</code>.</li>
+        <li>Trigger a redeploy (any git push works).</li>
+      </ol>
+    </details>
+  </div>
+
+  <div id="phrase" class="phrase-card">
+    <div class="phrase-kana jp" id="phrase-kana">—</div>
+    <div class="phrase-english" id="phrase-english"></div>
+  </div>
+
+  <div class="row">
+    <button class="ctrl-btn" id="random-btn" type="button">Random phrase</button>
+    <button class="ctrl-btn" id="next-btn" type="button">Next →</button>
+  </div>
+
+  <div class="mic-wrap">
+    <button class="mic-btn" id="mic-btn" type="button" aria-label="Record" disabled>🎤</button>
+    <div class="mic-label" id="mic-label">Loading…</div>
+  </div>
+
+  <div class="result" id="result">
+    <div class="score-main">
+      <div>
+        <div class="score-num" id="score-num">—</div>
+        <div class="score-verdict" id="score-verdict"></div>
+      </div>
+      <div style="text-align:right;font-size:13px;color:var(--ink-soft)">
+        <div>You said:</div>
+        <div id="said" class="jp" style="color:var(--ink);font-size:16px;margin-top:2px">—</div>
+      </div>
+    </div>
+    <div class="score-bar"><div class="score-bar-fill" id="score-bar-fill" style="width:0"></div></div>
+    <div class="subscores">
+      <div class="subscore"><div class="label">Accuracy</div><div class="v" id="ss-acc">—</div></div>
+      <div class="subscore"><div class="label">Fluency</div><div class="v" id="ss-flu">—</div></div>
+      <div class="subscore"><div class="label">Completeness</div><div class="v" id="ss-com">—</div></div>
+    </div>
+    <div class="word-strip" id="word-strip"></div>
+    <div class="row" style="margin-top:14px;margin-bottom:0">
+      <button class="ctrl-btn" id="retry-btn" type="button">Try again</button>
+      <button class="ctrl-btn" id="result-next-btn" type="button">Next phrase →</button>
+    </div>
+  </div>
+</main>
+<footer>
+  Source &middot; <a href="https://github.com/rolivischi2/japanese-tutor" target="_blank" rel="noopener">github.com/rolivischi2/japanese-tutor</a>
+</footer>
+
+<script>
+(function() {
+  // ─── kana → romaji ruby (mirror of reader/dict pages) ───────────
+  const SMALL_KANA = new Set("ぁぃぅぇぉゃゅょゎァィゥェォャュョヮ");
+  const SOKUON = new Set("っッ");
+  const LONG = "ー";
+  function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+  function splitMorae(t){
+    const out=[]; let i=0;
+    while(i<t.length){
+      let m=t[i++];
+      if(SOKUON.has(m)&&i<t.length){
+        let nxt=t[i++];
+        while(i<t.length&&(SMALL_KANA.has(t[i])||t[i]===LONG)) nxt+=t[i++];
+        out.push(m+nxt); continue;
+      }
+      while(i<t.length&&(SMALL_KANA.has(t[i])||t[i]===LONG)) m+=t[i++];
+      out.push(m);
+    }
+    return out;
+  }
+  function waitForLib(name,maxTries=400){
+    return new Promise((res,rej)=>{
+      if(window[name]) return res(window[name]);
+      let n=0;
+      const iv=setInterval(()=>{
+        if(window[name]){clearInterval(iv);res(window[name])}
+        else if(++n>maxTries){clearInterval(iv);rej(new Error(name+" did not load"))}
+      },50);
+    });
+  }
+  function renderKanaWithRomaji(text){
+    if(!text) return "";
+    const morae=splitMorae(text);
+    return morae.map(m=>{
+      if(/[ぁ-んァ-ヶー]/.test(m)){
+        const r=window.wanakana ? window.wanakana.toRomaji(m) : "";
+        return `<ruby>${escapeHtml(m)}<rt>${escapeHtml(r)}</rt></ruby>`;
+      }
+      return escapeHtml(m);
+    }).join("");
+  }
+
+  // ─── DOM refs ──────────────────────────────────────────────────
+  const phraseKana = document.getElementById("phrase-kana");
+  const phraseEnglish = document.getElementById("phrase-english");
+  const micBtn = document.getElementById("mic-btn");
+  const micLabel = document.getElementById("mic-label");
+  const resultEl = document.getElementById("result");
+  const scoreNum = document.getElementById("score-num");
+  const scoreVerdict = document.getElementById("score-verdict");
+  const scoreBarFill = document.getElementById("score-bar-fill");
+  const ssAcc = document.getElementById("ss-acc");
+  const ssFlu = document.getElementById("ss-flu");
+  const ssCom = document.getElementById("ss-com");
+  const wordStrip = document.getElementById("word-strip");
+  const saidEl = document.getElementById("said");
+  const setupNote = document.getElementById("setup");
+  const randomBtn = document.getElementById("random-btn");
+  const nextBtn = document.getElementById("next-btn");
+  const retryBtn = document.getElementById("retry-btn");
+  const resultNextBtn = document.getElementById("result-next-btn");
+
+  // ─── State ─────────────────────────────────────────────────────
+  let phrases = [];   // { kana, english, ... } from dict-index
+  let currentIdx = 0;
+  let token = null;
+  let tokenRegion = null;
+  let listening = false;
+
+  function setMicState(state, msg) {
+    const states = ["ready", "listening", "busy", "disabled"];
+    if (state === "listening") {
+      micBtn.classList.add("listening");
+      micBtn.disabled = false;
+    } else {
+      micBtn.classList.remove("listening");
+      micBtn.disabled = (state === "disabled" || state === "busy");
+    }
+    micLabel.classList.toggle("err", state === "error");
+    micLabel.textContent = msg;
+  }
+
+  // ─── Load phrases from /dict-index.json ────────────────────────
+  async function loadPhrases() {
+    try {
+      // Inline index data lives in /dict's HTML; we fetch our own copy.
+      // The build pipeline emits public/dict-index.json as a side product.
+      // If not present (older build), fall back to fetching /dict/ and
+      // parsing the inline window.__dictIndex.
+      let data;
+      try {
+        const r = await fetch("/dict-index.json");
+        if (r.ok) data = await r.json();
+      } catch (_) {}
+      if (!data) {
+        const r = await fetch("/dict/");
+        const html = await r.text();
+        const m = html.match(/window\.__dictIndex\s*=\s*(\[[\s\S]*?\]);/);
+        if (m) data = JSON.parse(m[1]);
+      }
+      if (!Array.isArray(data)) throw new Error("dict-index unavailable");
+      phrases = data.filter(e => e.type === "example" && e.kana);
+      if (!phrases.length) throw new Error("no phrase entries found");
+    } catch (err) {
+      micLabel.textContent = "Failed to load phrase list.";
+      micLabel.classList.add("err");
+      throw err;
+    }
+  }
+
+  function showPhrase(idx) {
+    if (!phrases.length) return;
+    currentIdx = ((idx % phrases.length) + phrases.length) % phrases.length;
+    const p = phrases[currentIdx];
+    phraseKana.innerHTML = renderKanaWithRomaji(p.kana);
+    phraseEnglish.textContent = p.english || "";
+    resultEl.classList.remove("on");
+  }
+  function pickRandom() {
+    if (!phrases.length) return;
+    let n = currentIdx;
+    if (phrases.length > 1) {
+      while (n === currentIdx) n = Math.floor(Math.random() * phrases.length);
+    }
+    showPhrase(n);
+  }
+
+  // ─── Fetch a fresh Azure auth token ────────────────────────────
+  async function getToken() {
+    if (token && Date.now() < token.expires) return token;
+    setMicState("busy", "Connecting…");
+    const r = await fetch("/api/speech-token");
+    if (!r.ok) {
+      const j = await r.json().catch(() => ({}));
+      if (j.error === "speech_not_configured" || r.status === 503) {
+        setupNote.style.display = "block";
+        setMicState("disabled", "Speech service not configured — see setup steps above.");
+      } else {
+        setMicState("disabled", "Token fetch failed: " + (j.message || r.status));
+      }
+      throw new Error("token");
+    }
+    const data = await r.json();
+    token = { value: data.token, expires: Date.now() + 9 * 60 * 1000 };
+    tokenRegion = data.region;
+    return token;
+  }
+
+  // ─── Recognize once with pronunciation assessment ──────────────
+  async function recognizeOnce() {
+    if (listening) return;
+    listening = true;
+
+    try { await waitForLib("SpeechSDK"); }
+    catch { setMicState("disabled", "Speech SDK failed to load."); listening = false; return; }
+    try { await waitForLib("wanakana", 60); } catch (_) {}
+
+    let tk;
+    try { tk = await getToken(); }
+    catch { listening = false; return; }
+
+    const SDK = window.SpeechSDK;
+    const speechConfig = SDK.SpeechConfig.fromAuthorizationToken(tk.value, tokenRegion);
+    speechConfig.speechRecognitionLanguage = "ja-JP";
+
+    const referenceText = phrases[currentIdx].kana;
+    const paConfig = new SDK.PronunciationAssessmentConfig(
+      referenceText,
+      SDK.PronunciationAssessmentGradingSystem.HundredMark,
+      SDK.PronunciationAssessmentGranularity.Phoneme,
+      true,
+    );
+
+    let audioConfig;
+    try { audioConfig = SDK.AudioConfig.fromDefaultMicrophoneInput(); }
+    catch (e) { setMicState("error", "Mic permission denied."); listening = false; return; }
+
+    const recognizer = new SDK.SpeechRecognizer(speechConfig, audioConfig);
+    paConfig.applyTo(recognizer);
+
+    setMicState("listening", "Listening… speak the phrase aloud.");
+
+    recognizer.recognizeOnceAsync(
+      result => {
+        listening = false;
+        recognizer.close();
+        if (result.reason !== SDK.ResultReason.RecognizedSpeech) {
+          setMicState("ready", "No speech detected — try again.");
+          return;
+        }
+        let parsed;
+        try { parsed = JSON.parse(result.json); }
+        catch { setMicState("ready", "Could not parse result."); return; }
+        renderResult(parsed, result.text || "");
+        setMicState("ready", "Tap to try again.");
+      },
+      err => {
+        listening = false;
+        recognizer.close();
+        setMicState("error", "Recognition failed: " + err);
+      },
+    );
+  }
+
+  // ─── Render the assessment result ──────────────────────────────
+  function bandClass(n){ if (n >= 80) return "good"; if (n >= 60) return "ok"; return "bad"; }
+  function verdictFor(n){
+    if (n >= 90) return "excellent";
+    if (n >= 80) return "good";
+    if (n >= 65) return "fair";
+    if (n >= 45) return "rough";
+    return "try again";
+  }
+
+  function renderResult(parsed, recognizedText) {
+    const nbest = (parsed.NBest && parsed.NBest[0]) || {};
+    const pa = nbest.PronunciationAssessment || {};
+    const words = nbest.Words || [];
+
+    const overall = Math.round(pa.PronScore ?? pa.AccuracyScore ?? 0);
+    scoreNum.textContent = overall;
+    scoreNum.className = "score-num " + bandClass(overall);
+    scoreVerdict.textContent = verdictFor(overall);
+    scoreBarFill.style.width = Math.min(100, overall) + "%";
+
+    ssAcc.textContent = Math.round(pa.AccuracyScore ?? 0);
+    ssFlu.textContent = Math.round(pa.FluencyScore ?? 0);
+    ssCom.textContent = Math.round(pa.CompletenessScore ?? 0);
+
+    wordStrip.innerHTML = "";
+    if (words.length === 0) {
+      wordStrip.innerHTML = '<div style="color:var(--ink-soft);font-style:italic;font-size:14px">No per-word data returned.</div>';
+    } else {
+      words.forEach((w, idx) => {
+        const acc = Math.round((w.PronunciationAssessment && w.PronunciationAssessment.AccuracyScore) ?? 0);
+        const errType = (w.PronunciationAssessment && w.PronunciationAssessment.ErrorType) || "None";
+        const cls = errType === "Omission" || errType === "Insertion" ? "bad" : bandClass(acc);
+        const wordSpan = document.createElement("div");
+        wordSpan.style.display = "inline-block";
+        const tag = document.createElement("span");
+        tag.className = "word jp " + cls;
+        tag.textContent = w.Word;
+        tag.title = `${w.Word}: ${acc}% (${errType})`;
+        wordSpan.appendChild(tag);
+        wordStrip.appendChild(wordSpan);
+        // Phoneme detail toggle
+        const phs = w.Phonemes || [];
+        if (phs.length) {
+          tag.addEventListener("click", () => {
+            const existing = wordSpan.querySelector(".phonemes");
+            if (existing) { existing.remove(); tag.classList.remove("expanded"); return; }
+            tag.classList.add("expanded");
+            const panel = document.createElement("div");
+            panel.className = "phonemes on";
+            phs.forEach(p => {
+              const pa2 = p.PronunciationAssessment || {};
+              const pscore = Math.round(pa2.AccuracyScore ?? 0);
+              const row = document.createElement("div");
+              row.className = "phoneme-row";
+              row.innerHTML = `<span class="ph">${escapeHtml(p.Phoneme || "")}</span>` +
+                              `<span class="ps ${bandClass(pscore)}">${pscore}</span>`;
+              panel.appendChild(row);
+            });
+            wordSpan.appendChild(panel);
+          });
+        }
+      });
+    }
+
+    saidEl.textContent = recognizedText || "(empty)";
+    resultEl.classList.add("on");
+  }
+
+  // ─── Wire UI ──────────────────────────────────────────────────
+  micBtn.addEventListener("click", recognizeOnce);
+  randomBtn.addEventListener("click", pickRandom);
+  nextBtn.addEventListener("click", () => showPhrase(currentIdx + 1));
+  retryBtn.addEventListener("click", recognizeOnce);
+  resultNextBtn.addEventListener("click", () => showPhrase(currentIdx + 1));
+
+  // ─── Init ─────────────────────────────────────────────────────
+  (async function init() {
+    setMicState("disabled", "Loading…");
+    try {
+      await loadPhrases();
+    } catch { return; }
+    showPhrase(0);
+    // Probe token endpoint to surface setup state early.
+    try {
+      const r = await fetch("/api/speech-token");
+      if (r.status === 503) {
+        const j = await r.json().catch(() => ({}));
+        setupNote.style.display = "block";
+        setMicState("disabled", "Speech service not configured — see setup steps above.");
+        return;
+      }
+      if (!r.ok) {
+        setMicState("disabled", "Token fetch failed.");
+        return;
+      }
+      const data = await r.json();
+      token = { value: data.token, expires: Date.now() + 9 * 60 * 1000 };
+      tokenRegion = data.region;
+      setMicState("ready", "Tap the mic and read the phrase aloud.");
+    } catch (e) {
+      setMicState("disabled", "Connection failed.");
+    }
+  })();
+})();
+</script>
+</body>
+</html>
