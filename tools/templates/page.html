@@ -216,7 +216,11 @@
   // ──────────────────────────────────────────────────────────────
   // DOM walking + per-node rubification
   // ──────────────────────────────────────────────────────────────
-  const SKIP_TAGS = new Set(["CODE", "PRE", "RUBY", "SCRIPT", "STYLE"]);
+  // Skip <pre> (fenced code blocks — keep literal), <ruby> (existing furigana
+  // — don't double-wrap), and non-content tags. Inline <code> IS walked: in
+  // this curriculum it wraps kana terms for typographic emphasis, not code.
+  // <pre><code>...</code></pre> children are still skipped via the <pre> rule.
+  const SKIP_TAGS = new Set(["PRE", "RUBY", "SCRIPT", "STYLE"]);
 
   function collectTextNodes(root) {
     const out = [];
