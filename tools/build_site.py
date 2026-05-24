@@ -433,12 +433,97 @@ def build_landing(modules: dict[str, ModuleMeta], template: str) -> str:
     return template.replace("{{MODULE_CARDS}}", cards)
 
 
+def _english_sort_key(text: str) -> str:
+    """Lowercase + strip leading articles + punctuation for sort ordering."""
+    s = (text or "").strip().lower()
+    for prefix in ("a ", "an ", "the ", "to "):
+        if s.startswith(prefix):
+            s = s[len(prefix):]
+            break
+    s = re.sub(r"[^a-z0-9\s]", "", s)
+    return s.strip()
+
+
+def build_dict_index(modules_dir: Path) -> list[dict]:
+    """Walk every module-vocab.json, flatten to a list of word + phrase entries."""
+    entries: list[dict] = []
+    for d in sorted(modules_dir.iterdir()):
+        if not d.is_dir():
+            continue
+        vocab_path = d / "module-vocab.json"
+        if not vocab_path.exists():
+            continue
+        try:
+            data = json.loads(vocab_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        if not data:
+            continue
+        module_num = d.name.split("-", 1)[0]
+        for v in data:
+            vid = v.get("id", "")
+            kana = v.get("kana", "")
+            kanji = v.get("kanji")
+            reading = v.get("reading") or kana
+            english_list = v.get("english") or []
+            english = ", ".join(english_list)
+            pos = v.get("pos") or ""
+            pitch = (v.get("pitch_accent") or {}).get("pattern") or ""
+            tags = v.get("tags") or []
+            search_parts = [
+                vid, kana, reading, english.lower(), pos, " ".join(tags),
+            ]
+            if kanji:
+                search_parts.append(kanji)
+            search_text = " ".join(s for s in search_parts if s).lower()
+            entries.append({
+                "type": "word",
+                "module_slug": d.name,
+                "module_num": module_num,
+                "id": vid,
+                "kana": kana,
+                "kanji": kanji,
+                "reading": reading,
+                "english": english,
+                "english_first": _english_sort_key(english_list[0]) if english_list else "",
+                "english_list": english_list,
+                "pos": pos,
+                "pitch": pitch,
+                "tags": tags,
+                "search_text": search_text,
+            })
+            for ex in (v.get("example_sentences") or []):
+                ex_kana = ex.get("kana", "")
+                ex_eng = ex.get("english", "")
+                ex_kanji = ex.get("kanji")
+                ex_search = " ".join(filter(None, [ex_kana, ex_kanji or "", ex_eng.lower()]))
+                entries.append({
+                    "type": "example",
+                    "module_slug": d.name,
+                    "module_num": module_num,
+                    "parent_id": vid,
+                    "kana": ex_kana,
+                    "kanji": ex_kanji,
+                    "english": ex_eng,
+                    "english_first": _english_sort_key(ex_eng),
+                    "search_text": ex_search,
+                })
+    return entries
+
+
+def render_dict_page(template: str, index: list[dict]) -> str:
+    """Inject the index data inline into the dict.html template."""
+    data_json = json.dumps(index, ensure_ascii=False, separators=(",", ":"))
+    return template.replace("{{INDEX_JSON}}", data_json)
+
+
 def main(argv: list[str]) -> int:
     if "--self-test" in argv:
         return run_self_tests()
 
     page_template = (TEMPLATES_DIR / "page.html").read_text(encoding="utf-8")
     landing_template = (TEMPLATES_DIR / "landing.html").read_text(encoding="utf-8")
+    dict_template = (TEMPLATES_DIR / "dict.html").read_text(encoding="utf-8")
     modules = parse_index_md(ROOT / "INDEX.md", MODULES_DIR)
 
     if OUT_DIR.exists():
@@ -447,6 +532,7 @@ def main(argv: list[str]) -> int:
     (OUT_DIR / "kana").mkdir()
     (OUT_DIR / "chart").mkdir()
     (OUT_DIR / "reader").mkdir()
+    (OUT_DIR / "dict").mkdir()
 
     total = 0
     for slug in sorted(modules):
@@ -455,8 +541,13 @@ def main(argv: list[str]) -> int:
     landing_html = build_landing(modules, landing_template)
     (OUT_DIR / "index.html").write_text(landing_html, encoding="utf-8")
 
+    dict_index = build_dict_index(MODULES_DIR)
+    dict_html = render_dict_page(dict_template, dict_index)
+    (OUT_DIR / "dict" / "index.html").write_text(dict_html, encoding="utf-8")
+
     print(f"Rendered {total} module page(s) into {OUT_DIR}/modules/")
     print(f"Wrote landing → {OUT_DIR}/index.html")
+    print(f"Wrote dictionary → {OUT_DIR}/dict/index.html ({len(dict_index)} entries)")
     return 0
 
 

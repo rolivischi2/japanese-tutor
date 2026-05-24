@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dictionary — japan-learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/wanakana@5/wanakana.min.js" defer></script>
+<script src="https://unpkg.com/kuroshiro@1.2.0/dist/kuroshiro.min.js" defer></script>
+<script src="https://unpkg.com/kuroshiro-analyzer-kuromoji@1.1.0/dist/kuroshiro-analyzer-kuromoji.min.js" defer></script>
+<style>
+  :root{
+    --paper:#f1e8d6; --paper-2:#e9dcc2; --ink:#2b2620; --ink-soft:#6f6557;
+    --vermilion:#bd3b2c; --vermilion-deep:#9c2f23; --gold:#b08a4a;
+    --cell:#f7f0e0; --cell-line:#d8c8a6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{background:var(--paper);color:var(--ink);font-family:"Fraunces",Georgia,serif;-webkit-font-smoothing:antialiased}
+  .jp,.kana,.headword,ruby{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif}
+
+  main{max-width:980px;width:100%;margin:0 auto;padding:36px 24px 60px}
+  nav.breadcrumb{font-size:13px;color:var(--ink-soft);letter-spacing:.04em;margin-bottom:18px}
+  nav.breadcrumb a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s}
+  nav.breadcrumb a:hover{border-bottom-color:var(--vermilion)}
+
+  header.dict-header{margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--cell-line)}
+  .kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  h1{font-size:36px;font-weight:700;letter-spacing:.01em;margin:6px 0 6px}
+  .tagline{font-style:italic;font-size:14.5px;color:var(--ink-soft);max-width:680px}
+
+  .search-wrap{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--cell-line);border-radius:8px;padding:10px 14px;margin:20px 0 10px;transition:border-color .15s,box-shadow .15s}
+  .search-wrap:focus-within{border-color:var(--vermilion);box-shadow:0 0 0 3px rgba(189,59,44,.12)}
+  .search-wrap svg{flex-shrink:0;opacity:.55}
+  #dict-search{flex:1;border:none;outline:none;font-family:inherit;font-size:17px;background:transparent;color:var(--ink)}
+  #dict-search::placeholder{color:var(--ink-soft);font-style:italic}
+  .clear-btn{background:none;border:none;font-size:18px;color:var(--ink-soft);cursor:pointer;padding:2px 6px;border-radius:4px;transition:color .12s,background .12s;display:none}
+  .clear-btn:hover{color:var(--vermilion-deep);background:var(--cell)}
+  .clear-btn.visible{display:inline-block}
+
+  .summary{font-size:13px;color:var(--ink-soft);margin-bottom:18px;min-height:1.4em}
+  .section-title{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin:28px 0 12px;border-bottom:1px solid var(--cell-line);padding-bottom:8px}
+  .section-title.empty{opacity:.5}
+
+  .entry{display:block;background:#fff;border:1px solid var(--cell-line);border-radius:7px;padding:14px 16px;margin-bottom:10px;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s,transform .12s}
+  .entry:hover{border-color:var(--vermilion);box-shadow:0 6px 16px -10px rgba(43,38,32,.4);transform:translateY(-1px)}
+  .entry.hidden{display:none}
+
+  .word-entry .headword{font-size:26px;line-height:1.4;font-weight:500;margin-bottom:2px}
+  .word-entry .meta{font-size:12px;color:var(--ink-soft);letter-spacing:.04em;margin-bottom:6px}
+  .word-entry .meta .module-tag{display:inline-block;background:var(--cell);padding:1px 8px;border-radius:99px;font-size:11px;font-weight:600;color:var(--ink-soft);margin-left:4px}
+  .word-entry .english{font-size:15.5px;color:var(--ink);margin-bottom:4px}
+  .word-entry .example-list{list-style:none;margin:8px 0 0 0;padding:8px 0 0;border-top:1px dashed var(--cell-line);font-size:14px;color:var(--ink-soft)}
+  .word-entry .example-list li{margin-bottom:6px;line-height:1.5}
+  .word-entry .example-list li:last-child{margin-bottom:0}
+  .word-entry .example-list .kana{color:var(--ink)}
+
+  .phrase-entry .kana{font-size:21px;line-height:1.45;font-weight:500;margin-bottom:4px;color:var(--ink)}
+  .phrase-entry .english{font-size:14.5px;color:var(--ink-soft);margin-bottom:6px}
+  .phrase-entry .from{font-size:11.5px;color:var(--ink-soft);letter-spacing:.04em}
+  .phrase-entry .from .from-word{color:var(--vermilion-deep);font-weight:500}
+
+  /* Romaji ruby — red, always on */
+  ruby{margin:0 1px}
+  ruby rt{font-size:.5em;color:var(--vermilion);font-weight:600;letter-spacing:.02em;font-family:"Fraunces",Georgia,serif}
+
+  .empty-state{text-align:center;padding:40px 0;color:var(--ink-soft);font-style:italic}
+  .more-results{text-align:center;font-size:13px;color:var(--ink-soft);padding:14px;font-style:italic;background:var(--cell);border-radius:6px;margin-top:12px}
+
+  .status-line{font-size:12px;color:var(--ink-soft);font-style:italic;text-align:right;min-height:1.2em;margin-top:6px}
+  .status-line.err{color:var(--vermilion-deep);font-style:normal}
+
+  footer{margin-top:60px;padding:24px 0 0;text-align:center;font-size:11.5px;color:var(--ink-soft);line-height:1.7;border-top:1px solid var(--cell-line)}
+  footer a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:2px}
+  footer a:hover{color:var(--vermilion-deep)}
+</style>
+</head>
+<body>
+<main>
+  <nav class="breadcrumb"><a href="/">Home</a> &rsaquo; Dictionary</nav>
+  <header class="dict-header">
+    <div class="kicker">japan-learning</div>
+    <h1>Dictionary</h1>
+    <p class="tagline">Every word and phrase in the curriculum. Search in Japanese, romaji, or English. Romaji always above each character.</p>
+  </header>
+
+  <div class="search-wrap">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <input id="dict-search" type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search words and phrases…">
+    <button id="clear-btn" class="clear-btn" type="button" aria-label="Clear">&times;</button>
+  </div>
+  <div id="summary" class="summary"></div>
+  <div id="status" class="status-line"></div>
+
+  <section>
+    <h2 id="words-title" class="section-title">Words</h2>
+    <div id="words-list"></div>
+  </section>
+  <section>
+    <h2 id="phrases-title" class="section-title">Example phrases</h2>
+    <div id="phrases-list"></div>
+  </section>
+</main>
+<footer>
+  Source &middot; <a href="https://github.com/rolivischi2/japanese-tutor" target="_blank" rel="noopener">github.com/rolivischi2/japanese-tutor</a>
+</footer>
+
+<script>
+window.__dictIndex = {{INDEX_JSON}};
+</script>
+<script>
+(function() {
+  // ──────────────────────────────────────────────────────────────
+  // Romaji helpers (mirror of tools/reader.html + page.html)
+  // ──────────────────────────────────────────────────────────────
+  const KANJI_RE = /[一-鿿㐀-䶿]/;
+  const SMALL_KANA = new Set("ぁぃぅぇぉゃゅょゎァィゥェォャュョヮ");
+  const SOKUON = new Set("っッ");
+  const LONG_MARK = "ー";
+
+  function hasKanji(t) { return KANJI_RE.test(t); }
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+  function splitKanaIntoMorae(text) {
+    const out = []; let i = 0;
+    while (i < text.length) {
+      let mora = text[i++];
+      if (SOKUON.has(mora) && i < text.length) {
+        let next = text[i++];
+        while (i < text.length && (SMALL_KANA.has(text[i]) || text[i] === LONG_MARK)) next += text[i++];
+        out.push(mora + next); continue;
+      }
+      while (i < text.length && (SMALL_KANA.has(text[i]) || text[i] === LONG_MARK)) mora += text[i++];
+      out.push(mora);
+    }
+    return out;
+  }
+  function waitForLib(name) {
+    return new Promise((resolve, reject) => {
+      if (window[name]) return resolve(window[name]);
+      let tries = 0;
+      const iv = setInterval(() => {
+        if (window[name]) { clearInterval(iv); resolve(window[name]); }
+        else if (++tries > 400) { clearInterval(iv); reject(new Error(name + " failed to load")); }
+      }, 50);
+    });
+  }
+  function renderWithWanakana(text) {
+    const morae = splitKanaIntoMorae(text);
+    return morae.map(m => {
+      if (/[ぁ-んァ-ヶー]/.test(m)) {
+        const romaji = window.wanakana.toRomaji(m);
+        return `<ruby>${escapeHtml(m)}<rt>${escapeHtml(romaji)}</rt></ruby>`;
+      }
+      return escapeHtml(m);
+    }).join("");
+  }
+  let kuro = null;
+  async function getKuro() {
+    if (kuro) return kuro;
+    setStatus("Loading kanji dictionary (~25 MB, first time only)…");
+    await waitForLib("Kuroshiro");
+    await waitForLib("KuromojiAnalyzer");
+    kuro = new window.Kuroshiro();
+    await kuro.init(new window.KuromojiAnalyzer({ dictPath: "https://unpkg.com/kuromoji@0.1.2/dict/" }));
+    return kuro;
+  }
+  async function renderWithKuro(text) {
+    const k = await getKuro();
+    return await k.convert(text, { mode: "furigana", to: "romaji", romajiSystem: "hepburn" });
+  }
+  async function renderRubyForText(text) {
+    if (!text) return "";
+    if (hasKanji(text)) {
+      try { return await renderWithKuro(text); }
+      catch (e) { return renderWithWanakana(text); }
+    }
+    return renderWithWanakana(text);
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // DOM refs + state
+  // ──────────────────────────────────────────────────────────────
+  const searchEl = document.getElementById("dict-search");
+  const clearBtn = document.getElementById("clear-btn");
+  const summaryEl = document.getElementById("summary");
+  const statusEl = document.getElementById("status");
+  const wordsList = document.getElementById("words-list");
+  const phrasesList = document.getElementById("phrases-list");
+  const wordsTitle = document.getElementById("words-title");
+  const phrasesTitle = document.getElementById("phrases-title");
+
+  const INDEX = (window.__dictIndex || []).slice();
+  const MAX_RESULTS_PER_SECTION = 60;
+
+  function setStatus(msg, err) {
+    statusEl.textContent = msg || "";
+    statusEl.classList.toggle("err", !!err);
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // Build the entry cards once (browse-mode order: alphabetical)
+  // Ruby is rendered async after the DOM is in place.
+  // ──────────────────────────────────────────────────────────────
+  function buildWordCard(e) {
+    const a = document.createElement("a");
+    a.className = "entry word-entry";
+    a.href = `/modules/${e.module_slug}/vocab.html#${e.id}`;
+    a.dataset.search = e.search_text;
+    a.dataset.englishSort = e.english_first;
+    const kanjiHtml = e.kanji ? ` <span class="jp" style="color:var(--ink-soft);font-weight:400;font-size:.7em">(${escapeHtml(e.kanji)})</span>` : "";
+    const metaBits = [];
+    if (e.pos) metaBits.push(escapeHtml(e.pos));
+    if (e.pitch) metaBits.push(`${escapeHtml(e.pitch)} pitch`);
+    metaBits.push(`<span class="module-tag">M${e.module_num}</span>`);
+    let html = `
+      <div class="headword jp" data-ja="${escapeHtml(e.kana)}">${escapeHtml(e.kana)}${kanjiHtml}</div>
+      <div class="meta">${metaBits.join(" · ")}</div>
+      <div class="english">${escapeHtml(e.english) || "—"}</div>`;
+    // Inline examples on word cards
+    const examples = INDEX.filter(x => x.type === "example" && x.parent_id === e.id && x.module_slug === e.module_slug);
+    if (examples.length) {
+      html += `<ul class="example-list">`;
+      for (const ex of examples) {
+        html += `<li><span class="kana jp" data-ja="${escapeHtml(ex.kana)}">${escapeHtml(ex.kana)}</span> — ${escapeHtml(ex.english)}</li>`;
+      }
+      html += `</ul>`;
+    }
+    a.innerHTML = html;
+    return a;
+  }
+
+  function buildPhraseCard(e) {
+    const a = document.createElement("a");
+    a.className = "entry phrase-entry";
+    a.href = `/modules/${e.module_slug}/vocab.html#${e.parent_id}`;
+    a.dataset.search = e.search_text;
+    a.dataset.englishSort = e.english_first;
+    const parent = INDEX.find(x => x.type === "word" && x.id === e.parent_id && x.module_slug === e.module_slug);
+    const parentKana = parent ? parent.kana : e.parent_id;
+    a.innerHTML = `
+      <div class="kana jp" data-ja="${escapeHtml(e.kana)}">${escapeHtml(e.kana)}</div>
+      <div class="english">${escapeHtml(e.english)}</div>
+      <div class="from">from <span class="from-word jp">${escapeHtml(parentKana)}</span> · M${e.module_num}</div>`;
+    return a;
+  }
+
+  // Build all cards once.
+  const words = INDEX.filter(e => e.type === "word")
+    .sort((a, b) => (a.english_first || "").localeCompare(b.english_first || ""));
+  const phrases = INDEX.filter(e => e.type === "example")
+    .sort((a, b) => (a.english_first || "").localeCompare(b.english_first || ""));
+
+  const wordCards = [];
+  for (const w of words) {
+    const card = buildWordCard(w);
+    wordsList.appendChild(card);
+    wordCards.push(card);
+  }
+  const phraseCards = [];
+  for (const p of phrases) {
+    const card = buildPhraseCard(p);
+    phrasesList.appendChild(card);
+    phraseCards.push(card);
+  }
+
+  function updateSummary() {
+    const w = wordCards.filter(c => !c.classList.contains("hidden")).length;
+    const p = phraseCards.filter(c => !c.classList.contains("hidden")).length;
+    summaryEl.textContent = `${w} word${w === 1 ? "" : "s"}, ${p} phrase${p === 1 ? "" : "s"}.`;
+    wordsTitle.classList.toggle("empty", w === 0);
+    phrasesTitle.classList.toggle("empty", p === 0);
+  }
+  updateSummary();
+
+  // ──────────────────────────────────────────────────────────────
+  // Apply ruby to every .jp element after wanakana loads.
+  // ──────────────────────────────────────────────────────────────
+  async function applyRubyToAll() {
+    setStatus("Loading romaji…");
+    try {
+      await waitForLib("wanakana");
+    } catch (err) {
+      setStatus("wanakana failed to load.", true);
+      return;
+    }
+    // Detect if any visible Japanese contains kanji; preload kuroshiro if so.
+    const anyKanji = INDEX.some(e => (e.kanji) || (e.kana && hasKanji(e.kana)) || hasKanji(e.search_text));
+    if (anyKanji) {
+      try { await getKuro(); }
+      catch (err) { setStatus("Kanji reading lookup unavailable; kana shown with ruby.", true); }
+    }
+    const targets = document.querySelectorAll(".jp[data-ja]");
+    setStatus(`Rendering ruby (${targets.length} items)…`);
+    let i = 0;
+    for (const el of targets) {
+      const text = el.dataset.ja;
+      try {
+        el.innerHTML = await renderRubyForText(text);
+      } catch (err) {
+        // leave plain text
+      }
+      i++;
+      if (i % 40 === 0) {
+        setStatus(`Rendering ruby (${i}/${targets.length})…`);
+        await new Promise(r => setTimeout(r, 0));
+      }
+    }
+    setStatus("");
+  }
+  applyRubyToAll();
+
+  // ──────────────────────────────────────────────────────────────
+  // Search / filter
+  // ──────────────────────────────────────────────────────────────
+  function filterAll(rawQuery) {
+    const q = (rawQuery || "").toLowerCase().trim();
+    clearBtn.classList.toggle("visible", q.length > 0);
+    if (!q) {
+      for (const c of wordCards) c.classList.remove("hidden");
+      for (const c of phraseCards) c.classList.remove("hidden");
+      updateSummary();
+      return;
+    }
+    let qKana = null;
+    if (window.wanakana && /[a-z]/.test(q)) {
+      try { qKana = window.wanakana.toHiragana(q); } catch (_) {}
+    }
+    function matches(card) {
+      const hay = card.dataset.search || "";
+      if (hay.indexOf(q) >= 0) return true;
+      if (qKana && hay.indexOf(qKana) >= 0) return true;
+      return false;
+    }
+    let wShown = 0, pShown = 0;
+    for (const c of wordCards) {
+      const m = matches(c);
+      if (m && wShown < MAX_RESULTS_PER_SECTION) {
+        c.classList.remove("hidden"); wShown++;
+      } else {
+        c.classList.add("hidden");
+      }
+    }
+    for (const c of phraseCards) {
+      const m = matches(c);
+      if (m && pShown < MAX_RESULTS_PER_SECTION) {
+        c.classList.remove("hidden"); pShown++;
+      } else {
+        c.classList.add("hidden");
+      }
+    }
+    updateSummary();
+  }
+
+  let debounce = null;
+  searchEl.addEventListener("input", () => {
+    if (debounce) clearTimeout(debounce);
+    debounce = setTimeout(() => filterAll(searchEl.value), 120);
+  });
+  clearBtn.addEventListener("click", () => {
+    searchEl.value = "";
+    filterAll("");
+    searchEl.focus();
+  });
+  searchEl.focus();
+})();
+</script>
+</body>
+</html>
