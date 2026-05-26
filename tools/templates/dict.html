@@ -490,21 +490,21 @@ window.__dictIndex = {{INDEX_JSON}};
     if (window.wanakana && /[a-z]/.test(q)) {
       try { qKana = window.wanakana.toHiragana(q); } catch (_) {}
     }
-    // A gloss "matches as headword" if it's literally the query OR it starts
-    // with the query followed by a word boundary (space, comma, punctuation,
-    // or open-paren — covers cases like "water (esp. cool or cold)").
+    // A gloss "matches as headword" if the query appears as a complete word
+    // anywhere in the gloss (word-boundary on both sides). Handles both
+    // "water (esp. cool or cold)" matching "water" AND "to drink" matching
+    // "drink" — JMdict prefixes most verb glosses with "to ".
+    function isWordChar(c) {
+      return c >= 0 && ((c >= 97 && c <= 122) || (c >= 48 && c <= 57));
+    }
     function glossIsHeadword(gloss, q) {
       const g = gloss.toLowerCase();
       if (g === q) return true;
-      if (g.startsWith(q)) {
-        const next = g.charCodeAt(q.length);
-        // any non-alphanumeric byte is a word boundary
-        return !(
-          (next >= 97 && next <= 122) || // a-z
-          (next >= 48 && next <= 57)    // 0-9
-        );
-      }
-      return false;
+      const idx = g.indexOf(q);
+      if (idx < 0) return false;
+      const prev = idx === 0 ? -1 : g.charCodeAt(idx - 1);
+      const next = (idx + q.length === g.length) ? -1 : g.charCodeAt(idx + q.length);
+      return !isWordChar(prev) && !isWordChar(next);
     }
 
     const cap = 80;
