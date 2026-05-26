@@ -723,6 +723,20 @@ def main(argv: list[str]) -> int:
         encoding="utf-8",
     )
 
+    # Mnemonics JSON for /drill — single source of truth lives in
+    # tools/build_kana_guide.py:MNEMONIC. Imported via importlib so we
+    # don't trigger that script's CLI behaviour.
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "_bkg", ROOT / "tools" / "build_kana_guide.py"
+    )
+    bkg = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(bkg)
+    (OUT_DIR / "kana-mnemonics.json").write_text(
+        json.dumps(bkg.MNEMONIC, ensure_ascii=False, separators=(",", ":")),
+        encoding="utf-8",
+    )
+
     lectures_count = render_lectures(OUT_DIR, page_template)
     phrases_count = render_phrases(OUT_DIR, page_template)
 

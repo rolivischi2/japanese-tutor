@@ -101,6 +101,16 @@
   .row-hint .slot .ro{font-size:11px;letter-spacing:.04em;color:var(--vermilion);font-weight:600}
   .row-hint .slot.empty .ro{visibility:hidden}
 
+  /* Mnemonic panel — short shape→sound hook for the current prompt */
+  .mnemonic{margin-top:14px;padding:10px 18px;background:rgba(255,255,255,.55);
+    border-left:3px solid var(--gold);border-radius:0 6px 6px 0;
+    font-size:14px;line-height:1.55;color:var(--ink-soft);font-style:italic;
+    transition:opacity .25s;text-align:left;max-width:560px;margin-left:auto;margin-right:auto}
+  .mnemonic.hidden{opacity:0;pointer-events:none;padding:0;margin-top:0;border-left-width:0;max-height:0;overflow:hidden}
+  .mnemonic b{color:var(--vermilion-deep);font-style:normal;font-weight:700}
+  .mnemonic .mn-prefix{display:block;font-style:normal;font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:4px}
+
   /* Hint mode cycler in settings */
   .hint-cycler{font-family:inherit;font-size:11.5px;font-weight:600;letter-spacing:.04em;
     padding:3px 10px;background:transparent;border:1px solid var(--cell-line);border-radius:99px;
@@ -183,6 +193,7 @@
       <div class="hint-label">Row pattern</div>
       <div class="slots" id="row-slots"></div>
     </div>
+    <div class="mnemonic hidden" id="mnemonic"></div>
   </div>
 
   <div class="mastery">
@@ -369,7 +380,84 @@
   const hintCyclerVal = document.getElementById("hint-mode-val");
   const rowHintEl = document.getElementById("row-hint");
   const rowSlotsEl = document.getElementById("row-slots");
+  const mnemonicEl = document.getElementById("mnemonic");
   const savedPill = document.getElementById("saved-pill");
+
+  // ─── Mnemonics (fetched once on init) ──────────────────────────
+  let MNEMONICS = null;
+  // Maps each derived kana (dakuten, handakuten, yoon) to its base hiragana
+  // so the mnemonic for か covers が; for し covers じ, しゃ, etc.
+  function baseKanaOf(c) {
+    if (!c) return "";
+    // Yōon: take the first character (e.g. きゃ → き)
+    if (c.length > 1) return c[0];
+    // NFD decomposition splits voiced kana into base + combining mark.
+    const dec = c.normalize("NFD");
+    return dec[0];
+  }
+  function mnemonicFor(c) {
+    if (!MNEMONICS) return null;
+    if (MNEMONICS[c]) return { html: MNEMONICS[c], prefix: null };
+    const base = baseKanaOf(c);
+    if (base && base !== c && MNEMONICS[base]) {
+      // Build a small prefix explaining how the derived form relates to its base.
+      let prefix = "";
+      const isYoon = c.length > 1;
+      const decomp = c.normalize("NFD");
+      const hasDakuten = decomp.includes("゙");
+      const hasHandakuten = decomp.includes("゚");
+      if (isYoon) {
+        const small = c[1];
+        const vowel = (small === "ゃ" || small === "ャ") ? "ya"
+                   : (small === "ゅ" || small === "ュ") ? "yu" : "yo";
+        prefix = `Yōon: base ${base} + small ${small} = ${vowel}-glide`;
+      } else if (hasHandakuten) {
+        prefix = `Handakuten (゜) form of ${base}: h → p`;
+      } else if (hasDakuten) {
+        prefix = `Dakuten (゛) form of ${base}: voiced`;
+      } else {
+        prefix = `Derived from ${base}`;
+      }
+      return { html: MNEMONICS[base], prefix };
+    }
+    return null;
+  }
+
+  async function loadMnemonics() {
+    try {
+      const r = await fetch("/kana-mnemonics.json");
+      if (!r.ok) return;
+      MNEMONICS = await r.json();
+      // If we already have a current prompt, refresh.
+      if (current) renderMnemonic(current.c);
+    } catch (_) { /* silent — mnemonics are optional */ }
+  }
+
+  function shouldShowMnemonic(kanaChar) {
+    const mode = state.settings.hintMode || "auto";
+    if (mode === "off") return false;
+    if (mode === "on") return true;
+    // Auto: hide once THIS item's level >= 3
+    return itemState(kanaChar).level < 3;
+  }
+
+  function renderMnemonic(c) {
+    if (!shouldShowMnemonic(c)) {
+      mnemonicEl.classList.add("hidden");
+      mnemonicEl.innerHTML = "";
+      return;
+    }
+    const m = mnemonicFor(c);
+    if (!m) {
+      mnemonicEl.classList.add("hidden");
+      mnemonicEl.innerHTML = "";
+      return;
+    }
+    const prefixHtml = m.prefix ? `<span class="mn-prefix">${escapeHtml(m.prefix)}</span>` : "";
+    // m.html contains <b> tags from the source; trust it as-is.
+    mnemonicEl.innerHTML = prefixHtml + m.html;
+    mnemonicEl.classList.remove("hidden");
+  }
 
   // ─── Row helpers ────────────────────────────────────────────────
   function rowForChar(c) { return ROWS_BY_ID[ROW_OF_CHAR[c]]; }
@@ -423,7 +511,10 @@
     updateHintCyclerLabel();
     saveState();
     flashSaved();
-    if (current) renderHint(current.c);
+    if (current) {
+      renderHint(current.c);
+      renderMnemonic(current.c);
+    }
   });
 
   // ─── Saved pill flash ──────────────────────────────────────────
@@ -511,6 +602,7 @@
     promptEl.classList.toggle("yoon", current.c.length > 1);
     promptEl.textContent = current.c;
     renderHint(current.c);
+    renderMnemonic(current.c);
     locked = false;
     ansEl.focus();
   }
@@ -637,7 +729,7 @@
   renderStats();
   renderDots();
   nextPrompt();
-  // Show "not saved" warning permanently if localStorage isn't usable
+  loadMnemonics();   // async; refreshes prompt's mnemonic on completion
   if (!saveOK) flashSaved();
 })();
 </script>
