@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drill — japan-learning</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f1e8d6; --paper-2:#e9dcc2; --ink:#2b2620; --ink-soft:#6f6557;
+    --vermilion:#bd3b2c; --vermilion-deep:#9c2f23; --gold:#b08a4a;
+    --cell:#f7f0e0; --cell-line:#d8c8a6;
+    --good:#3e8c5b; --good-bg:#e0eeda;
+    --bad:#bd3b2c; --bad-bg:#f3dcd6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{background:var(--paper);color:var(--ink);font-family:"Fraunces",Georgia,serif;-webkit-font-smoothing:antialiased}
+  .jp{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif}
+
+  main{max-width:820px;width:100%;margin:0 auto;padding:30px 22px 60px}
+  nav.breadcrumb{font-size:13px;color:var(--ink-soft);letter-spacing:.04em;margin-bottom:14px}
+  nav.breadcrumb a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s}
+  nav.breadcrumb a:hover{border-bottom-color:var(--vermilion)}
+
+  header.d-header{margin-bottom:18px}
+  .kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  h1{font-size:32px;font-weight:700;letter-spacing:.01em;margin:6px 0 4px}
+  .tagline{font-style:italic;font-size:14px;color:var(--ink-soft);max-width:600px}
+
+  /* Settings + stats row */
+  .top-bar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+    background:#fff;border:1px solid var(--cell-line);border-radius:8px;padding:10px 14px;margin:14px 0 6px}
+  .settings{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft)}
+  .settings label{display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+  .settings input[type=checkbox]{accent-color:var(--vermilion);cursor:pointer}
+  .stats{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft);align-items:center}
+  .stats .v{color:var(--ink);font-weight:600;font-size:14px;margin-left:3px}
+  .stats .v.streak{color:var(--vermilion-deep)}
+  .stats .reset-btn{font-family:inherit;font-size:11.5px;font-weight:600;letter-spacing:.04em;
+    padding:3px 10px;background:transparent;border:1px solid var(--cell-line);border-radius:99px;
+    color:var(--ink-soft);cursor:pointer;transition:all .12s}
+  .stats .reset-btn:hover{border-color:var(--vermilion);color:var(--vermilion)}
+
+  /* Drill arena */
+  .arena{
+    background:#fff;border:1px solid var(--cell-line);border-radius:10px;
+    margin:18px 0;padding:46px 24px 32px;text-align:center;
+    transition:background .18s ease, border-color .18s ease;
+  }
+  .arena.good{background:var(--good-bg);border-color:var(--good)}
+  .arena.bad{background:var(--bad-bg);border-color:var(--bad)}
+  .big-kana{font-size:148px;line-height:1;font-weight:500;color:var(--ink);margin-bottom:18px;
+    font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+    min-height:160px;display:flex;align-items:center;justify-content:center;letter-spacing:.02em}
+  .big-kana .yoon{font-size:108px}
+  .feedback{min-height:36px;font-size:18px;color:var(--ink-soft);margin-bottom:12px;font-style:italic}
+  .feedback.good{color:var(--good);font-style:normal;font-weight:600}
+  .feedback.bad{color:var(--bad);font-style:normal;font-weight:600}
+  .feedback .miss-shown{margin-top:4px;display:block;font-size:14px;color:var(--ink-soft);font-style:italic;font-weight:400}
+  .feedback .miss-shown .jp{color:var(--ink);font-style:normal}
+
+  .answer-row{display:flex;justify-content:center;gap:10px;align-items:center}
+  #ans{font-family:"Fraunces",Georgia,serif;font-size:30px;font-weight:600;text-align:center;
+    width:240px;padding:8px 12px;border:none;border-bottom:2px solid var(--cell-line);
+    outline:none;background:transparent;color:var(--ink);letter-spacing:.04em;
+    transition:border-color .15s}
+  #ans:focus{border-bottom-color:var(--vermilion)}
+  #ans[disabled]{opacity:.6;color:var(--ink-soft)}
+
+  .hint{font-size:12.5px;color:var(--ink-soft);font-style:italic;margin-top:10px}
+
+  /* Mastery grid */
+  .mastery{margin-top:28px}
+  .mastery-title{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:8px}
+  .dot-grid{display:flex;flex-wrap:wrap;gap:3px;align-items:center}
+  .dot{width:11px;height:11px;border-radius:2px;background:var(--cell);transition:background .2s}
+  .dot.l0{background:#eee0c4}
+  .dot.l1{background:#e5cf9c}
+  .dot.l2{background:#d8b770}
+  .dot.l3{background:#c89548}
+  .dot.l4{background:#bd6a36}
+  .dot.l5{background:#bd3b2c}
+  .dot[title]{cursor:default}
+  .mastery-legend{font-size:11.5px;color:var(--ink-soft);margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .mastery-legend .swatch{width:10px;height:10px;border-radius:2px;display:inline-block;margin:0 2px 0 8px;vertical-align:middle}
+
+  .empty-pool{padding:30px;text-align:center;color:var(--ink-soft);font-style:italic}
+
+  footer{margin-top:60px;padding:24px 0 0;text-align:center;font-size:11.5px;color:var(--ink-soft);line-height:1.7;border-top:1px solid var(--cell-line)}
+  footer a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:2px}
+  footer a:hover{color:var(--vermilion-deep)}
+
+  .site-nav{position:sticky;top:0;z-index:100;background:rgba(241,232,214,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--cell-line)}
+  .site-nav-inner{max-width:1100px;margin:0 auto;padding:10px 22px;display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-family:"Fraunces",Georgia,serif;font-size:13.5px;font-weight:600;letter-spacing:.04em}
+  .site-nav a{color:var(--ink-soft);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent;transition:color .12s,border-color .12s}
+  .site-nav a:hover{color:var(--vermilion-deep)}
+  .site-nav a.active{color:var(--vermilion);border-bottom-color:var(--vermilion)}
+  .site-nav .nav-brand{color:var(--ink);letter-spacing:.18em;text-transform:uppercase;font-size:11px;margin-right:6px}
+  @media print{.site-nav{display:none}}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <span class="nav-brand">japan-learning</span>
+    <a href="/">Home</a>
+    <a href="/#curriculum">Curriculum</a>
+    <a href="/kana/">Kana</a>
+    <a href="/chart/">Chart</a>
+    <a href="/dict/">Dictionary</a>
+    <a href="/numbers/">Numbers</a>
+    <a href="/phrases/">Phrases</a>
+    <a href="/lectures/">Lectures</a>
+    <a href="/drill/" class="active">Drill</a>
+  </div>
+</nav>
+<main>
+  <nav class="breadcrumb"><a href="/">Home</a> &rsaquo; Drill</nav>
+  <header class="d-header">
+    <div class="kicker">japan-learning</div>
+    <h1>Kana Drill</h1>
+    <p class="tagline">Burst-mode reading practice. Type the romaji of each character, hit Enter. Progress persists across sessions; weak items reappear more often.</p>
+  </header>
+
+  <div class="top-bar">
+    <div class="settings" id="settings">
+      <label><input type="checkbox" data-set="h-basics" checked> Hiragana</label>
+      <label><input type="checkbox" data-set="k-basics"> Katakana</label>
+      <label><input type="checkbox" data-set="dakuten"> Dakuten + handakuten</label>
+      <label><input type="checkbox" data-set="yoon"> Yōon combos</label>
+    </div>
+    <div class="stats">
+      <span>Session: <span class="v" id="stat-session">0/0</span></span>
+      <span>Streak: <span class="v streak" id="stat-streak">0</span></span>
+      <span>Mastery: <span class="v" id="stat-mastery">—</span></span>
+      <button class="reset-btn" id="reset-streak" type="button">Reset streak</button>
+      <button class="reset-btn" id="reset-all" type="button">Wipe progress</button>
+    </div>
+  </div>
+
+  <div class="arena" id="arena">
+    <div class="big-kana jp" id="prompt">—</div>
+    <div class="feedback" id="feedback">&nbsp;</div>
+    <div class="answer-row">
+      <input id="ans" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="romaji">
+    </div>
+    <div class="hint" id="hint">Press Enter to submit. Variants accepted (e.g. shi/si, chi/ti, tsu/tu).</div>
+  </div>
+
+  <div class="mastery">
+    <div class="mastery-title">Mastery</div>
+    <div class="dot-grid" id="dots"></div>
+    <div class="mastery-legend">
+      Level
+      <span class="swatch" style="background:#eee0c4"></span>0
+      <span class="swatch" style="background:#e5cf9c"></span>1
+      <span class="swatch" style="background:#d8b770"></span>2
+      <span class="swatch" style="background:#c89548"></span>3
+      <span class="swatch" style="background:#bd6a36"></span>4
+      <span class="swatch" style="background:#bd3b2c"></span>5
+    </div>
+  </div>
+</main>
+<footer>
+  Source &middot; <a href="https://github.com/rolivischi2/japanese-tutor" target="_blank" rel="noopener">github.com/rolivischi2/japanese-tutor</a>
+</footer>
+
+<script>
+(function() {
+  // ─── Kana inventory ─────────────────────────────────────────────
+  // Set tags: "h-basics", "k-basics", "dakuten", "yoon"
+  // Yōon set includes both hiragana + katakana combinations.
+  const KANA = [
+    // Hiragana basics (46)
+    ["あ","a"], ["い","i"], ["う","u"], ["え","e"], ["お","o"],
+    ["か","ka"], ["き","ki"], ["く","ku"], ["け","ke"], ["こ","ko"],
+    ["さ","sa"], ["し","shi"], ["す","su"], ["せ","se"], ["そ","so"],
+    ["た","ta"], ["ち","chi"], ["つ","tsu"], ["て","te"], ["と","to"],
+    ["な","na"], ["に","ni"], ["ぬ","nu"], ["ね","ne"], ["の","no"],
+    ["は","ha"], ["ひ","hi"], ["ふ","fu"], ["へ","he"], ["ほ","ho"],
+    ["ま","ma"], ["み","mi"], ["む","mu"], ["め","me"], ["も","mo"],
+    ["や","ya"], ["ゆ","yu"], ["よ","yo"],
+    ["ら","ra"], ["り","ri"], ["る","ru"], ["れ","re"], ["ろ","ro"],
+    ["わ","wa"], ["を","wo"], ["ん","n"],
+  ].map(([c,r]) => ({c, r, scripts:["hiragana"], sets:["h-basics"]}));
+
+  const KATA_BASICS = [
+    ["ア","a"], ["イ","i"], ["ウ","u"], ["エ","e"], ["オ","o"],
+    ["カ","ka"], ["キ","ki"], ["ク","ku"], ["ケ","ke"], ["コ","ko"],
+    ["サ","sa"], ["シ","shi"], ["ス","su"], ["セ","se"], ["ソ","so"],
+    ["タ","ta"], ["チ","chi"], ["ツ","tsu"], ["テ","te"], ["ト","to"],
+    ["ナ","na"], ["ニ","ni"], ["ヌ","nu"], ["ネ","ne"], ["ノ","no"],
+    ["ハ","ha"], ["ヒ","hi"], ["フ","fu"], ["ヘ","he"], ["ホ","ho"],
+    ["マ","ma"], ["ミ","mi"], ["ム","mu"], ["メ","me"], ["モ","mo"],
+    ["ヤ","ya"], ["ユ","yu"], ["ヨ","yo"],
+    ["ラ","ra"], ["リ","ri"], ["ル","ru"], ["レ","re"], ["ロ","ro"],
+    ["ワ","wa"], ["ヲ","wo"], ["ン","n"],
+  ].map(([c,r]) => ({c, r, scripts:["katakana"], sets:["k-basics"]}));
+
+  const HIRA_DAKUTEN = [
+    ["が","ga"], ["ぎ","gi"], ["ぐ","gu"], ["げ","ge"], ["ご","go"],
+    ["ざ","za"], ["じ","ji"], ["ず","zu"], ["ぜ","ze"], ["ぞ","zo"],
+    ["だ","da"], ["ぢ","ji"], ["づ","zu"], ["で","de"], ["ど","do"],
+    ["ば","ba"], ["び","bi"], ["ぶ","bu"], ["べ","be"], ["ぼ","bo"],
+    ["ぱ","pa"], ["ぴ","pi"], ["ぷ","pu"], ["ぺ","pe"], ["ぽ","po"],
+  ].map(([c,r]) => ({c, r, scripts:["hiragana"], sets:["dakuten"]}));
+
+  const KATA_DAKUTEN = [
+    ["ガ","ga"], ["ギ","gi"], ["グ","gu"], ["ゲ","ge"], ["ゴ","go"],
+    ["ザ","za"], ["ジ","ji"], ["ズ","zu"], ["ゼ","ze"], ["ゾ","zo"],
+    ["ダ","da"], ["ヂ","ji"], ["ヅ","zu"], ["デ","de"], ["ド","do"],
+    ["バ","ba"], ["ビ","bi"], ["ブ","bu"], ["ベ","be"], ["ボ","bo"],
+    ["パ","pa"], ["ピ","pi"], ["プ","pu"], ["ペ","pe"], ["ポ","po"],
+  ].map(([c,r]) => ({c, r, scripts:["katakana"], sets:["dakuten"]}));
+
+  const HIRA_YOON = [
+    ["きゃ","kya"], ["きゅ","kyu"], ["きょ","kyo"],
+    ["しゃ","sha"], ["しゅ","shu"], ["しょ","sho"],
+    ["ちゃ","cha"], ["ちゅ","chu"], ["ちょ","cho"],
+    ["にゃ","nya"], ["にゅ","nyu"], ["にょ","nyo"],
+    ["ひゃ","hya"], ["ひゅ","hyu"], ["ひょ","hyo"],
+    ["みゃ","mya"], ["みゅ","myu"], ["みょ","myo"],
+    ["りゃ","rya"], ["りゅ","ryu"], ["りょ","ryo"],
+    ["ぎゃ","gya"], ["ぎゅ","gyu"], ["ぎょ","gyo"],
+    ["じゃ","ja"],  ["じゅ","ju"],  ["じょ","jo"],
+    ["びゃ","bya"], ["びゅ","byu"], ["びょ","byo"],
+    ["ぴゃ","pya"], ["ぴゅ","pyu"], ["ぴょ","pyo"],
+  ].map(([c,r]) => ({c, r, scripts:["hiragana"], sets:["yoon"]}));
+
+  const KATA_YOON = [
+    ["キャ","kya"], ["キュ","kyu"], ["キョ","kyo"],
+    ["シャ","sha"], ["シュ","shu"], ["ショ","sho"],
+    ["チャ","cha"], ["チュ","chu"], ["チョ","cho"],
+    ["ニャ","nya"], ["ニュ","nyu"], ["ニョ","nyo"],
+    ["ヒャ","hya"], ["ヒュ","hyu"], ["ヒョ","hyo"],
+    ["ミャ","mya"], ["ミュ","myu"], ["ミョ","myo"],
+    ["リャ","rya"], ["リュ","ryu"], ["リョ","ryo"],
+    ["ギャ","gya"], ["ギュ","gyu"], ["ギョ","gyo"],
+    ["ジャ","ja"],  ["ジュ","ju"],  ["ジョ","jo"],
+    ["ビャ","bya"], ["ビュ","byu"], ["ビョ","byo"],
+    ["ピャ","pya"], ["ピュ","pyu"], ["ピョ","pyo"],
+  ].map(([c,r]) => ({c, r, scripts:["katakana"], sets:["yoon"]}));
+
+  const ALL_KANA = [].concat(KANA, KATA_BASICS, HIRA_DAKUTEN, KATA_DAKUTEN, HIRA_YOON, KATA_YOON);
+
+  // ─── Romaji answer variants (alternate spellings accepted) ──────
+  const VARIANTS = {
+    "shi": ["si"], "chi": ["ti"], "tsu": ["tu"],
+    "fu":  ["hu"],
+    "ji":  ["zi", "di", "dji"],
+    "zu":  ["du"],
+    "wo":  ["o"],
+    "sha": ["sya"], "shu": ["syu"], "sho": ["syo"],
+    "cha": ["tya"], "chu": ["tyu"], "cho": ["tyo"],
+    "ja":  ["zya", "jya"], "ju":  ["zyu", "jyu"], "jo":  ["zyo", "jyo"],
+  };
+  function answerMatches(input, canonical) {
+    const a = input.trim().toLowerCase();
+    if (!a) return false;
+    if (a === canonical) return true;
+    const alts = VARIANTS[canonical];
+    if (alts && alts.includes(a)) return true;
+    return false;
+  }
+
+  // ─── Persistence ────────────────────────────────────────────────
+  const KEY = "kana-drill-v1";
+  const DEFAULT_STATE = {
+    items: {},               // { char: { level, correct, wrong, lastSeen } }
+    session: { correct: 0, wrong: 0, streak: 0, started: Date.now() },
+    settings: { sets: ["h-basics"] },
+  };
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (!raw) return clone(DEFAULT_STATE);
+      const parsed = JSON.parse(raw);
+      // Schema sanity
+      return {
+        items: parsed.items || {},
+        session: parsed.session || { correct: 0, wrong: 0, streak: 0, started: Date.now() },
+        settings: parsed.settings || { sets: ["h-basics"] },
+      };
+    } catch (e) { return clone(DEFAULT_STATE); }
+  }
+  function saveState() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {}
+  }
+  function clone(x) { return JSON.parse(JSON.stringify(x)); }
+
+  let state = loadState();
+
+  function itemState(char) {
+    if (!state.items[char]) {
+      state.items[char] = { level: 0, correct: 0, wrong: 0, lastSeen: 0 };
+    }
+    return state.items[char];
+  }
+
+  // ─── DOM refs ───────────────────────────────────────────────────
+  const promptEl = document.getElementById("prompt");
+  const feedbackEl = document.getElementById("feedback");
+  const ansEl = document.getElementById("ans");
+  const arenaEl = document.getElementById("arena");
+  const dotsEl = document.getElementById("dots");
+  const statSession = document.getElementById("stat-session");
+  const statStreak = document.getElementById("stat-streak");
+  const statMastery = document.getElementById("stat-mastery");
+  const settingsRow = document.getElementById("settings");
+
+  // ─── Setup settings checkboxes ──────────────────────────────────
+  settingsRow.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    cb.checked = state.settings.sets.includes(cb.dataset.set);
+    cb.addEventListener("change", () => {
+      state.settings.sets = Array.from(settingsRow.querySelectorAll("input:checked"))
+        .map(x => x.dataset.set);
+      if (state.settings.sets.length === 0) {
+        // Force at least h-basics on
+        const first = settingsRow.querySelector('input[data-set="h-basics"]');
+        first.checked = true;
+        state.settings.sets = ["h-basics"];
+      }
+      saveState();
+      renderDots();
+      nextPrompt();
+    });
+  });
+
+  // ─── Pool + selection ───────────────────────────────────────────
+  let pool = [];
+  let recentMissQueue = [];   // chars due-bumped after a miss
+
+  function recomputePool() {
+    const enabled = new Set(state.settings.sets);
+    pool = ALL_KANA.filter(k => k.sets.some(s => enabled.has(s)));
+  }
+
+  function weightFor(k) {
+    const lvl = itemState(k.c).level;
+    return Math.max(1, 6 - lvl);
+  }
+
+  function pickRandom() {
+    if (recentMissQueue.length && Math.random() < 0.5) {
+      // 50% chance to surface a recently missed item first
+      const c = recentMissQueue.shift();
+      const k = pool.find(x => x.c === c);
+      if (k) return k;
+    }
+    let total = 0;
+    for (const k of pool) total += weightFor(k);
+    let r = Math.random() * total;
+    for (const k of pool) {
+      r -= weightFor(k);
+      if (r <= 0) return k;
+    }
+    return pool[pool.length - 1];
+  }
+
+  let current = null;
+  let locked = false;
+
+  function nextPrompt() {
+    feedbackEl.innerHTML = "&nbsp;";
+    feedbackEl.classList.remove("good", "bad");
+    arenaEl.classList.remove("good", "bad");
+    ansEl.value = "";
+    ansEl.disabled = false;
+    if (pool.length === 0) {
+      promptEl.textContent = "—";
+      feedbackEl.textContent = "Enable a kana set above to start.";
+      return;
+    }
+    current = pickRandom();
+    // Apply yoon sizing class
+    promptEl.classList.toggle("yoon", current.c.length > 1);
+    promptEl.textContent = current.c;
+    locked = false;
+    ansEl.focus();
+  }
+
+  function submit() {
+    if (locked || !current) return;
+    const raw = ansEl.value;
+    if (!raw.trim()) return;
+    locked = true;
+    ansEl.disabled = true;
+    const correct = answerMatches(raw, current.r);
+    const item = itemState(current.c);
+    item.lastSeen = Date.now();
+    if (correct) {
+      item.correct++;
+      item.level = Math.min(5, item.level + 1);
+      state.session.correct++;
+      state.session.streak++;
+      feedbackEl.textContent = "✓ correct";
+      feedbackEl.classList.add("good");
+      arenaEl.classList.add("good");
+      saveState();
+      renderStats();
+      renderDots();
+      setTimeout(nextPrompt, 380);
+    } else {
+      item.wrong++;
+      item.level = 0;
+      state.session.wrong++;
+      state.session.streak = 0;
+      feedbackEl.innerHTML =
+        `✗ ${escapeHtml(raw.trim())} — was: ` +
+        `<span class="miss-shown"><span class="jp">${escapeHtml(current.c)}</span> &mdash; ` +
+        `<b>${escapeHtml(current.r)}</b></span>`;
+      feedbackEl.classList.add("bad");
+      arenaEl.classList.add("bad");
+      // Re-queue for soon
+      recentMissQueue.push(current.c);
+      if (recentMissQueue.length > 5) recentMissQueue.shift();
+      saveState();
+      renderStats();
+      renderDots();
+      setTimeout(nextPrompt, 1300);
+    }
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+
+  // ─── Rendering: stats + dot grid ───────────────────────────────
+  function renderStats() {
+    const total = state.session.correct + state.session.wrong;
+    statSession.textContent = `${state.session.correct}/${total}`;
+    statStreak.textContent = state.session.streak;
+    if (pool.length === 0) {
+      statMastery.textContent = "—";
+      return;
+    }
+    let sum = 0;
+    for (const k of pool) sum += itemState(k.c).level;
+    const pct = Math.round((sum / (pool.length * 5)) * 100);
+    statMastery.textContent = pct + "%";
+  }
+
+  function renderDots() {
+    const enabled = new Set(state.settings.sets);
+    const items = ALL_KANA.filter(k => k.sets.some(s => enabled.has(s)));
+    dotsEl.innerHTML = "";
+    for (const k of items) {
+      const lvl = itemState(k.c).level;
+      const dot = document.createElement("span");
+      dot.className = "dot l" + lvl;
+      dot.title = `${k.c} (${k.r}) — level ${lvl}`;
+      dotsEl.appendChild(dot);
+    }
+  }
+
+  // ─── Reset buttons ──────────────────────────────────────────────
+  document.getElementById("reset-streak").addEventListener("click", () => {
+    if (!confirm("Reset the session streak counter to 0?")) return;
+    state.session.streak = 0;
+    saveState();
+    renderStats();
+  });
+  document.getElementById("reset-all").addEventListener("click", () => {
+    if (!confirm("Wipe all drill progress (every item's level, session stats)? This cannot be undone.")) return;
+    state = clone(DEFAULT_STATE);
+    state.settings.sets = Array.from(settingsRow.querySelectorAll("input:checked")).map(x => x.dataset.set);
+    if (state.settings.sets.length === 0) state.settings.sets = ["h-basics"];
+    saveState();
+    recomputePool();
+    renderDots();
+    renderStats();
+    nextPrompt();
+  });
+
+  // ─── Input wiring ──────────────────────────────────────────────
+  ansEl.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (locked) return;
+      submit();
+    }
+  });
+
+  // ─── Init ─────────────────────────────────────────────────────
+  recomputePool();
+  renderStats();
+  renderDots();
+  nextPrompt();
+})();
+</script>
+</body>
+</html>

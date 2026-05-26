@@ -692,6 +692,7 @@ footer a{color:var(--ink-soft)}
     <a href="/numbers/">Numbers</a>
     <a href="/phrases/">Phrases</a>
     <a href="/lectures/">Lectures</a>
+    <a href="/drill/">Drill</a>
   </div>
 </nav>
 <div class="wrap">

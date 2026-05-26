@@ -703,6 +703,7 @@ def main(argv: list[str]) -> int:
     (OUT_DIR / "chart").mkdir()
     (OUT_DIR / "dict").mkdir()
     (OUT_DIR / "numbers").mkdir()
+    (OUT_DIR / "drill").mkdir()
     (OUT_DIR / "lectures").mkdir()
     (OUT_DIR / "phrases").mkdir()
 
