@@ -411,6 +411,176 @@ def render_module(module: ModuleMeta, out_dir: Path, template: str) -> int:
     return written
 
 
+# ─── Lectures + Phrases (flat-file sections outside /modules) ──────
+
+def _flat_sort_key(name: str) -> tuple:
+    base = name.removesuffix(".md")
+    if base == "00-overview":
+        return (0, base)
+    m = re.match(r"^(\d{2})-", base)
+    if m:
+        return (int(m.group(1)), base)
+    return (200, base)
+
+
+def _render_flat_sidebar(
+    files: list[Path],
+    current: Path | None,
+    section_label: str,
+) -> str:
+    """Sidebar for flat directories (phrases/, lectures/<topic>/).
+    `current` may be None when rendering an index page.
+    """
+    items: list[str] = []
+    for f in sorted(files, key=lambda p: _flat_sort_key(p.name)):
+        is_current = (current is not None and f.resolve() == current.resolve())
+        href = "index.html" if f.name == "00-overview.md" else f.name.replace(".md", ".html")
+        label = "Overview" if f.name == "00-overview.md" else _human_title(f.name)
+        cls = ' class="current"' if is_current else ""
+        items.append(f'<li><a href="{href}"{cls}>{label}</a></li>')
+    return "\n        ".join(items)
+
+
+def _render_flat_page(
+    md_path: Path,
+    sibling_files: list[Path],
+    template: str,
+    section_label: str,
+    parent_link: str,
+    url_prefix: str,
+) -> str:
+    """Render one .md page that lives outside /modules/.
+
+    `section_label` shows in the sidebar header (e.g. "Particles", "Phrases").
+    `parent_link` is the URL used by the breadcrumb "Module {{N}}" slot
+    (repurposed as the section parent link, e.g. "/lectures/" or "/phrases/").
+    """
+    raw = md_path.read_text(encoding="utf-8")
+    frontmatter, body = strip_frontmatter(raw)
+    body = preprocess_furigana(body)
+
+    md = md_lib.Markdown(extensions=["fenced_code", "tables", "attr_list"])
+    rendered = md.convert(body)
+    rendered = rewrite_links(rendered, md_path)
+
+    page_title = (
+        section_label
+        if md_path.name == "00-overview.md"
+        else _human_title(md_path.name)
+    )
+    sidebar = _render_flat_sidebar(sibling_files, md_path, section_label)
+    rel_source = md_path.relative_to(ROOT).as_posix()
+
+    # The page.html template uses {{MODULE_NUM}} inside the breadcrumb
+    # as the anchor target. Repurpose: pass the parent section's URL path
+    # component so the breadcrumb reads "Home > <Section>".
+    # The template currently builds: `Module {{MODULE_NUM}}` — for sections
+    # we want just the section name. So we pre-fill MODULE_TITLE with the
+    # section name and override the breadcrumb pattern by exploiting how
+    # MODULE_NUM is only used as link-text qualifier.
+    # For sections, MODULE_NUM = "" (empty) and MODULE_TITLE shows the
+    # section name. The breadcrumb link uses parent_link for the href.
+    breadcrumb_label = section_label
+    return (template
+        .replace('<a href="/#curriculum">Module {{MODULE_NUM}}</a>',
+                 f'<a href="{parent_link}">{breadcrumb_label}</a>')
+        .replace("{{TITLE}}", page_title)
+        .replace("{{MODULE_NUM}}", "")
+        .replace("{{MODULE_TITLE}}", section_label)
+        .replace("{{SIDEBAR_LIST}}", sidebar)
+        .replace("{{RENDERED_HTML}}", rendered)
+        .replace("{{LAST_UPDATED}}", str(frontmatter.get("last_updated", "—")))
+        .replace("{{SOURCE_URL}}", f"{GITHUB_BLOB}/{rel_source}")
+    )
+
+
+def render_lectures(out_dir: Path, template: str) -> int:
+    """Walk lectures/<topic>/*.md and render to public/lectures/<topic>/."""
+    src_root = ROOT / "lectures"
+    if not src_root.exists():
+        return 0
+    written = 0
+    topics: list[tuple[str, list[Path]]] = []
+    for topic_dir in sorted(p for p in src_root.iterdir() if p.is_dir()):
+        md_files = sorted(topic_dir.glob("*.md"))
+        if not md_files:
+            continue
+        topic_slug = topic_dir.name
+        topic_title = topic_slug.replace("-", " ").title()
+        target = out_dir / "lectures" / topic_slug
+        target.mkdir(parents=True, exist_ok=True)
+        for f in md_files:
+            html = _render_flat_page(
+                f, md_files, template,
+                section_label=topic_title,
+                parent_link=f"/lectures/{topic_slug}/",
+                url_prefix=f"/lectures/{topic_slug}/",
+            )
+            out_name = "index.html" if f.name == "00-overview.md" else f.name.replace(".md", ".html")
+            (target / out_name).write_text(html, encoding="utf-8")
+            written += 1
+        topics.append((topic_slug, md_files))
+
+    # Top-level /lectures/ index — lists every topic + its lectures.
+    if topics:
+        import html as _html
+        body_parts = ["<h1>Lectures</h1>", "<p><em>Focused mini-lessons on Japanese grammar glue: particles, demonstratives, near-synonym pairs.</em></p>"]
+        for topic_slug, md_files in topics:
+            topic_title = topic_slug.replace("-", " ").title()
+            body_parts.append(f'<h2><a href="/lectures/{topic_slug}/" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--cell-line)">{_html.escape(topic_title)}</a></h2>')
+            body_parts.append("<ul>")
+            for f in sorted(md_files, key=lambda p: _flat_sort_key(p.name)):
+                href = f"/lectures/{topic_slug}/" + ("index.html" if f.name == "00-overview.md" else f.name.replace(".md", ".html"))
+                label = "Overview" if f.name == "00-overview.md" else _human_title(f.name)
+                body_parts.append(f'<li><a href="{href}">{_html.escape(label)}</a></li>')
+            body_parts.append("</ul>")
+        body = "\n".join(body_parts)
+
+        # Sidebar for the index lists topic names.
+        sidebar_items = "\n        ".join(
+            f'<li><a href="/lectures/{t}/">{_html.escape(t.replace("-", " ").title())}</a></li>'
+            for t, _ in topics
+        )
+        index_html = (template
+            .replace('<a href="/#curriculum">Module {{MODULE_NUM}}</a>',
+                     '<a href="/lectures/">Lectures</a>')
+            .replace("{{TITLE}}", "Lectures")
+            .replace("{{MODULE_NUM}}", "")
+            .replace("{{MODULE_TITLE}}", "Lectures")
+            .replace("{{SIDEBAR_LIST}}", sidebar_items)
+            .replace("{{RENDERED_HTML}}", body)
+            .replace("{{LAST_UPDATED}}", "—")
+            .replace("{{SOURCE_URL}}", f"{GITHUB_BLOB}/lectures/")
+        )
+        (out_dir / "lectures" / "index.html").write_text(index_html, encoding="utf-8")
+        written += 1
+    return written
+
+
+def render_phrases(out_dir: Path, template: str) -> int:
+    """Walk phrases/*.md and render to public/phrases/."""
+    src_root = ROOT / "phrases"
+    if not src_root.exists():
+        return 0
+    md_files = sorted(src_root.glob("*.md"))
+    if not md_files:
+        return 0
+    target = out_dir / "phrases"
+    target.mkdir(parents=True, exist_ok=True)
+    written = 0
+    for f in md_files:
+        html = _render_flat_page(
+            f, md_files, template,
+            section_label="Phrases",
+            parent_link="/phrases/",
+            url_prefix="/phrases/",
+        )
+        out_name = "index.html" if f.name == "00-overview.md" else f.name.replace(".md", ".html")
+        (target / out_name).write_text(html, encoding="utf-8")
+        written += 1
+    return written
+
+
 def _render_module_card(module: ModuleMeta) -> str:
     """Single module card. Locked → div, otherwise → anchor."""
     href = f"/modules/{module.slug}/"
@@ -533,6 +703,8 @@ def main(argv: list[str]) -> int:
     (OUT_DIR / "chart").mkdir()
     (OUT_DIR / "dict").mkdir()
     (OUT_DIR / "numbers").mkdir()
+    (OUT_DIR / "lectures").mkdir()
+    (OUT_DIR / "phrases").mkdir()
 
     total = 0
     for slug in sorted(modules):
@@ -544,16 +716,21 @@ def main(argv: list[str]) -> int:
     dict_index = build_dict_index(MODULES_DIR)
     dict_html = render_dict_page(dict_template, dict_index)
     (OUT_DIR / "dict" / "index.html").write_text(dict_html, encoding="utf-8")
-    # Standalone JSON for cross-page fetches (e.g. /speech consumes it).
+    # Standalone JSON for cross-page fetches.
     (OUT_DIR / "dict-index.json").write_text(
         json.dumps(dict_index, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8",
     )
 
+    lectures_count = render_lectures(OUT_DIR, page_template)
+    phrases_count = render_phrases(OUT_DIR, page_template)
+
     print(f"Rendered {total} module page(s) into {OUT_DIR}/modules/")
     print(f"Wrote landing → {OUT_DIR}/index.html")
     print(f"Wrote dictionary → {OUT_DIR}/dict/index.html ({len(dict_index)} entries)")
     print(f"Wrote dict-index.json → {OUT_DIR}/dict-index.json")
+    print(f"Rendered {lectures_count} lecture page(s) into {OUT_DIR}/lectures/")
+    print(f"Rendered {phrases_count} phrase page(s) into {OUT_DIR}/phrases/")
     return 0
 
 
