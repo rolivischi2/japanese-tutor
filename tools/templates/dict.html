@@ -490,6 +490,23 @@ window.__dictIndex = {{INDEX_JSON}};
     if (window.wanakana && /[a-z]/.test(q)) {
       try { qKana = window.wanakana.toHiragana(q); } catch (_) {}
     }
+    // A gloss "matches as headword" if it's literally the query OR it starts
+    // with the query followed by a word boundary (space, comma, punctuation,
+    // or open-paren — covers cases like "water (esp. cool or cold)").
+    function glossIsHeadword(gloss, q) {
+      const g = gloss.toLowerCase();
+      if (g === q) return true;
+      if (g.startsWith(q)) {
+        const next = g.charCodeAt(q.length);
+        // any non-alphanumeric byte is a word boundary
+        return !(
+          (next >= 97 && next <= 122) || // a-z
+          (next >= 48 && next <= 57)    // 0-9
+        );
+      }
+      return false;
+    }
+
     const cap = 80;
     const results = [];
     let totalMatched = 0;
@@ -500,9 +517,13 @@ window.__dictIndex = {{INDEX_JSON}};
       let rank = -1;
       if (e.r.includes(q) || e.k.includes(q)) rank = 0;
       else if (qKana && (e.r.includes(qKana) || e.k.includes(qKana))) rank = 0;
-      else if (e.g.some(g => g.toLowerCase() === q)) rank = 1;
-      else if (e.s.indexOf(q) >= 0) rank = 2;
-      else if (qKana && e.s.indexOf(qKana) >= 0) rank = 2;
+      // rank 1: FIRST gloss matches as headword — strongest English signal
+      else if (e.g.length && glossIsHeadword(e.g[0], q)) rank = 1;
+      // rank 2: any subsequent gloss matches as headword
+      else if (e.g.some(g => glossIsHeadword(g, q))) rank = 2;
+      // rank 3: substring anywhere in search blob
+      else if (e.s.indexOf(q) >= 0) rank = 3;
+      else if (qKana && e.s.indexOf(qKana) >= 0) rank = 3;
       if (rank >= 0) {
         totalMatched++;
         if (results.length < cap) results.push({ e, rank });
