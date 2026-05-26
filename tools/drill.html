@@ -77,16 +77,43 @@
   .mastery{margin-top:28px}
   .mastery-title{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:8px}
   .dot-grid{display:flex;flex-wrap:wrap;gap:3px;align-items:center}
-  .dot{width:11px;height:11px;border-radius:2px;background:var(--cell);transition:background .2s}
-  .dot.l0{background:#eee0c4}
-  .dot.l1{background:#e5cf9c}
-  .dot.l2{background:#d8b770}
-  .dot.l3{background:#c89548}
-  .dot.l4{background:#bd6a36}
-  .dot.l5{background:#bd3b2c}
+  .dot{width:11px;height:11px;border-radius:2px;background:var(--cell);transition:background .25s,transform .2s}
+  .dot.l0{background:#e2dac4}
+  .dot.l1{background:#d8a85a}
+  .dot.l2{background:#cb7c33}
+  .dot.l3{background:#bd4f2d}
+  .dot.l4{background:#9c2f23}
+  .dot.l5{background:#7a1f17;box-shadow:0 0 4px rgba(122,31,23,.4)}
+  .dot.just-updated{transform:scale(1.5)}
   .dot[title]{cursor:default}
   .mastery-legend{font-size:11.5px;color:var(--ink-soft);margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
   .mastery-legend .swatch{width:10px;height:10px;border-radius:2px;display:inline-block;margin:0 2px 0 8px;vertical-align:middle}
+
+  /* Row-context hint panel */
+  .row-hint{margin-top:18px;min-height:64px;text-align:center;transition:opacity .25s}
+  .row-hint.hidden{opacity:0;pointer-events:none;min-height:0;margin-top:0}
+  .row-hint .hint-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:8px}
+  .row-hint .slots{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .row-hint .slot{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:42px;padding:4px 6px;border-radius:5px}
+  .row-hint .slot.solo{opacity:.5}
+  .row-hint .slot .ch{font-size:24px;color:var(--ink);font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN",sans-serif;line-height:1}
+  .row-hint .slot.empty .ch{color:var(--vermilion);opacity:.4;font-family:"Fraunces",Georgia,serif}
+  .row-hint .slot .ro{font-size:11px;letter-spacing:.04em;color:var(--vermilion);font-weight:600}
+  .row-hint .slot.empty .ro{visibility:hidden}
+
+  /* Hint mode cycler in settings */
+  .hint-cycler{font-family:inherit;font-size:11.5px;font-weight:600;letter-spacing:.04em;
+    padding:3px 10px;background:transparent;border:1px solid var(--cell-line);border-radius:99px;
+    color:var(--ink-soft);cursor:pointer;transition:all .12s;white-space:nowrap}
+  .hint-cycler:hover{border-color:var(--vermilion);color:var(--vermilion)}
+  .hint-cycler .cycle-val{color:var(--vermilion-deep);text-transform:lowercase;font-style:italic}
+
+  /* Saved indicator */
+  .saved-pill{display:inline-block;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;
+    color:var(--good);background:rgba(62,140,91,.14);padding:2px 8px;border-radius:99px;
+    opacity:0;transition:opacity .25s;margin-left:4px}
+  .saved-pill.show{opacity:1}
+  .saved-pill.err{color:var(--bad);background:rgba(189,59,44,.14);opacity:1}
 
   .empty-pool{padding:30px;text-align:center;color:var(--ink-soft);font-style:italic}
 
@@ -136,9 +163,12 @@
     <div class="stats">
       <span>Session: <span class="v" id="stat-session">0/0</span></span>
       <span>Streak: <span class="v streak" id="stat-streak">0</span></span>
-      <span>Mastery: <span class="v" id="stat-mastery">—</span></span>
+      <span>Mastered: <span class="v" id="stat-mastered">0/0</span></span>
+      <span>Avg: <span class="v" id="stat-mastery">—</span></span>
+      <button class="hint-cycler" id="hint-cycler" type="button">Hint: <span class="cycle-val" id="hint-mode-val">auto</span></button>
       <button class="reset-btn" id="reset-streak" type="button">Reset streak</button>
       <button class="reset-btn" id="reset-all" type="button">Wipe progress</button>
+      <span class="saved-pill" id="saved-pill">saved ✓</span>
     </div>
   </div>
 
@@ -148,7 +178,11 @@
     <div class="answer-row">
       <input id="ans" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="romaji">
     </div>
-    <div class="hint" id="hint">Press Enter to submit. Variants accepted (e.g. shi/si, chi/ti, tsu/tu).</div>
+    <div class="hint">Press Enter to submit. Variants accepted (e.g. shi/si, chi/ti, tsu/tu).</div>
+    <div class="row-hint hidden" id="row-hint">
+      <div class="hint-label">Row pattern</div>
+      <div class="slots" id="row-slots"></div>
+    </div>
   </div>
 
   <div class="mastery">
@@ -172,80 +206,92 @@
 <script>
 (function() {
   // ─── Kana inventory ─────────────────────────────────────────────
-  // Set tags: "h-basics", "k-basics", "dakuten", "yoon"
-  // Yōon set includes both hiragana + katakana combinations.
-  const KANA = [
-    // Hiragana basics (46)
-    ["あ","a"], ["い","i"], ["う","u"], ["え","e"], ["お","o"],
-    ["か","ka"], ["き","ki"], ["く","ku"], ["け","ke"], ["こ","ko"],
-    ["さ","sa"], ["し","shi"], ["す","su"], ["せ","se"], ["そ","so"],
-    ["た","ta"], ["ち","chi"], ["つ","tsu"], ["て","te"], ["と","to"],
-    ["な","na"], ["に","ni"], ["ぬ","nu"], ["ね","ne"], ["の","no"],
-    ["は","ha"], ["ひ","hi"], ["ふ","fu"], ["へ","he"], ["ほ","ho"],
-    ["ま","ma"], ["み","mi"], ["む","mu"], ["め","me"], ["も","mo"],
-    ["や","ya"], ["ゆ","yu"], ["よ","yo"],
-    ["ら","ra"], ["り","ri"], ["る","ru"], ["れ","re"], ["ろ","ro"],
-    ["わ","wa"], ["を","wo"], ["ん","n"],
-  ].map(([c,r]) => ({c, r, scripts:["hiragana"], sets:["h-basics"]}));
+  // Each row = a gojūon row (vowel pattern X+a/X+i/X+u/X+e/X+o, or 3-member yōon
+  // X+ya/X+yu/X+yo). The `row` id is used by the hint panel below the prompt to
+  // show the other members of the row with their romaji, helping the learner
+  // derive the answer from the pattern.
+  const ROWS = [
+    // ── Hiragana basics ──
+    { id:"h-vowels", script:"hiragana", set:"h-basics", chars:[["あ","a"],["い","i"],["う","u"],["え","e"],["お","o"]] },
+    { id:"h-k",      script:"hiragana", set:"h-basics", chars:[["か","ka"],["き","ki"],["く","ku"],["け","ke"],["こ","ko"]] },
+    { id:"h-s",      script:"hiragana", set:"h-basics", chars:[["さ","sa"],["し","shi"],["す","su"],["せ","se"],["そ","so"]] },
+    { id:"h-t",      script:"hiragana", set:"h-basics", chars:[["た","ta"],["ち","chi"],["つ","tsu"],["て","te"],["と","to"]] },
+    { id:"h-n",      script:"hiragana", set:"h-basics", chars:[["な","na"],["に","ni"],["ぬ","nu"],["ね","ne"],["の","no"]] },
+    { id:"h-h",      script:"hiragana", set:"h-basics", chars:[["は","ha"],["ひ","hi"],["ふ","fu"],["へ","he"],["ほ","ho"]] },
+    { id:"h-m",      script:"hiragana", set:"h-basics", chars:[["ま","ma"],["み","mi"],["む","mu"],["め","me"],["も","mo"]] },
+    { id:"h-y",      script:"hiragana", set:"h-basics", chars:[["や","ya"],["ゆ","yu"],["よ","yo"]] },
+    { id:"h-r",      script:"hiragana", set:"h-basics", chars:[["ら","ra"],["り","ri"],["る","ru"],["れ","re"],["ろ","ro"]] },
+    { id:"h-w",      script:"hiragana", set:"h-basics", chars:[["わ","wa"],["を","wo"]] },
+    { id:"h-n-solo", script:"hiragana", set:"h-basics", chars:[["ん","n"]] },
 
-  const KATA_BASICS = [
-    ["ア","a"], ["イ","i"], ["ウ","u"], ["エ","e"], ["オ","o"],
-    ["カ","ka"], ["キ","ki"], ["ク","ku"], ["ケ","ke"], ["コ","ko"],
-    ["サ","sa"], ["シ","shi"], ["ス","su"], ["セ","se"], ["ソ","so"],
-    ["タ","ta"], ["チ","chi"], ["ツ","tsu"], ["テ","te"], ["ト","to"],
-    ["ナ","na"], ["ニ","ni"], ["ヌ","nu"], ["ネ","ne"], ["ノ","no"],
-    ["ハ","ha"], ["ヒ","hi"], ["フ","fu"], ["ヘ","he"], ["ホ","ho"],
-    ["マ","ma"], ["ミ","mi"], ["ム","mu"], ["メ","me"], ["モ","mo"],
-    ["ヤ","ya"], ["ユ","yu"], ["ヨ","yo"],
-    ["ラ","ra"], ["リ","ri"], ["ル","ru"], ["レ","re"], ["ロ","ro"],
-    ["ワ","wa"], ["ヲ","wo"], ["ン","n"],
-  ].map(([c,r]) => ({c, r, scripts:["katakana"], sets:["k-basics"]}));
+    // ── Katakana basics ──
+    { id:"k-vowels", script:"katakana", set:"k-basics", chars:[["ア","a"],["イ","i"],["ウ","u"],["エ","e"],["オ","o"]] },
+    { id:"k-k",      script:"katakana", set:"k-basics", chars:[["カ","ka"],["キ","ki"],["ク","ku"],["ケ","ke"],["コ","ko"]] },
+    { id:"k-s",      script:"katakana", set:"k-basics", chars:[["サ","sa"],["シ","shi"],["ス","su"],["セ","se"],["ソ","so"]] },
+    { id:"k-t",      script:"katakana", set:"k-basics", chars:[["タ","ta"],["チ","chi"],["ツ","tsu"],["テ","te"],["ト","to"]] },
+    { id:"k-n",      script:"katakana", set:"k-basics", chars:[["ナ","na"],["ニ","ni"],["ヌ","nu"],["ネ","ne"],["ノ","no"]] },
+    { id:"k-h",      script:"katakana", set:"k-basics", chars:[["ハ","ha"],["ヒ","hi"],["フ","fu"],["ヘ","he"],["ホ","ho"]] },
+    { id:"k-m",      script:"katakana", set:"k-basics", chars:[["マ","ma"],["ミ","mi"],["ム","mu"],["メ","me"],["モ","mo"]] },
+    { id:"k-y",      script:"katakana", set:"k-basics", chars:[["ヤ","ya"],["ユ","yu"],["ヨ","yo"]] },
+    { id:"k-r",      script:"katakana", set:"k-basics", chars:[["ラ","ra"],["リ","ri"],["ル","ru"],["レ","re"],["ロ","ro"]] },
+    { id:"k-w",      script:"katakana", set:"k-basics", chars:[["ワ","wa"],["ヲ","wo"]] },
+    { id:"k-n-solo", script:"katakana", set:"k-basics", chars:[["ン","n"]] },
 
-  const HIRA_DAKUTEN = [
-    ["が","ga"], ["ぎ","gi"], ["ぐ","gu"], ["げ","ge"], ["ご","go"],
-    ["ざ","za"], ["じ","ji"], ["ず","zu"], ["ぜ","ze"], ["ぞ","zo"],
-    ["だ","da"], ["ぢ","ji"], ["づ","zu"], ["で","de"], ["ど","do"],
-    ["ば","ba"], ["び","bi"], ["ぶ","bu"], ["べ","be"], ["ぼ","bo"],
-    ["ぱ","pa"], ["ぴ","pi"], ["ぷ","pu"], ["ぺ","pe"], ["ぽ","po"],
-  ].map(([c,r]) => ({c, r, scripts:["hiragana"], sets:["dakuten"]}));
+    // ── Dakuten + handakuten (hiragana) ──
+    { id:"h-g", script:"hiragana", set:"dakuten", chars:[["が","ga"],["ぎ","gi"],["ぐ","gu"],["げ","ge"],["ご","go"]] },
+    { id:"h-z", script:"hiragana", set:"dakuten", chars:[["ざ","za"],["じ","ji"],["ず","zu"],["ぜ","ze"],["ぞ","zo"]] },
+    { id:"h-d", script:"hiragana", set:"dakuten", chars:[["だ","da"],["ぢ","ji"],["づ","zu"],["で","de"],["ど","do"]] },
+    { id:"h-b", script:"hiragana", set:"dakuten", chars:[["ば","ba"],["び","bi"],["ぶ","bu"],["べ","be"],["ぼ","bo"]] },
+    { id:"h-p", script:"hiragana", set:"dakuten", chars:[["ぱ","pa"],["ぴ","pi"],["ぷ","pu"],["ぺ","pe"],["ぽ","po"]] },
 
-  const KATA_DAKUTEN = [
-    ["ガ","ga"], ["ギ","gi"], ["グ","gu"], ["ゲ","ge"], ["ゴ","go"],
-    ["ザ","za"], ["ジ","ji"], ["ズ","zu"], ["ゼ","ze"], ["ゾ","zo"],
-    ["ダ","da"], ["ヂ","ji"], ["ヅ","zu"], ["デ","de"], ["ド","do"],
-    ["バ","ba"], ["ビ","bi"], ["ブ","bu"], ["ベ","be"], ["ボ","bo"],
-    ["パ","pa"], ["ピ","pi"], ["プ","pu"], ["ペ","pe"], ["ポ","po"],
-  ].map(([c,r]) => ({c, r, scripts:["katakana"], sets:["dakuten"]}));
+    // ── Dakuten + handakuten (katakana) ──
+    { id:"k-g", script:"katakana", set:"dakuten", chars:[["ガ","ga"],["ギ","gi"],["グ","gu"],["ゲ","ge"],["ゴ","go"]] },
+    { id:"k-z", script:"katakana", set:"dakuten", chars:[["ザ","za"],["ジ","ji"],["ズ","zu"],["ゼ","ze"],["ゾ","zo"]] },
+    { id:"k-d", script:"katakana", set:"dakuten", chars:[["ダ","da"],["ヂ","ji"],["ヅ","zu"],["デ","de"],["ド","do"]] },
+    { id:"k-b", script:"katakana", set:"dakuten", chars:[["バ","ba"],["ビ","bi"],["ブ","bu"],["ベ","be"],["ボ","bo"]] },
+    { id:"k-p", script:"katakana", set:"dakuten", chars:[["パ","pa"],["ピ","pi"],["プ","pu"],["ペ","pe"],["ポ","po"]] },
 
-  const HIRA_YOON = [
-    ["きゃ","kya"], ["きゅ","kyu"], ["きょ","kyo"],
-    ["しゃ","sha"], ["しゅ","shu"], ["しょ","sho"],
-    ["ちゃ","cha"], ["ちゅ","chu"], ["ちょ","cho"],
-    ["にゃ","nya"], ["にゅ","nyu"], ["にょ","nyo"],
-    ["ひゃ","hya"], ["ひゅ","hyu"], ["ひょ","hyo"],
-    ["みゃ","mya"], ["みゅ","myu"], ["みょ","myo"],
-    ["りゃ","rya"], ["りゅ","ryu"], ["りょ","ryo"],
-    ["ぎゃ","gya"], ["ぎゅ","gyu"], ["ぎょ","gyo"],
-    ["じゃ","ja"],  ["じゅ","ju"],  ["じょ","jo"],
-    ["びゃ","bya"], ["びゅ","byu"], ["びょ","byo"],
-    ["ぴゃ","pya"], ["ぴゅ","pyu"], ["ぴょ","pyo"],
-  ].map(([c,r]) => ({c, r, scripts:["hiragana"], sets:["yoon"]}));
+    // ── Yōon (hiragana) ──
+    { id:"h-kya", script:"hiragana", set:"yoon", chars:[["きゃ","kya"],["きゅ","kyu"],["きょ","kyo"]] },
+    { id:"h-sha", script:"hiragana", set:"yoon", chars:[["しゃ","sha"],["しゅ","shu"],["しょ","sho"]] },
+    { id:"h-cha", script:"hiragana", set:"yoon", chars:[["ちゃ","cha"],["ちゅ","chu"],["ちょ","cho"]] },
+    { id:"h-nya", script:"hiragana", set:"yoon", chars:[["にゃ","nya"],["にゅ","nyu"],["にょ","nyo"]] },
+    { id:"h-hya", script:"hiragana", set:"yoon", chars:[["ひゃ","hya"],["ひゅ","hyu"],["ひょ","hyo"]] },
+    { id:"h-mya", script:"hiragana", set:"yoon", chars:[["みゃ","mya"],["みゅ","myu"],["みょ","myo"]] },
+    { id:"h-rya", script:"hiragana", set:"yoon", chars:[["りゃ","rya"],["りゅ","ryu"],["りょ","ryo"]] },
+    { id:"h-gya", script:"hiragana", set:"yoon", chars:[["ぎゃ","gya"],["ぎゅ","gyu"],["ぎょ","gyo"]] },
+    { id:"h-ja",  script:"hiragana", set:"yoon", chars:[["じゃ","ja"], ["じゅ","ju"], ["じょ","jo"]] },
+    { id:"h-bya", script:"hiragana", set:"yoon", chars:[["びゃ","bya"],["びゅ","byu"],["びょ","byo"]] },
+    { id:"h-pya", script:"hiragana", set:"yoon", chars:[["ぴゃ","pya"],["ぴゅ","pyu"],["ぴょ","pyo"]] },
 
-  const KATA_YOON = [
-    ["キャ","kya"], ["キュ","kyu"], ["キョ","kyo"],
-    ["シャ","sha"], ["シュ","shu"], ["ショ","sho"],
-    ["チャ","cha"], ["チュ","chu"], ["チョ","cho"],
-    ["ニャ","nya"], ["ニュ","nyu"], ["ニョ","nyo"],
-    ["ヒャ","hya"], ["ヒュ","hyu"], ["ヒョ","hyo"],
-    ["ミャ","mya"], ["ミュ","myu"], ["ミョ","myo"],
-    ["リャ","rya"], ["リュ","ryu"], ["リョ","ryo"],
-    ["ギャ","gya"], ["ギュ","gyu"], ["ギョ","gyo"],
-    ["ジャ","ja"],  ["ジュ","ju"],  ["ジョ","jo"],
-    ["ビャ","bya"], ["ビュ","byu"], ["ビョ","byo"],
-    ["ピャ","pya"], ["ピュ","pyu"], ["ピョ","pyo"],
-  ].map(([c,r]) => ({c, r, scripts:["katakana"], sets:["yoon"]}));
+    // ── Yōon (katakana) ──
+    { id:"k-kya", script:"katakana", set:"yoon", chars:[["キャ","kya"],["キュ","kyu"],["キョ","kyo"]] },
+    { id:"k-sha", script:"katakana", set:"yoon", chars:[["シャ","sha"],["シュ","shu"],["ショ","sho"]] },
+    { id:"k-cha", script:"katakana", set:"yoon", chars:[["チャ","cha"],["チュ","chu"],["チョ","cho"]] },
+    { id:"k-nya", script:"katakana", set:"yoon", chars:[["ニャ","nya"],["ニュ","nyu"],["ニョ","nyo"]] },
+    { id:"k-hya", script:"katakana", set:"yoon", chars:[["ヒャ","hya"],["ヒュ","hyu"],["ヒョ","hyo"]] },
+    { id:"k-mya", script:"katakana", set:"yoon", chars:[["ミャ","mya"],["ミュ","myu"],["ミョ","myo"]] },
+    { id:"k-rya", script:"katakana", set:"yoon", chars:[["リャ","rya"],["リュ","ryu"],["リョ","ryo"]] },
+    { id:"k-gya", script:"katakana", set:"yoon", chars:[["ギャ","gya"],["ギュ","gyu"],["ギョ","gyo"]] },
+    { id:"k-ja",  script:"katakana", set:"yoon", chars:[["ジャ","ja"], ["ジュ","ju"], ["ジョ","jo"]] },
+    { id:"k-bya", script:"katakana", set:"yoon", chars:[["ビャ","bya"],["ビュ","byu"],["ビョ","byo"]] },
+    { id:"k-pya", script:"katakana", set:"yoon", chars:[["ピャ","pya"],["ピュ","pyu"],["ピョ","pyo"]] },
+  ];
 
-  const ALL_KANA = [].concat(KANA, KATA_BASICS, HIRA_DAKUTEN, KATA_DAKUTEN, HIRA_YOON, KATA_YOON);
+  const ROWS_BY_ID = Object.fromEntries(ROWS.map(r => [r.id, r]));
+
+  const ALL_KANA = ROWS.flatMap(row =>
+    row.chars.map(([c, r]) => ({
+      c, r,
+      scripts: [row.script],
+      sets: [row.set],
+      row: row.id,
+    }))
+  );
+
+  // O(1) lookup: char → row id
+  const ROW_OF_CHAR = {};
+  for (const k of ALL_KANA) ROW_OF_CHAR[k.c] = k.row;
 
   // ─── Romaji answer variants (alternate spellings accepted) ──────
   const VARIANTS = {
@@ -272,23 +318,30 @@
   const DEFAULT_STATE = {
     items: {},               // { char: { level, correct, wrong, lastSeen } }
     session: { correct: 0, wrong: 0, streak: 0, started: Date.now() },
-    settings: { sets: ["h-basics"] },
+    settings: { sets: ["h-basics"], hintMode: "auto" },  // hintMode: auto|on|off
   };
   function loadState() {
     try {
       const raw = localStorage.getItem(KEY);
       if (!raw) return clone(DEFAULT_STATE);
       const parsed = JSON.parse(raw);
-      // Schema sanity
+      const settings = parsed.settings || {};
       return {
         items: parsed.items || {},
         session: parsed.session || { correct: 0, wrong: 0, streak: 0, started: Date.now() },
-        settings: parsed.settings || { sets: ["h-basics"] },
+        settings: {
+          sets: settings.sets || ["h-basics"],
+          hintMode: settings.hintMode || "auto",
+        },
       };
     } catch (e) { return clone(DEFAULT_STATE); }
   }
+  let saveOK = true;
   function saveState() {
-    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {}
+    try {
+      localStorage.setItem(KEY, JSON.stringify(state));
+      saveOK = true;
+    } catch (_) { saveOK = false; }
   }
   function clone(x) { return JSON.parse(JSON.stringify(x)); }
 
@@ -310,7 +363,84 @@
   const statSession = document.getElementById("stat-session");
   const statStreak = document.getElementById("stat-streak");
   const statMastery = document.getElementById("stat-mastery");
+  const statMastered = document.getElementById("stat-mastered");
   const settingsRow = document.getElementById("settings");
+  const hintCyclerBtn = document.getElementById("hint-cycler");
+  const hintCyclerVal = document.getElementById("hint-mode-val");
+  const rowHintEl = document.getElementById("row-hint");
+  const rowSlotsEl = document.getElementById("row-slots");
+  const savedPill = document.getElementById("saved-pill");
+
+  // ─── Row helpers ────────────────────────────────────────────────
+  function rowForChar(c) { return ROWS_BY_ID[ROW_OF_CHAR[c]]; }
+
+  function rowAvgLevel(rowId) {
+    const r = ROWS_BY_ID[rowId];
+    if (!r) return 0;
+    let sum = 0;
+    for (const [c] of r.chars) sum += itemState(c).level;
+    return sum / r.chars.length;
+  }
+
+  function shouldShowHint(rowId) {
+    const mode = state.settings.hintMode || "auto";
+    if (mode === "off") return false;
+    if (mode === "on") return true;
+    // auto: hide once row is mostly mastered (avg level >= 3)
+    return rowAvgLevel(rowId) < 3;
+  }
+
+  function renderHint(currentChar) {
+    const row = rowForChar(currentChar);
+    if (!row || row.chars.length <= 1) {
+      // Singleton rows like ん — no row siblings to show.
+      rowHintEl.classList.add("hidden");
+      return;
+    }
+    if (!shouldShowHint(row.id)) {
+      rowHintEl.classList.add("hidden");
+      return;
+    }
+    const slotsHtml = row.chars.map(([c, r]) => {
+      if (c === currentChar) {
+        return `<div class="slot empty"><span class="ch">?</span><span class="ro">${escapeHtml(r)}</span></div>`;
+      }
+      return `<div class="slot"><span class="ch">${escapeHtml(c)}</span><span class="ro">${escapeHtml(r)}</span></div>`;
+    }).join("");
+    rowSlotsEl.innerHTML = slotsHtml;
+    rowHintEl.classList.remove("hidden");
+  }
+
+  // ─── Hint-mode cycler ──────────────────────────────────────────
+  const HINT_MODES = ["auto", "on", "off"];
+  function updateHintCyclerLabel() {
+    hintCyclerVal.textContent = state.settings.hintMode;
+  }
+  hintCyclerBtn.addEventListener("click", () => {
+    const cur = state.settings.hintMode || "auto";
+    const next = HINT_MODES[(HINT_MODES.indexOf(cur) + 1) % HINT_MODES.length];
+    state.settings.hintMode = next;
+    updateHintCyclerLabel();
+    saveState();
+    flashSaved();
+    if (current) renderHint(current.c);
+  });
+
+  // ─── Saved pill flash ──────────────────────────────────────────
+  let _savedTimer = null;
+  function flashSaved() {
+    if (!saveOK) {
+      savedPill.textContent = "not saved";
+      savedPill.classList.add("err");
+      savedPill.classList.add("show");
+      return;
+    }
+    savedPill.textContent = "saved ✓";
+    savedPill.classList.remove("err");
+    savedPill.classList.add("show");
+    if (_savedTimer) clearTimeout(_savedTimer);
+    _savedTimer = setTimeout(() => savedPill.classList.remove("show"), 800);
+  }
 
   // ─── Setup settings checkboxes ──────────────────────────────────
   settingsRow.querySelectorAll("input[type=checkbox]").forEach(cb => {
@@ -373,12 +503,14 @@
     if (pool.length === 0) {
       promptEl.textContent = "—";
       feedbackEl.textContent = "Enable a kana set above to start.";
+      rowHintEl.classList.add("hidden");
       return;
     }
     current = pickRandom();
     // Apply yoon sizing class
     promptEl.classList.toggle("yoon", current.c.length > 1);
     promptEl.textContent = current.c;
+    renderHint(current.c);
     locked = false;
     ansEl.focus();
   }
@@ -392,6 +524,7 @@
     const correct = answerMatches(raw, current.r);
     const item = itemState(current.c);
     item.lastSeen = Date.now();
+    const justUpdatedChar = current.c;
     if (correct) {
       item.correct++;
       item.level = Math.min(5, item.level + 1);
@@ -401,8 +534,9 @@
       feedbackEl.classList.add("good");
       arenaEl.classList.add("good");
       saveState();
+      flashSaved();
       renderStats();
-      renderDots();
+      renderDots(justUpdatedChar);
       setTimeout(nextPrompt, 380);
     } else {
       item.wrong++;
@@ -419,8 +553,9 @@
       recentMissQueue.push(current.c);
       if (recentMissQueue.length > 5) recentMissQueue.shift();
       saveState();
+      flashSaved();
       renderStats();
-      renderDots();
+      renderDots(justUpdatedChar);
       setTimeout(nextPrompt, 1300);
     }
   }
@@ -436,15 +571,21 @@
     statStreak.textContent = state.session.streak;
     if (pool.length === 0) {
       statMastery.textContent = "—";
+      statMastered.textContent = "0/0";
       return;
     }
-    let sum = 0;
-    for (const k of pool) sum += itemState(k.c).level;
-    const pct = Math.round((sum / (pool.length * 5)) * 100);
-    statMastery.textContent = pct + "%";
+    let sum = 0, mastered = 0;
+    for (const k of pool) {
+      const lvl = itemState(k.c).level;
+      sum += lvl;
+      if (lvl >= 3) mastered++;
+    }
+    statMastered.textContent = `${mastered}/${pool.length}`;
+    const pct = (sum / (pool.length * 5)) * 100;
+    statMastery.textContent = pct.toFixed(1) + "%";
   }
 
-  function renderDots() {
+  function renderDots(justUpdatedChar) {
     const enabled = new Set(state.settings.sets);
     const items = ALL_KANA.filter(k => k.sets.some(s => enabled.has(s)));
     dotsEl.innerHTML = "";
@@ -453,6 +594,11 @@
       const dot = document.createElement("span");
       dot.className = "dot l" + lvl;
       dot.title = `${k.c} (${k.r}) — level ${lvl}`;
+      if (justUpdatedChar && k.c === justUpdatedChar) {
+        dot.classList.add("just-updated");
+        // remove class after animation
+        setTimeout(() => dot.classList.remove("just-updated"), 250);
+      }
       dotsEl.appendChild(dot);
     }
   }
@@ -487,9 +633,12 @@
 
   // ─── Init ─────────────────────────────────────────────────────
   recomputePool();
+  updateHintCyclerLabel();
   renderStats();
   renderDots();
   nextPrompt();
+  // Show "not saved" warning permanently if localStorage isn't usable
+  if (!saveOK) flashSaved();
 })();
 </script>
 </body>
