@@ -19,3 +19,8 @@ __pycache__/
 public/
 .vercel/
 .vercel
+
+# Raw JMdict source (regenerate via tools/build_jmdict.py).
+# The slim tools/data/jmdict-index.json IS committed; raw source is not.
+tools/data/jmdict-eng-*.json
+tools/data/jmdict-eng.json.tgz
